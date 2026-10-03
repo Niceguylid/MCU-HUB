@@ -1,0 +1,3843 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marvel Cinematic Universe</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#050505;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
+}
+
+.mcu-nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:9999;
+  padding:18px 5%;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.mcu-nav-inner{
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+}
+
+.mcu-logo{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:2px;
+  white-space:nowrap;
+}
+
+.mcu-logo span{
+  color:#e62429;
+}
+
+.mcu-menu{
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.mcu-menu a{
+  color:#ddd;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:bold;
+  letter-spacing:.8px;
+  transition:.3s;
+}
+
+.mcu-menu a:hover{
+  color:#e62429;
+}
+
+.mcu-hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 20px 80px;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.62),
+      rgba(0,0,0,.72)
+    ),
+    url('https://cdn.marvel.com/content/2x/news_articles-mas_dsk_01.webp');
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+.mcu-hero-content{
+  max-width:1000px;
+}
+
+.mcu-hero small{
+  color:#e62429;
+  font-weight:bold;
+  letter-spacing:5px;
+  font-size:13px;
+}
+
+.mcu-hero h1{
+  font-size:clamp(45px,8vw,100px);
+  line-height:.95;
+  margin:20px 0;
+  text-transform:uppercase;
+  font-weight:1000;
+  letter-spacing:-3px;
+}
+
+.mcu-hero p{
+  color:#ccc;
+  max-width:700px;
+  margin:0 auto;
+  font-size:18px;
+}
+
+.mcu-button{
+  display:inline-block;
+  margin-top:35px;
+  padding:14px 30px;
+  border:1px solid #e62429;
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.mcu-button:hover{
+  background:#e62429;
+}
+
+.mcu-section{
+  max-width:1250px;
+  margin:auto;
+  padding:110px 30px;
+}
+
+.mcu-title{
+  margin-bottom:50px;
+}
+
+.mcu-title h2{
+  font-size:42px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+.mcu-title p{
+  color:#888;
+  margin-top:10px;
+}
+
+.mcu-line{
+  width:75px;
+  height:4px;
+  background:#e62429;
+  margin-top:18px;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:50px;
+  align-items:center;
+}
+
+.about-text p{
+  color:#aaa;
+  font-size:17px;
+  margin-bottom:20px;
+}
+
+.about-box{
+  padding:35px;
+  background:#101010;
+  border:1px solid #222;
+  border-left:3px solid #e62429;
+  transition:.3s;
+}
+
+.about-box:hover{
+  transform:translateY(-6px);
+  border-color:#e62429;
+  box-shadow:0 15px 40px rgba(230,36,41,.12);
+}
+
+.about-box h3{
+  color:#e62429;
+  margin-bottom:15px;
+  letter-spacing:2px;
+}
+
+.about-box p{
+  color:#aaa;
+  line-height:2;
+}
+
+.timeline{
+  position:relative;
+  margin-top:50px;
+}
+
+.timeline:before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:#222;
+  transform:translateX(-50%);
+}
+
+.timeline-item{
+  position:relative;
+  width:50%;
+  padding:25px 50px;
+}
+
+.timeline-item:nth-child(odd){
+  left:0;
+  text-align:right;
+}
+
+.timeline-item:nth-child(even){
+  left:50%;
+}
+
+.timeline-dot{
+  position:absolute;
+  top:32px;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#e62429;
+  box-shadow:0 0 18px rgba(230,36,41,.8);
+}
+
+.timeline-item:nth-child(odd) .timeline-dot{
+  right:-6px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+  left:-6px;
+}
+
+.timeline-card{
+  background:#0e0e0e;
+  border:1px solid #222;
+  padding:25px;
+  transition:.3s;
+}
+
+.timeline-card:hover{
+  transform:translateY(-5px);
+  border-color:#e62429;
+}
+
+.timeline-card h3{
+  color:#fff;
+  margin-bottom:7px;
+}
+
+.timeline-card span{
+  color:#e62429;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.timeline-card p{
+  color:#888;
+  margin-top:10px;
+}
+
+.watch-order{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.watch-item{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:18px;
+  background:rgba(13,13,13,.85);
+  border:1px solid #202020;
+  transition:.3s;
+  overflow:hidden;
+}
+
+.watch-item:hover{
+  border-color:#e62429;
+  transform:translateX(6px);
+  box-shadow:0 10px 30px rgba(230,36,41,.12);
+}
+
+.watch-number{
+  min-width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#e62429;
+  color:#fff;
+  font-weight:900;
+  font-size:17px;
+}
+
+.watch-poster{
+  width:75px;
+  height:105px;
+  flex-shrink:0;
+  overflow:hidden;
+  background:#181818;
+}
+
+.watch-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.4s;
+}
+
+.watch-item:hover .watch-poster img{
+  transform:scale(1.08);
+}
+
+.watch-info{
+  min-width:0;
+}
+
+.watch-info h3{
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.watch-info p{
+  color:#777;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.watch-meta{
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.watch-badge{
+  display:inline-block;
+  padding:4px 8px;
+  background:#e62429;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.watch-year{
+  color:#e62429;
+  font-size:11px;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .watch-order{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+  .watch-item{
+    padding:12px;
+    gap:12px;
+  }
+
+  .watch-number{
+    min-width:38px;
+    height:38px;
+    font-size:13px;
+  }
+
+  .watch-poster{
+    width:60px;
+    height:85px;
+  }
+
+  .watch-info h3{
+    font-size:13px;
+  }
+}
+
+/* UPCOMING MCU */
+
+.upcoming-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.upcoming-item{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:20px;
+  background:rgba(15,15,15,.88);
+  border:1px solid #252525;
+  transition:.35s;
+  overflow:hidden;
+}
+
+.upcoming-item:hover{
+  transform:translateY(-6px);
+  border-color:#e62429;
+  box-shadow:0 12px 35px rgba(230,36,41,.15);
+}
+
+.upcoming-number{
+  min-width:55px;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#181818;
+  border:1px solid #e62429;
+  color:#e62429;
+  font-size:18px;
+  font-weight:900;
+}
+
+.upcoming-poster{
+  width:75px;
+  height:105px;
+  flex-shrink:0;
+  background:#181818;
+  overflow:hidden;
+}
+
+.upcoming-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.4s;
+}
+
+.upcoming-item:hover .upcoming-poster img{
+  transform:scale(1.08);
+}
+
+.upcoming-info{
+  min-width:0;
+}
+
+.upcoming-info h3{
+  font-size:17px;
+  margin-bottom:6px;
+}
+
+.upcoming-info p{
+  color:#777;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.upcoming-badge{
+  display:inline-block;
+  margin-top:9px;
+  padding:4px 9px;
+  background:#e62429;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.timeline-tba{
+  color:#e62429;
+  font-size:11px;
+  font-weight:bold;
+  margin-left:8px;
+}
+
+@media(max-width:900px){
+  .upcoming-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+  .upcoming-item{
+    padding:13px;
+    gap:12px;
+  }
+
+  .upcoming-number{
+    min-width:40px;
+    height:40px;
+    font-size:13px;
+  }
+
+  .upcoming-poster{
+    width:60px;
+    height:85px;
+  }
+
+  .upcoming-info h3{
+    font-size:14px;
+  }
+}
+
+/* =========================
+   MCU SAGAS
+========================= */
+
+.saga-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.saga-card{
+  position:relative;
+  min-height:330px;
+  padding:32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      rgba(0,0,0,.25),
+      rgba(0,0,0,.92)
+    );
+  border:1px solid #242424;
+  transition:.4s;
+}
+
+.saga-card:hover{
+  transform:translateY(-8px);
+  border-color:#e62429;
+  box-shadow:0 18px 45px rgba(230,36,41,.15);
+}
+
+.saga-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    135deg,
+    rgba(230,36,41,.12),
+    transparent 55%
+  );
+  pointer-events:none;
+}
+
+.saga-card > *{
+  position:relative;
+  z-index:2;
+}
+
+.saga-card span{
+  color:#e62429;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.saga-card h3{
+  font-size:32px;
+  margin:8px 0 12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.saga-card p{
+  color:#999;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.saga-phases{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid #292929;
+  color:#ddd;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+  .saga-grid{
+    grid-template-columns:1fr;
+  }
+
+  .saga-card{
+    min-height:280px;
+  }
+}
+
+@media(max-width:600px){
+  .saga-card{
+    min-height:250px;
+    padding:25px;
+  }
+
+  .saga-card h3{
+    font-size:25px;
+  }
+}
+
+/* =========================
+   AVENGERS MOVIES
+========================= */
+
+.avengers-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.avengers-card{
+  background:#0d0d0d;
+  border:1px solid #222;
+  overflow:hidden;
+  transition:.4s;
+}
+
+.avengers-card:hover{
+  transform:translateY(-8px);
+  border-color:#e62429;
+  box-shadow:0 15px 40px rgba(230,36,41,.15);
+}
+
+.avengers-poster{
+  height:390px;
+  overflow:hidden;
+  background:#171717;
+}
+
+.avengers-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.5s;
+}
+
+.avengers-card:hover .avengers-poster img{
+  transform:scale(1.06);
+}
+
+.avengers-info{
+  padding:20px;
+}
+
+.avengers-info h3{
+  font-size:18px;
+  margin-bottom:7px;
+}
+
+.avengers-info p{
+  color:#777;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.avengers-meta{
+  margin-top:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.avengers-badge{
+  padding:5px 9px;
+  background:#e62429;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.avengers-year{
+  color:#e62429;
+  font-size:11px;
+  font-weight:bold;
+}
+
+@media(max-width:900px){
+  .avengers-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .avengers-poster{
+    height:330px;
+  }
+}
+
+@media(max-width:600px){
+  .avengers-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .avengers-poster{
+    height:270px;
+  }
+
+  .avengers-info{
+    padding:14px;
+  }
+
+  .avengers-info h3{
+    font-size:14px;
+  }
+
+  .avengers-info p{
+    font-size:11px;
+  }
+}
+
+/* =========================
+   INFINITY STONES
+========================= */
+
+.stones-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.stone{
+  position:relative;
+  padding:40px 25px;
+  min-height:330px;
+  text-align:center;
+  background:rgba(12,12,12,.9);
+  border:1px solid #242424;
+  overflow:hidden;
+  transition:.4s;
+}
+
+.stone:hover{
+  transform:translateY(-8px);
+}
+
+.stone::before{
+  content:'';
+  position:absolute;
+  width:180px;
+  height:180px;
+  top:-90px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:50%;
+  opacity:.12;
+  filter:blur(45px);
+  transition:.4s;
+}
+
+.stone:hover::before{
+  opacity:.3;
+}
+
+.stone-gem{
+  position:relative;
+  width:90px;
+  height:90px;
+  margin:15px auto 35px;
+  transform:rotate(45deg);
+  border:4px solid rgba(255,255,255,.5);
+  border-radius:8px;
+  transition:.5s;
+}
+
+.stone:hover .stone-gem{
+  transform:rotate(45deg) scale(1.12);
+}
+
+.stone-gem::after{
+  content:'';
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(255,255,255,.5);
+  transform:rotate(0deg);
+}
+
+.stone h3{
+  font-size:20px;
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.stone p{
+  color:#888;
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* SPACE */
+
+.stone-space{
+  border-color:rgba(55,166,255,.25);
+}
+
+.stone-space::before{
+  background:#2196ff;
+}
+
+.stone-space .stone-gem{
+  background:linear-gradient(135deg,#0b315b,#37a6ff);
+  box-shadow:
+    0 0 20px #2196ff,
+    0 0 50px rgba(33,150,255,.7);
+}
+
+/* MIND */
+
+.stone-mind{
+  border-color:rgba(255,225,0,.25);
+}
+
+.stone-mind::before{
+  background:#ffe600;
+}
+
+.stone-mind .stone-gem{
+  background:linear-gradient(135deg,#6b5d00,#ffe600);
+  box-shadow:
+    0 0 20px #ffe600,
+    0 0 50px rgba(255,230,0,.7);
+}
+
+/* REALITY */
+
+.stone-reality{
+  border-color:rgba(255,30,30,.25);
+}
+
+.stone-reality::before{
+  background:#ff2020;
+}
+
+.stone-reality .stone-gem{
+  background:linear-gradient(135deg,#5b0000,#ff2020);
+  box-shadow:
+    0 0 20px #ff2020,
+    0 0 50px rgba(255,32,32,.7);
+}
+
+/* POWER */
+
+.stone-power{
+  border-color:rgba(165,43,255,.25);
+}
+
+.stone-power::before{
+  background:#a52bff;
+}
+
+.stone-power .stone-gem{
+  background:linear-gradient(135deg,#40005b,#a52bff);
+  box-shadow:
+    0 0 20px #a52bff,
+    0 0 50px rgba(165,43,255,.7);
+}
+
+/* TIME */
+
+.stone-time{
+  border-color:rgba(36,214,50,.25);
+}
+
+.stone-time::before{
+  background:#24d632;
+}
+
+.stone-time .stone-gem{
+  background:linear-gradient(135deg,#003c00,#24d632);
+  box-shadow:
+    0 0 20px #24d632,
+    0 0 50px rgba(36,214,50,.7);
+}
+
+/* SOUL */
+
+.stone-soul{
+  border-color:rgba(255,157,48,.25);
+}
+
+.stone-soul::before{
+  background:#ff9d30;
+}
+
+.stone-soul .stone-gem{
+  background:linear-gradient(135deg,#663800,#ff9d30);
+  box-shadow:
+    0 0 20px #ff9d30,
+    0 0 50px rgba(255,157,48,.7);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+  .stones-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .stones-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .stone{
+    min-height:280px;
+    padding:25px 15px;
+  }
+
+  .stone-gem{
+    width:65px;
+    height:65px;
+    margin-bottom:25px;
+  }
+
+  .stone h3{
+    font-size:15px;
+  }
+
+  .stone p{
+    font-size:11px;
+  }
+}
+
+/* =========================
+   MCU CHARACTERS
+========================= */
+
+.character-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.character-card{
+  background:#0c0c0c;
+  border:1px solid #222;
+  overflow:hidden;
+  transition:.4s;
+}
+
+.character-card:hover{
+  transform:translateY(-8px);
+  border-color:#e62429;
+  box-shadow:0 15px 40px rgba(230,36,41,.15);
+}
+
+.character-image{
+  height:320px;
+  background:#181818;
+  overflow:hidden;
+}
+
+.character-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.5s;
+}
+
+.character-card:hover .character-image img{
+  transform:scale(1.06);
+}
+
+.character-info{
+  padding:18px;
+}
+
+.character-info h3{
+  font-size:17px;
+  margin-bottom:5px;
+}
+
+.character-info span{
+  color:#e62429;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+
+.character-info p{
+  color:#777;
+  font-size:12px;
+  margin-top:8px;
+  line-height:1.5;
+}
+
+@media(max-width:900px){
+  .character-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .character-image{
+    height:280px;
+  }
+}
+
+@media(max-width:600px){
+  .character-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .character-image{
+    height:230px;
+  }
+
+  .character-info{
+    padding:13px;
+  }
+
+  .character-info h3{
+    font-size:14px;
+  }
+}
+
+/* =========================
+   MAJOR EVENTS
+========================= */
+
+.event-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.event{
+  position:relative;
+  padding:30px;
+  background:linear-gradient(145deg,#111,#090909);
+  border:1px solid #242424;
+  border-left:3px solid #e62429;
+  overflow:hidden;
+  transition:.4s;
+}
+
+.event::after{
+  content:'';
+  position:absolute;
+  width:120px;
+  height:120px;
+  right:-60px;
+  top:-60px;
+  background:#e62429;
+  opacity:.06;
+  border-radius:50%;
+  filter:blur(20px);
+  transition:.4s;
+}
+
+.event:hover{
+  transform:translateY(-8px);
+  border-color:#e62429;
+  box-shadow:0 15px 40px rgba(230,36,41,.15);
+}
+
+.event:hover::after{
+  opacity:.18;
+}
+
+.event span{
+  color:#e62429;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.event h3{
+  margin:12px 0 10px;
+  font-size:21px;
+}
+
+.event p{
+  color:#888;
+  font-size:13px;
+  line-height:1.7;
+}
+
+@media(max-width:900px){
+  .event-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .event-grid{
+    grid-template-columns:1fr;
+  }
+
+  .event{
+    padding:25px;
+  }
+}
+
+.theme-toggle{
+  width:42px;
+  height:42px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:17px;
+  transition:.3s;
+}
+
+.theme-toggle:hover{
+  border-color:#e62429;
+  transform:rotate(15deg) scale(1.05);
+}
+
+/* LIGHT MODE */
+
+body.light-mode{
+  background:#f2f2f2;
+  color:#111;
+}
+
+body.light-mode .mcu-nav{
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid #ddd;
+}
+
+body.light-mode .mcu-menu a{
+  color:#333;
+}
+
+body.light-mode .mcu-menu a:hover{
+  color:#e62429;
+}
+
+body.light-mode .mcu-section{
+  color:#111;
+}
+
+body.light-mode .mcu-title p{
+  color:#666;
+}
+
+body.light-mode .about-text p{
+  color:#555;
+}
+
+body.light-mode .about-box,
+body.light-mode .timeline-card,
+body.light-mode .watch-item,
+body.light-mode .upcoming-item,
+body.light-mode .saga-card,
+body.light-mode .avengers-card,
+body.light-mode .stone,
+body.light-mode .character-card,
+body.light-mode .event{
+  background:#fff;
+  border-color:#ddd;
+}
+
+body.light-mode .timeline-card p,
+body.light-mode .watch-info p,
+body.light-mode .upcoming-info p,
+body.light-mode .saga-card p,
+body.light-mode .avengers-info p,
+body.light-mode .stone p,
+body.light-mode .character-info p,
+body.light-mode .event p{
+  color:#666;
+}
+
+body.light-mode .timeline:before{
+  background:#ccc;
+}
+
+body.light-mode .theme-toggle{
+  background:#eee;
+  color:#111;
+  border-color:#ccc;
+}
+
+/* FIX HERO LIGHT MODE */
+
+body.light-mode .mcu-hero{
+  background:
+    linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.45)),
+    url('https://cdn.marvel.com/content/2x/news_articles-mas_dsk_01.webp');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+body.light-mode .mcu-hero h1{
+  color:#111;
+  text-shadow:0 3px 15px rgba(255,255,255,.8);
+}
+
+body.light-mode .mcu-hero p{
+  color:#222;
+}
+
+body.light-mode .mcu-hero small{
+  color:#e62429;
+}
+
+/* =========================
+   MCU SEARCH
+========================= */
+
+.mcu-search-section{
+  max-width:900px;
+  margin:0 auto;
+  padding:35px 30px 20px;
+}
+
+.mcu-search-box{
+  display:flex;
+  align-items:center;
+  background:#0d0d0d;
+  border:1px solid #292929;
+  transition:.3s;
+}
+
+.mcu-search-box:focus-within{
+  border-color:#e62429;
+  box-shadow:0 0 25px rgba(230,36,41,.12);
+}
+
+.mcu-search-box input{
+  flex:1;
+  padding:18px 20px;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:#fff;
+  font-size:15px;
+}
+
+.mcu-search-box input::placeholder{
+  color:#666;
+}
+
+.mcu-search-box button{
+  width:55px;
+  height:55px;
+  border:0;
+  background:transparent;
+  color:#777;
+  cursor:pointer;
+  font-size:16px;
+  transition:.3s;
+}
+
+.mcu-search-box button:hover{
+  color:#e62429;
+}
+
+.search-result{
+  margin-top:12px;
+  color:#777;
+  font-size:13px;
+}
+
+body.light-mode .mcu-search-box{
+  background:#fff;
+  border-color:#ddd;
+}
+
+body.light-mode .mcu-search-box input{
+  color:#111;
+}
+
+body.light-mode .mcu-search-box input::placeholder{
+  color:#999;
+}
+
+@media(max-width:600px){
+  .mcu-search-section{
+    padding:25px 18px 10px;
+  }
+
+  .mcu-search-box input{
+    font-size:13px;
+    padding:15px;
+  }
+}
+
+.search-result{
+  margin-top:20px;
+}
+
+.search-result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.search-result-title{
+  color:#e62429;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:15px;
+  letter-spacing:1px;
+}
+
+.search-result-grid > *{
+  display:block !important;
+}
+
+@media(max-width:900px){
+  .search-result-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .search-result-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================
+   MCU FILTERS
+========================= */
+
+.mcu-filters{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.filter-btn{
+  padding:9px 16px;
+  background:#0d0d0d;
+  color:#888;
+  border:1px solid #292929;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active{
+  background:#e62429;
+  color:#fff;
+  border-color:#e62429;
+}
+
+body.light-mode .filter-btn{
+  background:#fff;
+  color:#666;
+  border-color:#ddd;
+}
+
+body.light-mode .filter-btn:hover,
+body.light-mode .filter-btn.active{
+  background:#e62429;
+  color:#fff;
+  border-color:#e62429;
+}
+
+.filter-hidden{
+  display:none !important;
+}
+
+.personal-status{
+  display:inline-block;
+  margin-left:8px;
+  padding:4px 8px;
+  border:1px solid #444;
+  color:#888;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.personal-status.is-watched{
+  color:#fff;
+  background:#e62429;
+  border-color:#e62429;
+}
+
+.personal-watch-btn{
+  margin-top:10px;
+  padding:7px 12px;
+  background:rgba(20,20,20,.8);
+  color:#888;
+  border:1px solid #333;
+  border-radius:4px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.personal-watch-btn:hover{
+  color:#fff;
+  border-color:#e62429;
+  transform:translateY(-2px);
+  box-shadow:0 5px 18px rgba(230,36,41,.2);
+}
+
+.personal-watch-btn:active{
+  transform:scale(.94);
+}
+
+.personal-watch-btn.is-watched{
+  color:#fff;
+  background:#e62429;
+  border-color:#e62429;
+  box-shadow:0 0 18px rgba(230,36,41,.35);
+  animation:watchPop .35s ease;
+}
+
+@keyframes watchPop{
+  0%{transform:scale(.9);}
+  60%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+.mcu-progress{
+  margin:0 0 45px;
+  padding:25px 28px;
+  background:rgba(15,15,15,.85);
+  border:1px solid #252525;
+  border-left:3px solid #e62429;
+  box-shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+.progress-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.progress-label{
+  color:#e62429;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.progress-header h3{
+  margin-top:5px;
+  font-size:20px;
+}
+
+.progress-percent{
+  color:#e62429;
+  font-size:28px;
+  font-weight:900;
+}
+
+.progress-track{
+  height:8px;
+  margin-top:20px;
+  background:#222;
+  overflow:hidden;
+  border-radius:10px;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+  background:#e62429;
+  border-radius:10px;
+  transition:width .5s ease;
+  box-shadow:0 0 15px rgba(230,36,41,.6);
+}
+
+@media(max-width:600px){
+  .mcu-progress{
+    padding:20px;
+  }
+
+  .progress-header h3{
+    font-size:16px;
+  }
+
+  .progress-percent{
+    font-size:22px;
+  }
+}
+
+/* MOVIE DETAIL POPUP */
+
+.movie-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(10px);
+}
+
+.movie-modal.active{
+  display:flex;
+}
+
+.movie-modal-box{
+  position:relative;
+  width:min(850px,100%);
+  max-height:90vh;
+  overflow:auto;
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:30px;
+  padding:30px;
+  background:rgba(15,15,15,.97);
+  border:1px solid #292929;
+  border-left:3px solid #e62429;
+  box-shadow:0 25px 80px rgba(0,0,0,.7);
+  animation:modalIn .3s ease;
+}
+
+.movie-modal-poster{
+  width:100%;
+  height:410px;
+  overflow:hidden;
+  background:#111;
+}
+
+.movie-modal-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.movie-modal-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.movie-modal-info span{
+  color:#e62429;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.movie-modal-info h2{
+  font-size:32px;
+  line-height:1.1;
+  margin:10px 0 15px;
+}
+
+.movie-modal-info p{
+  color:#aaa;
+  font-size:14px;
+  line-height:1.8;
+}
+
+.movie-modal-close{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:36px;
+  height:36px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+  transition:.3s;
+}
+
+.movie-modal-close:hover{
+  background:#e62429;
+  border-color:#e62429;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+@media(max-width:600px){
+
+  .movie-modal{
+    padding:15px;
+  }
+
+  .movie-modal-box{
+    grid-template-columns:1fr;
+    gap:20px;
+    padding:20px;
+  }
+
+  .movie-modal-poster{
+    height:300px;
+  }
+
+  .movie-modal-info h2{
+    font-size:25px;
+  }
+
+}
+
+/* MOBILE NAVIGATION */
+
+.mobile-menu-btn{
+  display:none;
+  width:42px;
+  height:42px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:10001;
+}
+
+@media(max-width:900px){
+
+  .mcu-nav{
+    padding:14px 20px;
+  }
+
+  .mcu-nav-inner{
+    position:relative;
+  }
+
+  .mobile-menu-btn{
+    display:flex;
+  }
+
+  .mcu-menu{
+    display:none;
+    position:absolute;
+    top:60px;
+    left:0;
+    right:0;
+    padding:18px;
+    flex-direction:column;
+    gap:0;
+    background:rgba(8,8,8,.97);
+    border:1px solid #252525;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+    z-index:10000;
+  }
+
+  .mcu-menu.mobile-open{
+    display:flex;
+    z-index:10000;
+  }
+
+  .mcu-menu a{
+    padding:13px 5px;
+    border-bottom:1px solid #222;
+  }
+
+  .theme-toggle{
+    margin-top:14px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="mcu-nav">
+  <div class="mcu-nav-inner">
+
+    <div class="mcu-logo">
+      <span>GOUFE</span>
+    </div>
+
+    <<button class="mobile-menu-btn" id="mobileMenuBtn">
+       ☰
+    </button>>
+      <a href="#about">ABOUT</a>
+      <a href="#timeline">TIMELINE</a>
+      <a href="#watch-order">WATCH ORDER</a>
+      <a href="#sagas">SAGAS</a>
+      <a href="#movies">AVENGERS MOVIES</a>
+      <a href="#stones">STONES</a>
+      <a href="#characters">CHARACTERS</a>
+      <a href="#events">EVENTS</a>
+<button class="theme-toggle" id="themeToggle">☀️</button>
+         </div>
+
+  </div>
+</nav>
+
+<section class="mcu-hero">
+
+  <div class="mcu-hero-content">
+
+    <small>THE MARVEL CINEMATIC UNIVERSE</small>
+
+    <h1>
+      Marvel<br>
+      Cinematic<br>
+      Universe
+    </h1>
+
+    <p>
+      The complete journey through heroes, stories,
+      sagas, Infinity Stones and the multiverse.
+    </p>
+
+    <a class="mcu-button" href="#watch-order">
+      EXPLORE THE MCU
+    </a>
+
+  </div>
+
+</section>
+
+<!-- SEARCH -->
+<section class="mcu-search-section">
+  <div class="mcu-search-box">
+    <input
+      type="text"
+      id="mcuSearch"
+      placeholder="Search MCU movies, characters, events..."
+      autocomplete="off"
+    >
+    <button id="clearSearch">✕</button>
+  </div>
+  <div id="searchResult" class="search-result"></div>
+<div class="mcu-filters">
+
+ <button class="filter-btn active" onclick="mcuFilter('all', this)">
+  ALL
+</button>
+
+  <button class="filter-btn"
+  onclick="mcuFilter('not-watched', this)">
+  NOT WATCHED
+</button>
+
+  <button class="filter-btn"
+    onclick="mcuFilter('watched', this)">
+    WATCHED
+  </button>
+
+</div>
+</section>
+
+<section class="mcu-section" id="about">
+
+  <div class="mcu-title">
+    <h2>The MCU</h2>
+    <div class="mcu-line"></div>
+    <p>A cinematic universe built across generations.</p>
+  </div>
+
+  <div class="about-grid">
+
+    <div class="about-text">
+      <p>
+        The Marvel Cinematic Universe is a connected
+        universe of stories following heroes, villains,
+        organizations and worlds across different eras.
+      </p>
+
+      <p>
+        From Tony Stark's first flight as Iron Man to
+        the rise of the multiverse, every story contributes
+        to a much larger universe.
+      </p>
+
+      <p>
+        This archive is designed as a fan-made guide to
+        explore the MCU chronologically, by saga,
+        character and major event.
+      </p>
+    </div>
+
+    <div class="about-box">
+      <h3>MCU ARCHIVE</h3>
+      <p>
+        Movies<br>
+        Characters<br>
+        Infinity Stones<br>
+        Major Events<br>
+        Chronological Watch Order
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="mcu-section" id="timeline">
+
+  <div class="mcu-title">
+    <h2>MCU Timeline</h2>
+    <div class="mcu-line"></div>
+    <p>The evolution of the Marvel Cinematic Universe.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE ONE</span>
+        <h3>The Avengers Assemble</h3>
+        <p>Iron Man, Captain America, Thor and the first Avengers come together.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE TWO</span>
+        <h3>New Heroes</h3>
+        <p>The universe expands with Guardians, Ant-Man and new threats.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE THREE</span>
+        <h3>Infinity Saga</h3>
+        <p>The Avengers face the largest threat the universe has ever seen.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE FOUR</span>
+        <h3>The Multiverse</h3>
+        <p>New heroes emerge while reality itself begins to fracture.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE FIVE</span>
+        <h3>The Multiverse Saga</h3>
+        <p>The MCU expands beyond a single timeline.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <span>PHASE SIX</span>
+        <h3>The Next Chapter</h3>
+        <p>The future of the MCU moves toward the next major crossover.</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="mcu-section" id="watch-order">
+
+<div class="mcu-progress">
+  <div class="progress-header">
+    <div>
+      <span class="progress-label">YOUR MCU PROGRESS</span>
+      <h3><span id="watchedCount">0</span> / <span id="totalCount">0</span> WATCHED</h3>
+    </div>
+    <div class="progress-percent" id="progressPercent">0%</div>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+  <div class="mcu-title">
+    <h2>Chronological Watch Order</h2>
+    <div class="mcu-line"></div>
+    <p>Follow the MCU from the beginning of the timeline.</p>
+  </div>
+
+  <div class="watch-order">
+
+    <div class="watch-item">
+      <div class="watch-number">01</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/captainamericathefirstavenger_lob_crd_01.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Captain America: The First Avenger</h3>
+        <p>Steve Rogers becomes Captain America.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">1940s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">02</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/captainmarvel_lob_crd_06.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Captain Marvel</h3>
+        <p>Carol Danvers discovers her powers.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">1995</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">03</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/ironman_lob_crd_01_4.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Iron Man</h3>
+        <p>Tony Stark becomes Iron Man.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2010</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">04</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/ironman2_lob_crd_01_3.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Iron Man 2</h3>
+        <p>Tony Stark faces new threats and technology.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2010</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">05</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/theincrediblehulk_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>The Incredible Hulk</h3>
+        <p>Bruce Banner struggles to control the Hulk.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2010</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">06</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thor_lob_crd_01_1.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Thor</h3>
+        <p>Thor is sent to Earth and learns humility.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2011</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">07</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/theavengers_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>The Avengers</h3>
+        <p>Earth's Mightiest Heroes assemble.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2012</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">08</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/ironman3_lob_crd_01_10.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Iron Man 3</h3>
+        <p>Tony deals with the aftermath of New York.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2012</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">09</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thorthedarkworld_lob_crd_02_1.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Thor: The Dark World</h3>
+        <p>Thor faces the Dark Elves and the Aether.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2013</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">10</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/captainamericathewintersoldier_lob_crd_01_4.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Captain America: The Winter Soldier</h3>
+        <p>Steve uncovers a conspiracy inside S.H.I.E.L.D.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2014</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">11</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/guardiansofthegalaxy_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Guardians of the Galaxy</h3>
+        <p>Peter Quill forms a cosmic team.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2014</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">12</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/guardiansofthegalaxyvol2_lob_crd_01.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Guardians of the Galaxy Vol. 2</h3>
+        <p>The Guardians continue their cosmic journey.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2014</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">13</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/avengersageofultron_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Avengers: Age of Ultron</h3>
+        <p>The Avengers face Ultron.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2015</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">14</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/ant-man_lob_crd_01_8.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Ant-Man</h3>
+        <p>Scott Lang becomes Ant-Man.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2015</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">15</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/captainamericacivilwar_lob_crd_01_9.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Captain America: Civil War</h3>
+        <p>The Avengers split over the Sokovia Accords.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2016</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">16</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/blackwidow_lob_crd_06.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Black Widow</h3>
+        <p>Natasha confronts her past after Civil War.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2016</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">17</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/blackpanther_lob_crd_01_4.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Black Panther</h3>
+        <p>T'Challa returns to Wakanda as king.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2016</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">18</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/spider-manhomecoming_lob_crd_02.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Spider-Man: Homecoming</h3>
+        <p>Peter balances school and superhero life.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2016</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">19</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/doctorstrange_lob_crd_01_6.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Doctor Strange</h3>
+        <p>Stephen enters the Mystic Arts.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2016–17</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">20</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thorragnarok_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Thor: Ragnarok</h3>
+        <p>Thor faces Ragnarok and the fall of Asgard.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2017</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">21</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/ant-manthewasp_lob_crd_01.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Ant-Man and the Wasp</h3>
+        <p>Scott and Hope embark on a dangerous mission.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2018</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">22</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/avengersinfinitywar_lob_crd_02_1.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Avengers: Infinity War</h3>
+        <p>Thanos begins collecting the Infinity Stones.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2018</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">23</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/avengersendgame_lob_crd_05_2.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Avengers: Endgame</h3>
+        <p>The survivors attempt to undo the Snap.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">2018–2023</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">24</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/spider-manfarfromhome_lob_crd_04_3.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Spider-Man: Far From Home</h3>
+        <p>Peter deals with the aftermath of Endgame.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After Endgame</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">25</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/shangchi_lob_crd_07.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Shang-Chi and the Legend of the Ten Rings</h3>
+        <p>Shang-Chi confronts his family past.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After Endgame</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">26</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/eternals_lob_crd_06.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Eternals</h3>
+        <p>The Eternals emerge from the shadows.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After Endgame</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">27</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/spider-mannowayhome_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Spider-Man: No Way Home</h3>
+        <p>Peter's spell causes a multiverse collision.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After FFH</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">28</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/doctorstrangeinthemultiverseofmadness_lob_crd_02_3.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Doctor Strange in the Multiverse of Madness</h3>
+        <p>Strange faces dangerous realities.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After NWH</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">29</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thorloveandthunder_lob_crd_04.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Thor: Love and Thunder</h3>
+        <p>Thor encounters a new cosmic threat.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After Endgame</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">30</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/blackpantherwakandaforever_lob_crd_06.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Black Panther: Wakanda Forever</h3>
+        <p>Wakanda faces a new threat after T'Challa's death.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">WATCHED</span>
+          <span class="watch-year">After Endgame</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">31</div>
+      <div class="watch-poster">
+        <img src="https://static.wikia.nocookie.net/marveldatabase/images/d/d7/The_Guardians_of_the_Galaxy_Holiday_Special_poster_002.jpg/revision/latest?cb=20221125173222">
+      </div>
+      <div class="watch-info">
+        <h3>The Guardians of the Galaxy Holiday Special</h3>
+        <p>The Guardians celebrate Christmas together.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">32</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/antmanandthewaspquantumania_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Ant-Man and the Wasp: Quantumania</h3>
+        <p>Scott and his family enter the Quantum Realm.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">33</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/guardiansofthegalaxyvolume3_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Guardians of the Galaxy Vol. 3</h3>
+        <p>The Guardians face a threat tied to Rocket's past.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">34</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/themarvels_lob_crd_05.webp">
+      </div>
+      <div class="watch-info">
+        <h3>The Marvels</h3>
+        <p>Carol, Monica and Kamala unite.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">35</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/deadpoolandwolverine_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Deadpool &amp; Wolverine</h3>
+        <p>Deadpool becomes involved with the multiverse and TVA.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Multiverse</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">36</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/captainamericabravenewworld_lob_crd_04.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Captain America: Brave New World</h3>
+        <p>Sam Wilson takes on the mantle of Captain America.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">37</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thunderbolts_lob_crd_03.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Thunderbolts*</h3>
+        <p>An unconventional team of heroes and antiheroes unite.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-Blip</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">38</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/thefantasticfourfirststeps_lob_crd_02.webp">
+      </div>
+      <div class="watch-info">
+        <h3>The Fantastic Four: First Steps</h3>
+        <p>The Fantastic Four exist in an alternate reality.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">ALTERNATE REALITY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-number">39</div>
+      <div class="watch-poster">
+        <img src="https://cdn.marvel.com/content/1x/spidermanbrandnewday_lob_crd_01.webp">
+      </div>
+      <div class="watch-info">
+        <h3>Spider-Man: Brand New Day</h3>
+        <p>Peter Parker begins a new chapter.</p>
+        <div class="watch-meta">
+          <span class="watch-badge">RELEASED</span>
+          <span class="watch-year">Post-NWH</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="mcu-section" id="upcoming">
+
+  <div class="mcu-title">
+    <h2>Upcoming MCU</h2>
+    <div class="mcu-line"></div>
+    <p>Upcoming projects from the future of the Marvel Cinematic Universe.</p>
+  </div>
+
+<div class="upcoming-grid">
+
+  <!-- 01 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">01</div>
+
+    <div class="upcoming-poster">
+      <img src="https://cdn.marvel.com/content/1x/avengersdoomsday_lob_crd_03.webp">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>Avengers: Doomsday</h3>
+      <p>The next major Avengers crossover event.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">DEC 18, 2026</span>
+    </div>
+  </div>
+
+
+  <!-- 02 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">02</div>
+
+    <div class="upcoming-poster">
+      <img src="https://cdn.marvel.com/content/1x/avengerssecretwars_lob_crd_02.webp" alt="Avengers Secret Wars">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>Avengers: Secret Wars</h3>
+      <p>The massive multiverse event of the MCU.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">DEC 17, 2027</span>
+    </div>
+  </div>
+
+
+  <!-- 03 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">03</div>
+
+    <div class="upcoming-poster">
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2e317a1c-f1ce-4a5f-90db-d88cc01db2d0/dmn2nb8-68f92fd1-2268-4163-97ab-f01f97d4b834.png/v1/fit/w_828,h_1322,q_70,strp/x_men_movie_2028_cast_mcu_poster_4k__by_mrandrew7w7_dmn2nb8-414w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjA0NSIsInBhdGgiOiIvZi8yZTMxN2ExYy1mMWNlLTRhNWYtOTBkYi1kODhjYzAxZGIyZDAvZG1uMm5iOC02OGY5MmZkMS0yMjY4LTQxNjMtOTdhYi1mMDFmOTdkNGI4MzQucG5nIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.pHQbed0oWjzhuFuCZutyb1pMGZEZpAki-V5EhEtrAiM" alt="X-Men">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>X-Men</h3>
+      <p>A new Marvel Studios X-Men film.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">MAY 5, 2028</span>
+    </div>
+  </div>
+
+
+  <!-- 04 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">04</div>
+
+    <div class="upcoming-poster">
+      <img src="https://cdn.marvel.com/content/1x/ghostrider_lob_crd_01.webp">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>Ghost Rider</h3>
+      <p>The legendary Spirit of Vengeance enters the MCU.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">JUL 28, 2028</span>
+    </div>
+  </div>
+
+
+  <!-- 05 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">05</div>
+
+    <div class="upcoming-poster">
+      <img src="https://cdn.marvel.com/content/1x/blackpanther3_lob_crd_01.webp" alt="Black Panther 3">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>Black Panther 3</h3>
+      <p>The next chapter of the Black Panther story.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">DEC 15, 2028</span>
+    </div>
+  </div>
+
+
+  <!-- 06 -->
+  <div class="upcoming-item">
+    <div class="upcoming-number">06</div>
+
+    <div class="upcoming-poster">
+      <img src="https://cdn.marvel.com/content/1x/blade_lob_crd_01.webp" alt="Blade">
+    </div>
+
+    <div class="upcoming-info">
+      <h3>Blade</h3>
+      <p>Marvel Studios' vampire hunter project.</p>
+      <span class="upcoming-badge">UPCOMING</span>
+      <span class="timeline-tba">RELEASE DATE TBA</span>
+    </div>
+  </div>
+
+</div>
+  
+</section>
+
+<!-- =========================
+     MCU SAGAS
+========================= -->
+
+<section class="mcu-section" id="sagas">
+
+  <div class="mcu-title">
+    <h2>MCU Sagas</h2>
+    <div class="mcu-line"></div>
+    <p>The major chapters shaping the Marvel Cinematic Universe.</p>
+  </div>
+
+  <div class="saga-grid">
+
+    <!-- INFINITY SAGA -->
+    <div class="saga-card">
+
+      <span>PHASE ONE — THREE</span>
+
+      <h3>Infinity Saga</h3>
+
+      <p>
+        The story of the Infinity Stones, the Avengers,
+        and their ultimate confrontation with Thanos.
+      </p>
+
+      <div class="saga-phases">
+        PHASES 1–3 · INFINITY STONES · AVENGERS · THANOS
+      </div>
+
+    </div>
+
+
+    <!-- MULTIVERSE SAGA -->
+    <div class="saga-card">
+
+      <span>PHASE FOUR — SIX</span>
+
+      <h3>Multiverse Saga</h3>
+
+      <p>
+        The MCU expands beyond a single reality as
+        alternate universes, timelines and multiversal
+        threats reshape the universe.
+      </p>
+
+      <div class="saga-phases">
+        PHASES 4–6 · MULTIVERSE · VARIANTS · SECRET WARS
+      </div>
+
+    </div>
+
+
+    <!-- MUTANT SAGA -->
+    <div class="saga-card">
+
+      <span>THE NEXT ERA</span>
+
+      <h3>Mutant Saga</h3>
+
+      <p>
+        A new era of the MCU expanding the world of
+        mutants and introducing the next generation
+        of mutant heroes and stories.
+      </p>
+
+      <div class="saga-phases">
+        X-MEN · MUTANTS · THE NEXT GENERATION
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     AVENGERS MOVIES
+========================= -->
+
+<section class="mcu-section" id="movies">
+
+  <div class="mcu-title">
+    <h2>Avengers Movies</h2>
+    <div class="mcu-line"></div>
+    <p>The Avengers saga from the Battle of New York to the future of the Multiverse.</p>
+  </div>
+
+  <div class="avengers-grid">
+
+    <!-- THE AVENGERS -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/theavengers_lob_crd_03.webp"
+          alt="The Avengers">
+      </div>
+
+      <div class="avengers-info">
+        <h3>The Avengers</h3>
+        <p>The original Avengers unite to defend Earth from Loki and the Chitauri.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">RELEASED</span>
+          <span class="avengers-year">2012</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- AGE OF ULTRON -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/avengersageofultron_lob_crd_03.webp"
+          alt="Avengers Age of Ultron">
+      </div>
+
+      <div class="avengers-info">
+        <h3>Avengers: Age of Ultron</h3>
+        <p>The Avengers face Ultron, an artificial intelligence determined to destroy humanity.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">RELEASED</span>
+          <span class="avengers-year">2015</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- INFINITY WAR -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/avengersinfinitywar_lob_crd_02_1.webp"
+          alt="Avengers Infinity War">
+      </div>
+
+      <div class="avengers-info">
+        <h3>Avengers: Infinity War</h3>
+        <p>The Avengers and their allies face Thanos as he seeks the Infinity Stones.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">RELEASED</span>
+          <span class="avengers-year">2018</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ENDGAME -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/avengersendgame_lob_crd_05_2.webp"
+          alt="Avengers Endgame">
+      </div>
+
+      <div class="avengers-info">
+        <h3>Avengers: Endgame</h3>
+        <p>The surviving heroes attempt to undo the devastating events of the Snap.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">RELEASED</span>
+          <span class="avengers-year">2019</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- DOOMSDAY -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/avengersdoomsday_lob_crd_03.webp"
+          alt="Avengers Doomsday">
+      </div>
+
+      <div class="avengers-info">
+        <h3>Avengers: Doomsday</h3>
+        <p>The Avengers return for a new major multiverse conflict.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">UPCOMING</span>
+          <span class="avengers-year">DEC 18, 2026</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- SECRET WARS -->
+    <div class="avengers-card">
+
+      <div class="avengers-poster">
+        <img
+          src="https://cdn.marvel.com/content/1x/avengerssecretwars_lob_crd_02.webp"
+          alt="Avengers Secret Wars">
+      </div>
+
+      <div class="avengers-info">
+        <h3>Avengers: Secret Wars</h3>
+        <p>The next massive multiverse event following Avengers: Doomsday.</p>
+
+        <div class="avengers-meta">
+          <span class="avengers-badge">UPCOMING</span>
+          <span class="avengers-year">DEC 17, 2027</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     INFINITY STONES
+========================= -->
+
+<section class="mcu-section" id="stones">
+
+  <div class="mcu-title">
+    <h2>Infinity Stones</h2>
+    <div class="mcu-line"></div>
+    <p>The six cosmic artifacts that shaped the Infinity Saga.</p>
+  </div>
+
+  <div class="stones-grid">
+
+    <!-- SPACE -->
+    <div class="stone stone-space">
+
+      <div class="stone-gem"></div>
+
+      <h3>Space Stone</h3>
+
+      <p>
+        Controls space and allows instant travel
+        across vast distances.
+      </p>
+
+    </div>
+
+
+    <!-- MIND -->
+    <div class="stone stone-mind">
+
+      <div class="stone-gem"></div>
+
+      <h3>Mind Stone</h3>
+
+      <p>
+        Grants extraordinary mental and
+        consciousness-based abilities.
+      </p>
+
+    </div>
+
+
+    <!-- REALITY -->
+    <div class="stone stone-reality">
+
+      <div class="stone-gem"></div>
+
+      <h3>Reality Stone</h3>
+
+      <p>
+        Can alter the physical nature
+        of reality itself.
+      </p>
+
+    </div>
+
+
+    <!-- POWER -->
+    <div class="stone stone-power">
+
+      <div class="stone-gem"></div>
+
+      <h3>Power Stone</h3>
+
+      <p>
+        Contains immense destructive
+        cosmic energy.
+      </p>
+
+    </div>
+
+
+    <!-- TIME -->
+    <div class="stone stone-time">
+
+      <div class="stone-gem"></div>
+
+      <h3>Time Stone</h3>
+
+      <p>
+        Allows manipulation of time
+        and possible futures.
+      </p>
+
+    </div>
+
+
+    <!-- SOUL -->
+    <div class="stone stone-soul">
+
+      <div class="stone-gem"></div>
+
+      <h3>Soul Stone</h3>
+
+      <p>
+        One of the most mysterious Stones,
+        connected to the soul.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     MCU CHARACTERS
+========================= -->
+
+<section class="mcu-section" id="characters">
+
+  <div class="mcu-title">
+    <h2>Characters</h2>
+    <div class="mcu-line"></div>
+    <p>The heroes, villains and legends of the MCU.</p>
+  </div>
+
+  <div class="character-grid">
+
+    <!-- IRON MAN -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/002irm_ons_crd_03.webp" alt="Iron Man">
+      </div>
+      <div class="character-info">
+        <h3>Iron Man</h3>
+        <span>TONY STARK</span>
+        <p>Genius, billionaire and armored Avenger.</p>
+      </div>
+    </div>
+
+    <!-- CAPTAIN AMERICA -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/003cap_ons_crd_03.webp" alt="Captain America">
+      </div>
+      <div class="character-info">
+        <h3>Captain America</h3>
+        <span>STEVE ROGERS</span>
+        <p>The super soldier and founding Avenger.</p>
+      </div>
+    </div>
+
+    <!-- THOR -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/004tho_ons_crd_04.webp" alt="Thor">
+      </div>
+      <div class="character-info">
+        <h3>Thor</h3>
+        <span>GOD OF THUNDER</span>
+        <p>The Asgardian god of thunder and Avenger.</p>
+      </div>
+    </div>
+
+    <!-- HULK -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/006hbb_ons_crd_03.webp" alt="Hulk">
+      </div>
+      <div class="character-info">
+        <h3>Hulk</h3>
+        <span>BRUCE BANNER</span>
+        <p>A brilliant scientist with incredible strength.</p>
+      </div>
+    </div>
+
+    <!-- BLACK WIDOW -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/011blw_ons_crd_04.webp" alt="Black Widow">
+      </div>
+      <div class="character-info">
+        <h3>Black Widow</h3>
+        <span>NATASHA ROMANOFF</span>
+        <p>A highly trained spy and original Avenger.</p>
+      </div>
+    </div>
+
+    <!-- HAWKEYE -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/hawkeye_ons_crd_01.webp" alt="Hawkeye">
+      </div>
+      <div class="character-info">
+        <h3>Hawkeye</h3>
+        <span>CLINT BARTON</span>
+        <p>The master archer of the Avengers.</p>
+      </div>
+    </div>
+
+    <!-- SPIDER-MAN -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/005smp_ons_crd_02.webp" alt="Spider-Man">
+      </div>
+      <div class="character-info">
+        <h3>Spider-Man</h3>
+        <span>PETER PARKER</span>
+        <p>The friendly neighborhood superhero.</p>
+      </div>
+    </div>
+
+    <!-- DOCTOR STRANGE -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/009drs_ons_crd_03.webp" alt="Doctor Strange">
+      </div>
+      <div class="character-info">
+        <h3>Doctor Strange</h3>
+        <span>STEPHEN STRANGE</span>
+        <p>Master of the mystic arts and protector of reality.</p>
+      </div>
+    </div>
+
+    <!-- SCARLET WITCH -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/012scw_ons_crd_03.webp" alt="Scarlet Witch">
+      </div>
+      <div class="character-info">
+        <h3>Scarlet Witch</h3>
+        <span>WANDA MAXIMOFF</span>
+        <p>A powerful wielder of chaos magic.</p>
+      </div>
+    </div>
+
+    <!-- BLACK PANTHER -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/007blp_ons_crd_02.webp" alt="Black Panther">
+      </div>
+      <div class="character-info">
+        <h3>Black Panther</h3>
+        <span>WAKANDA</span>
+        <p>Protector and king of Wakanda.</p>
+      </div>
+    </div>
+
+    <!-- CAPTAIN MARVEL -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/008cmv_ons_crd_05.webp" alt="Captain Marvel">
+      </div>
+      <div class="character-info">
+        <h3>Captain Marvel</h3>
+        <span>CAROL DANVERS</span>
+        <p>One of the universe's most powerful heroes.</p>
+      </div>
+    </div>
+
+    <!-- SAM WILSON -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/cap_ons_crd_01.webp" alt="Sam Wilson">
+      </div>
+      <div class="character-info">
+        <h3>Captain America</h3>
+        <span>SAM WILSON</span>
+        <p>The new Captain America carrying the shield.</p>
+      </div>
+    </div>
+
+    <!-- SHANG CHI -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/242shc_ons_crd_01.webp" alt="Shang-Chi">
+      </div>
+      <div class="character-info">
+        <h3>Shang-Chi</h3>
+        <span>MASTER OF THE TEN RINGS</span>
+        <p>A skilled martial artist wielding the Ten Rings.</p>
+      </div>
+    </div>
+
+    <!-- ANT-MAN -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/010ant_ons_crd_05.webp" alt="Ant-Man">
+      </div>
+      <div class="character-info">
+        <h3>Ant-Man</h3>
+        <span>SCOTT LANG</span>
+        <p>A hero with the ability to change his size.</p>
+      </div>
+    </div>
+
+    <!-- WASP -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/321whv_ons_crd_02.webp" alt="Wasp">
+      </div>
+      <div class="character-info">
+        <h3>Wasp</h3>
+        <span>HOPE VAN DYNE</span>
+        <p>A skilled hero equipped with advanced technology.</p>
+      </div>
+    </div>
+
+    <!-- LOKI -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/017lok_ons_crd_03.webp" alt="Loki">
+      </div>
+      <div class="character-info">
+        <h3>Loki</h3>
+        <span>GOD OF MISCHIEF</span>
+        <p>The Asgardian trickster whose story reaches the multiverse.</p>
+      </div>
+    </div>
+
+    <!-- ULTRON -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/061ult_ons_crd_01-1.webp" alt="Ultron">
+      </div>
+      <div class="character-info">
+        <h3>Ultron</h3>
+        <span>ARTIFICIAL INTELLIGENCE</span>
+        <p>An AI created to protect Earth at any cost.</p>
+      </div>
+    </div>
+
+    <!-- THANOS -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/019tha_ons_crd_03.webp" alt="Thanos">
+      </div>
+      <div class="character-info">
+        <h3>Thanos</h3>
+        <span>THE MAD TITAN</span>
+        <p>The wielder of the Infinity Gauntlet.</p>
+      </div>
+    </div>
+
+    <!-- KANG -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/301kng_ons_crd_01.webp" alt="Kang">
+      </div>
+      <div class="character-info">
+        <h3>Kang</h3>
+        <span>TIME VARIANT</span>
+        <p>A powerful figure connected to the multiverse.</p>
+      </div>
+    </div>
+
+    <!-- GREEN GOBLIN -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/104gno_ons_crd_01.webp" alt="Green Goblin">
+      </div>
+      <div class="character-info">
+        <h3>Green Goblin</h3>
+        <span>NORMAN OSBORN</span>
+        <p>A dangerous villain from Spider-Man's multiverse.</p>
+      </div>
+    </div>
+
+    <!-- DOCTOR DOOM -->
+    <div class="character-card">
+      <div class="character-image">
+        <img src="https://cdn.marvel.com/content/1x/057drd_com_crd_01.webp" alt="Doctor Doom">
+      </div>
+      <div class="character-info">
+        <h3>Doctor Doom</h3>
+        <span>VICTOR VON DOOM</span>
+        <p>A legendary Marvel villain entering the next era.</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     MAJOR EVENTS
+========================= -->
+
+<section class="mcu-section" id="events">
+
+  <div class="mcu-title">
+    <h2>Major Events</h2>
+    <div class="mcu-line"></div>
+    <p>The events that changed the Marvel Cinematic Universe forever.</p>
+  </div>
+
+  <div class="event-grid">
+
+    <div class="event">
+      <span>2012</span>
+      <h3>Battle of New York</h3>
+      <p>The Avengers unite for the first time to defend Earth against Loki and the Chitauri invasion.</p>
+    </div>
+
+    <div class="event">
+      <span>2015</span>
+      <h3>Battle of Sokovia</h3>
+      <p>The Avengers face Ultron as Sokovia becomes the center of a catastrophic global conflict.</p>
+    </div>
+
+    <div class="event">
+      <span>2016</span>
+      <h3>Sokovia Accords</h3>
+      <p>The Avengers become divided over government oversight and responsibility for enhanced individuals.</p>
+    </div>
+
+    <div class="event">
+      <span>2018</span>
+      <h3>The Snap</h3>
+      <p>Thanos gathers the Infinity Stones and uses their combined power, causing half of all life to disappear.</p>
+    </div>
+
+    <div class="event">
+      <span>2023</span>
+      <h3>The Blip</h3>
+      <p>The surviving Avengers find a way to reverse the Snap and restore the people who disappeared.</p>
+    </div>
+
+    <div class="event">
+      <span>MULTIVERSE</span>
+      <h3>The Multiverse</h3>
+      <p>Multiple realities become connected, creating new variants, alternate worlds and multiversal conflicts.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+const themeToggle = document.getElementById("themeToggle");
+
+const savedTheme = localStorage.getItem("mcu-theme");
+
+if(savedTheme === "light"){
+  document.body.classList.add("light-mode");
+  themeToggle.textContent = "🌙";
+}
+
+themeToggle.addEventListener("click", function(){
+
+  document.body.classList.toggle("light-mode");
+
+  if(document.body.classList.contains("light-mode")){
+    themeToggle.textContent = "🌙";
+    localStorage.setItem("mcu-theme","light");
+  }else{
+    themeToggle.textContent = "☀️";
+    localStorage.setItem("mcu-theme","dark");
+  }
+
+});
+
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const mcuMenu = document.querySelector(".mcu-menu");
+
+mobileMenuBtn.addEventListener("click", function(){
+
+  mcuMenu.classList.toggle("mobile-open");
+
+  if(mcuMenu.classList.contains("mobile-open")){
+    mobileMenuBtn.textContent = "✕";
+  }else{
+    mobileMenuBtn.textContent = "☰";
+  }
+
+});
+
+mcuMenu.querySelectorAll("a").forEach(function(link){
+
+  link.addEventListener("click", function(){
+    mcuMenu.classList.remove("mobile-open");
+    mobileMenuBtn.textContent = "☰";
+  });
+
+});
+
+</script>
+
+<div class="movie-modal" id="movieModal">
+
+  <div class="movie-modal-box">
+
+    <button class="movie-modal-close" id="movieModalClose">
+      ✕
+    </button>
+
+    <div class="movie-modal-poster">
+      <img id="modalPoster" src="" alt="">
+    </div>
+
+    <div class="movie-modal-info">
+      <span id="modalYear">MCU</span>
+
+      <h2 id="modalTitle">Movie Title</h2>
+
+      <p id="modalDescription">
+        Movie description.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const movieModal = document.getElementById("movieModal");
+const movieModalClose = document.getElementById("movieModalClose");
+
+const modalPoster = document.getElementById("modalPoster");
+
+const movieDescriptions = {
+
+  "captain america: the first avenger":
+    "Steve Rogers becomes Captain America and joins the fight against Hydra during World War II.",
+
+  "captain marvel":
+    "Carol Danvers discovers her past and becomes one of the most powerful heroes in the universe.",
+
+  "iron man":
+    "Tony Stark builds the first Iron Man armor and begins his journey from weapons manufacturer to hero.",
+
+  "iron man 2":
+    "Tony Stark faces new threats while dealing with the consequences of revealing himself as Iron Man.",
+
+  "the incredible hulk":
+    "Bruce Banner searches for a cure while trying to control the powerful Hulk within him.",
+
+  "thor":
+    "Thor is banished to Earth and learns what it truly means to be worthy of his power.",
+
+  "the avengers":
+    "Earth's greatest heroes unite for the first time to stop Loki and an alien invasion.",
+
+  "iron man 3":
+    "Tony Stark faces the Mandarin and struggles with the aftermath of the Battle of New York.",
+
+  "thor: the dark world":
+    "Thor must protect the Nine Realms when an ancient enemy seeks to unleash the dangerous Aether.",
+
+  "captain america: the winter soldier":
+    "Steve Rogers uncovers a conspiracy within S.H.I.E.L.D. while facing a mysterious super-soldier.",
+
+  "guardians of the galaxy":
+    "Peter Quill and a group of unlikely heroes join forces to protect a powerful cosmic artifact.",
+
+  "guardians of the galaxy vol. 2":
+    "The Guardians face new threats while Peter Quill discovers the truth about his mysterious father.",
+
+  "avengers: age of ultron":
+    "The Avengers create an artificial intelligence that becomes a dangerous enemy threatening the world.",
+
+  "ant-man":
+    "Scott Lang becomes Ant-Man and learns to master a suit that allows him to shrink while gaining incredible strength.",
+
+  "captain america: civil war":
+    "The Avengers are divided over government control, forcing former allies to fight against each other.",
+
+  "black widow":
+    "Natasha Romanoff confronts her past and reunites with her former family while facing a dangerous conspiracy.",
+
+  "black panther":
+    "T'Challa returns to Wakanda and must defend his kingdom from a powerful challenger.",
+
+  "spider-man: homecoming":
+    "Peter Parker balances high school life with his new responsibilities as Spider-Man.",
+
+  "doctor strange":
+    "A brilliant surgeon discovers the mystic arts and becomes Earth's newest defender against supernatural threats.",
+
+  "thor: ragnarok":
+    "Thor must escape Sakaar and stop Hela from destroying Asgard.",
+
+  "ant-man and the wasp":
+    "Scott Lang teams up with Hope van Dyne to uncover a mystery connected to the Quantum Realm.",
+
+  "avengers: infinity war":
+    "The Avengers and their allies battle Thanos as he seeks the Infinity Stones.",
+
+  "avengers: endgame":
+    "The remaining heroes attempt to reverse the devastation caused by Thanos and restore what was lost.",
+
+  "wandavision":
+    "Wanda Maximoff creates a strange reality that hides a deeper mystery surrounding her life.",
+
+  "shang-chi and the legend of the ten rings":
+    "Shang-Chi confronts his family's past and the mysterious organization known as the Ten Rings.",
+
+  "spider-man: far from home":
+    "Peter Parker travels to Europe but is pulled into a new crisis involving mysterious elemental creatures.",
+
+  "eternals":
+    "A group of ancient cosmic beings reunites to protect humanity from a threat hidden for thousands of years.",
+
+  "spider-man: no way home":
+    "Peter Parker seeks help from Doctor Strange after his identity is exposed, causing the multiverse to break open.",
+
+  "doctor strange in the multiverse of madness":
+    "Doctor Strange travels across realities while protecting America Chavez from a powerful multiversal threat.",
+
+  "thor: love and thunder":
+    "Thor reunites with Jane Foster as a dangerous enemy begins hunting the gods.",
+
+  "black panther: wakanda forever":
+    "Wakanda mourns T'Challa while facing a new threat from the underwater kingdom of Talokan.",
+
+  "the guardians of the galaxy holiday special":
+    "The Guardians celebrate Christmas while trying to create a special surprise for Peter Quill.",
+
+  "ant-man and the wasp: quantumania":
+    "Scott Lang and his family become trapped in the Quantum Realm and encounter the powerful Kang.",
+
+  "guardians of the galaxy vol. 3":
+    "The Guardians embark on a dangerous mission to save Rocket and confront the High Evolutionary.",
+
+  "the marvels":
+    "Carol Danvers, Kamala Khan, and Monica Rambeau become connected through a strange cosmic phenomenon.",
+
+  "deadpool & wolverine":
+    "Deadpool joins forces with Wolverine on a chaotic multiversal adventure that changes both of their worlds.",
+
+  "captain america: brave new world":
+    "Sam Wilson embraces his role as Captain America while confronting a new international threat.",
+
+  "thunderbolts*":
+    "A group of unconventional heroes and antiheroes are brought together for a dangerous mission.",
+
+  "the fantastic four: first steps":
+    "The Fantastic Four face a major cosmic threat in an alternate reality of the Marvel universe.",
+
+  "spider-man: brand new day":
+    "Peter Parker begins a new chapter as Spider-Man while facing challenges that reshape his life."
+};
+
+const modalTitle = document.getElementById("modalTitle");
+const modalYear = document.getElementById("modalYear");
+const modalDescription = document.getElementById("modalDescription");
+
+document.querySelectorAll(".watch-item, .upcoming-item, .avengers-card").forEach(function(item){
+
+  const poster = item.querySelector("img");
+
+  const title = item.querySelector(
+    ".watch-info h3, .upcoming-info h3, .avengers-info h3"
+  );
+
+  const description = item.querySelector(
+    ".watch-info p, .upcoming-info p, .avengers-info p"
+  );
+
+  const year = item.querySelector(
+    ".watch-year, .upcoming-badge, .avengers-year"
+  );
+
+  if(!poster || !title) return;
+
+  poster.style.cursor = "pointer";
+
+  poster.addEventListener("click", function(){
+
+    modalPoster.src = poster.src;
+    modalPoster.alt = title.textContent.trim();
+
+    modalTitle.textContent = title.textContent.trim();
+
+    const movieKey = title.textContent.trim().toLowerCase();
+
+modalDescription.textContent =
+  movieDescriptions[movieKey] ||
+  (description
+    ? description.textContent.trim()
+    : "A Marvel Cinematic Universe story.");
+
+    modalYear.textContent =
+      year
+        ? year.textContent.trim()
+        : "MCU";
+
+    movieModal.classList.add("active");
+
+  });
+
+});
+
+movieModalClose.addEventListener("click", function(){
+  movieModal.classList.remove("active");
+});
+
+movieModal.addEventListener("click", function(event){
+
+  if(event.target === movieModal){
+    movieModal.classList.remove("active");
+  }
+
+});
+
+const searchInput = document.getElementById("mcuSearch");
+const searchResult = document.getElementById("searchResult");
+const clearSearch = document.getElementById("clearSearch");
+
+/* PERSONAL WATCHED */
+const filterItems = document.querySelectorAll(
+  ".watch-item, .upcoming-item, .avengers-card"
+);
+
+let watchedMovies = JSON.parse(
+  localStorage.getItem("mcu-watched") || "[]"
+);
+
+function updateMCUProgress(){
+
+  const progressItems = document.querySelectorAll(".watch-item");
+
+  const total = progressItems.length;
+
+  let watched = 0;
+
+  progressItems.forEach(function(item){
+
+    const movieId = item.dataset.movieId;
+
+    if(movieId && watchedMovies.includes(movieId)){
+      watched++;
+    }
+
+  });
+
+  const percent = total > 0
+    ? Math.round((watched / total) * 100)
+    : 0;
+
+  document.getElementById("watchedCount").textContent = watched;
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("progressPercent").textContent = percent + "%";
+  document.getElementById("progressFill").style.width = percent + "%";
+
+}
+
+filterItems.forEach(function(item){
+
+  const titleElement = item.querySelector(
+    ".watch-info h3, .upcoming-info h3, .avengers-info h3"
+  );
+
+  if(!titleElement) return;
+
+  const title = titleElement.textContent.trim();
+  const movieId = title.toLowerCase();
+
+  item.dataset.movieId = movieId;
+
+  const badge = item.querySelector(
+    ".watch-badge, .upcoming-badge, .avengers-badge"
+  );
+
+  if(!badge) return;
+
+  badge.style.display = "none";
+
+  const watchButton = document.createElement("button");
+
+  watchButton.className = "personal-watch-btn";
+  watchButton.type = "button";
+
+  function updateWatchButton(){
+
+   if(watchedMovies.includes(movieId)){
+
+  watchButton.textContent = "✓ WATCHED";
+  watchButton.classList.add("is-watched");
+
+}else{
+
+  watchButton.textContent = "NOT WATCHED";
+  watchButton.classList.remove("is-watched");
+
+}
+  }
+
+  watchButton.addEventListener("click", function(){
+
+    if(watchedMovies.includes(movieId)){
+
+      watchedMovies = watchedMovies.filter(
+        id => id !== movieId
+      );
+
+    }else{
+
+      watchedMovies.push(movieId);
+
+    }
+
+    localStorage.setItem(
+      "mcu-watched",
+      JSON.stringify(watchedMovies)
+    );
+
+    updateWatchButton();
+    updateMCUProgress();
+
+  });
+
+  badge.parentNode.appendChild(watchButton);
+
+  updateWatchButton();
+
+});
+
+updateMCUProgress();
+
+/* MCU PROGRESS */
+
+const progressItems = document.querySelectorAll(".watch-item");
+
+const watchedCountElement = document.getElementById("watchedCount");
+const totalCountElement = document.getElementById("totalCount");
+const progressPercentElement = document.getElementById("progressPercent");
+const progressFillElement = document.getElementById("progressFill");
+
+function updateMCUProgress(){
+
+  const progressItems = document.querySelectorAll(".watch-item");
+
+  const total = progressItems.length;
+
+  let watched = 0;
+
+  progressItems.forEach(function(item){
+
+    if(watchedMovies.includes(item.dataset.movieId)){
+      watched++;
+    }
+
+  });
+
+  const percent = total > 0
+    ? Math.round((watched / total) * 100)
+    : 0;
+
+  document.getElementById("watchedCount").textContent = watched;
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("progressPercent").textContent = percent + "%";
+  document.getElementById("progressFill").style.width = percent + "%";
+
+}
+
+/* SEARCH */
+const searchableItems = document.querySelectorAll(
+  ".watch-item, .upcoming-item, .avengers-card, .character-card, .event, .saga-card"
+);
+
+searchInput.addEventListener("input", function(){
+
+  const query = this.value.toLowerCase().trim();
+
+  searchableItems.forEach(item => {
+    item.style.display = "";
+  });
+
+  if(query === ""){
+    searchResult.innerHTML = "";
+    return;
+  }
+
+  const matches = [];
+
+  searchableItems.forEach(item => {
+
+    const text = item.innerText.toLowerCase();
+
+    if(text.includes(query)){
+      matches.push(item);
+    }
+
+    item.style.display = "none";
+
+  });
+
+  if(matches.length === 0){
+
+    searchResult.innerHTML =
+      '<div class="search-result-title">NO MCU RESULTS FOUND</div>';
+
+    return;
+  }
+
+  const grid = document.createElement("div");
+
+  grid.className = "search-result-grid";
+
+  matches.forEach(item => {
+
+    const clone = item.cloneNode(true);
+
+    grid.appendChild(clone);
+
+  });
+
+  searchResult.innerHTML =
+    '<div class="search-result-title">' +
+    matches.length +
+    ' MCU RESULT(S) FOUND</div>';
+
+  searchResult.appendChild(grid);
+
+});
+
+
+clearSearch.addEventListener("click", function(){
+
+  searchInput.value = "";
+
+  searchableItems.forEach(item => {
+    item.style.display = "";
+  });
+
+  searchResult.innerHTML = "";
+
+  searchInput.focus();
+
+});
+
+
+/* FILTER */
+function mcuFilter(type, button){
+
+  document.querySelectorAll(".filter-btn").forEach(function(btn){
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  filterItems.forEach(function(item){
+
+    const movieId = item.dataset.movieId;
+
+    const isWatched =
+      watchedMovies.includes(movieId);
+
+    const badge = item.querySelector(
+      ".watch-badge, .upcoming-badge, .avengers-badge"
+    );
+
+    const status = badge
+      ? badge.textContent.trim().toLowerCase()
+      : "";
+
+    if(type === "all"){
+
+      item.classList.remove("filter-hidden");
+
+    }else if(type === "watched"){
+
+      if(isWatched){
+        item.classList.remove("filter-hidden");
+      }else{
+        item.classList.add("filter-hidden");
+      }
+
+}else if(type === "not-watched"){
+
+  if(!isWatched){
+    item.classList.remove("filter-hidden");
+  }else{
+    item.classList.add("filter-hidden");
+  }
+
+}else if(type === "upcoming"){
+
+          if(status === "upcoming"){
+        item.classList.remove("filter-hidden");
+      }else{
+        item.classList.add("filter-hidden");
+      }
+
+    }
+
+  });
+
+}
+</script>
+
+</body>
+</html>
