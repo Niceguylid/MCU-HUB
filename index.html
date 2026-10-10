@@ -2218,6 +2218,100 @@ body.light-mode :focus-visible{
   body.light-mode *::after{transition:none!important;animation:none!important}
 }
 
+
+
+/* ===== LIGHT MODE READABILITY: COMMAND CENTER, TEAM BUILDER, COMMUNITY + AI ===== */
+body.light-mode .jarvis-shell,
+body.light-mode .journey-panel,
+body.light-mode .builder-panel{
+  background:linear-gradient(145deg,#ffffff,#f5f7fb);
+  border-color:#d9dee8;
+  color:#171923;
+  box-shadow:0 14px 36px rgba(25,32,48,.09);
+}
+body.light-mode .jarvis-shell:before{opacity:.18;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(0,125,160,.035) 6px)}
+body.light-mode .jarvis-kicker,
+body.light-mode .jarvis-label{color:#087f9b}
+body.light-mode .jarvis-title{color:#171923}
+body.light-mode .jarvis-title span{color:#c91d22;text-shadow:none}
+body.light-mode .jarvis-status{color:#087747;border-color:rgba(8,119,71,.28);background:#effaf4}
+body.light-mode .jarvis-metric{background:#f4f6fa;border-color:#e1e5ed}
+body.light-mode .jarvis-metric strong{color:#171923}
+body.light-mode .jarvis-metric small{color:#626878}
+body.light-mode .jarvis-btn,
+body.light-mode .builder-btn,
+body.light-mode .journey-btn,
+body.light-mode .archive-filter{
+  color:#273044;background:#f8f9fc;border-color:#cbd3df;
+}
+body.light-mode .jarvis-btn:hover,
+body.light-mode .builder-btn:hover,
+body.light-mode .journey-btn:hover,
+body.light-mode .archive-filter:hover{color:#fff;background:#c91d22;border-color:#c91d22}
+body.light-mode .archive-filter.active{color:#fff;background:#e62429;border-color:#e62429}
+body.light-mode .jarvis-readout{color:#525b6b}
+body.light-mode .jarvis-readout b{color:#087f9b}
+body.light-mode .journey-stat{background:#f5f7fb;border-color:#e1e5ed}
+body.light-mode .journey-stat span{color:#626878}
+body.light-mode .journey-note{color:#525b6b}
+body.light-mode .journey-track{background:#e3e7ef}
+body.light-mode .builder-pick{
+  color:#252b39;background:#f8f9fc;border-color:#dce1e9;
+}
+body.light-mode .builder-pick:hover{background:#fff;border-color:#e62429}
+body.light-mode .builder-pick input{accent-color:#e62429}
+body.light-mode .builder-output{
+  color:#252b39;background:#f8fbfd;border-color:#cddfe5;
+}
+body.light-mode .builder-output h3{color:#087f9b}
+body.light-mode .builder-output p{color:#525b6b}
+body.light-mode .builder-chip{color:#252b39;background:#fff;border-color:rgba(201,29,34,.35)}
+body.light-mode .archive-tools input,
+body.light-mode .archive-tools select{
+  color:#171923;background:#fff;border-color:#d4d9e3;
+}
+body.light-mode .archive-tools input::placeholder{color:#747b8a}
+body.light-mode .event-archive-note{color:#626878}
+
+/* Community Transmission and G.O.U.F.E AI */
+body.light-mode .community-panel,
+body.light-mode .ai-panel{
+  background:linear-gradient(145deg,#fff,#f6f8fc);
+  color:#171923;border-color:#dce1e9;
+  box-shadow:0 12px 32px rgba(25,32,48,.08);
+}
+body.light-mode .community-panel h3,
+body.light-mode .ai-panel h3{color:#171923}
+body.light-mode .community-panel p,
+body.light-mode .ai-panel p{color:#4f5666}
+body.light-mode .community-panel .community-note{color:#626878}
+body.light-mode .ai-status{color:#087747}
+body.light-mode .ai-chat-log{
+  background:#f1f3f8;border-color:#dce1e9;
+}
+body.light-mode .ai-message.bot{
+  color:#252b39;background:#fff;border-color:#d5e0ea;
+}
+body.light-mode .ai-message.user{
+  color:#7d1519;background:#fff0f0;border-color:rgba(230,36,41,.35);
+}
+body.light-mode .ai-message.error{color:#a3161b;background:#fff0f0;border-color:#e62429}
+body.light-mode .ai-chat-form textarea{
+  color:#171923;background:#fff;border-color:#cfd5e0;
+}
+body.light-mode .ai-chat-form textarea::placeholder{color:#747b8a}
+body.light-mode .ai-quick-prompts button{
+  color:#3d4555;background:#fff;border-color:#cfd5e0;
+}
+body.light-mode .ai-quick-prompts button:hover{color:#c91d22;border-color:#e62429;background:#fff7f7}
+body.light-mode .ai-config-note{color:#79551a!important}
+body.light-mode .community-panel code{color:#8f1d22;background:#f7e9ea;padding:2px 4px;border-radius:3px}
+@media(max-width:600px){
+  body.light-mode .jarvis-title{letter-spacing:0}
+  body.light-mode .builder-pick{font-size:11px;padding:9px}
+  body.light-mode .community-panel h3,
+  body.light-mode .ai-panel h3{font-size:1.02rem}
+}
 </style>
 
 </head>
