@@ -25,7 +25,7 @@ export default {
     };
 
     if (!allowedOrigin) return json({ error: "Server configuration is incomplete: ALLOWED_ORIGIN is missing." }, 500);
-    if (origin && origin !== allowedOrigin) return json({ error: "Origin not allowed." }, 403);
+    if (origin !== allowedOrigin) return json({ error: "Origin not allowed." }, 403);
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
 
     const url = new URL(request.url);
