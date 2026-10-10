@@ -2023,6 +2023,32 @@ body.light-mode .filter-btn.active{
 @media(max-width:760px){.jarvis-console{margin:90px auto 35px}.jarvis-shell{padding:18px}.jarvis-metric{min-width:calc(50% - 10px)}.journey-summary{grid-template-columns:1fr}.builder-layout{grid-template-columns:1fr}.builder-pool{grid-template-columns:1fr 1fr}.journey-panel,.builder-panel{padding:16px}}
 @media(prefers-reduced-motion:reduce){.jarvis-btn,.builder-btn,.journey-btn,.archive-filter,.stone,.journey-track span{transition:none}}
 
+
+
+/* COMMUNITY + LIVE MCU AI */
+.community-ai-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:start}
+.community-panel,.ai-panel{background:linear-gradient(145deg,rgba(20,24,31,.94),rgba(5,7,11,.96));border:1px solid rgba(230,36,41,.42);border-radius:18px;padding:clamp(18px,3vw,28px);box-shadow:0 12px 38px rgba(0,0,0,.28);min-width:0}
+.community-panel h3,.ai-panel h3{font-size:1.2rem;letter-spacing:.06em;margin-bottom:8px}
+.community-panel p,.ai-panel p{color:#b9c0cb;font-size:.94rem}
+.community-note{font-size:.82rem!important;margin:10px 0 16px}
+.utterances{width:100%;min-height:360px}
+.ai-status{display:inline-flex;align-items:center;gap:8px;color:#a9f7c5;font-size:.78rem;letter-spacing:.08em;margin:0 0 12px}
+.ai-status:before{content:"";width:8px;height:8px;border-radius:50%;background:#5ce49b;box-shadow:0 0 12px #5ce49b}
+.ai-chat-log{height:300px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;margin:14px 0;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.09);border-radius:12px}
+.ai-message{max-width:95%;padding:10px 12px;border-radius:12px;font-size:.92rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-message.bot{align-self:flex-start;background:#171d27;border:1px solid rgba(76,184,255,.22)}
+.ai-message.user{align-self:flex-end;background:rgba(230,36,41,.16);border:1px solid rgba(230,36,41,.42)}
+.ai-message.error{border-color:#e62429;color:#ffb6b8}
+.ai-chat-form{display:flex;gap:8px}
+.ai-chat-form textarea{width:100%;min-height:54px;max-height:130px;resize:vertical;background:#090c11;color:#fff;border:1px solid #363d49;border-radius:10px;padding:12px;font:inherit}
+.ai-chat-form button{flex-shrink:0;border:0;border-radius:10px;padding:0 17px;background:#e62429;color:#fff;font-weight:700;cursor:pointer}
+.ai-chat-form button:disabled{opacity:.55;cursor:wait}
+.ai-config-note{margin-top:10px;font-size:.78rem!important;color:#e7c88b!important}
+.ai-quick-prompts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.ai-quick-prompts button{background:transparent;color:#dfe5ef;border:1px solid #444b58;border-radius:999px;padding:6px 10px;font-size:.78rem;cursor:pointer}
+.ai-quick-prompts button:hover{border-color:#e62429}
+@media(max-width:850px){.community-ai-grid{grid-template-columns:1fr}.ai-chat-log{height:260px}}
+
 </style>
 
 </head>
@@ -4310,6 +4336,43 @@ function mcuFilter(type, button){
      MCU FOOTER
 ========================= -->
 
+
+<!-- COMMUNITY COMMENTS + LIVE AI ASSISTANT -->
+<section class="mcu-section" id="community-ai">
+  <div class="mcu-title">
+    <h2>GOUFE COMMUNITY &amp; MCU AI</h2>
+    <p>Discuss theories with other fans, or ask the MCU Assistant your own question.</p>
+    <div class="mcu-line"></div>
+  </div>
+  <div class="community-ai-grid">
+    <div class="community-panel">
+      <h3><span style="color:#e62429">01 /</span> COMMUNITY TRANSMISSION</h3>
+      <p>Share theories, favorite moments, and respectful MCU discussions with the community.</p>
+      <p class="community-note">Comments are hosted by GitHub Utterances. A GitHub account is required to post. The repository owner must enable Issues and install the Utterances app for this repository.</p>
+      <div id="communityComments"><p class="community-note">Loading community comments… If they do not appear, finish the setup in <code>MCU-AI-SETUP.md</code>.</p></div>
+      <noscript><p>Enable JavaScript to load the community discussion.</p></noscript>
+    </div>
+    <div class="ai-panel">
+      <h3><span style="color:#e62429">02 /</span> MCU AI ASSISTANT</h3>
+      <div class="ai-status">JARVIS LINK INTERFACE</div>
+      <p>Ask open-ended questions about Marvel characters, timelines, movies, and theories.</p>
+      <div class="ai-chat-log" id="mcuAiLog" role="log" aria-live="polite">
+        <div class="ai-message bot">Hello. I'm the GOUFE MCU Assistant. Ask me anything about the Marvel Cinematic Universe.</div>
+      </div>
+      <form class="ai-chat-form" id="mcuAiForm">
+        <textarea id="mcuAiInput" maxlength="2000" aria-label="Ask the MCU AI Assistant" placeholder="Ask about Thanos, the Infinity Stones, timelines…" required></textarea>
+        <button id="mcuAiSend" type="submit">SEND</button>
+      </form>
+      <div class="ai-quick-prompts">
+        <button type="button" data-mcu-prompt="Explain how the Infinity Stones work.">Infinity Stones</button>
+        <button type="button" data-mcu-prompt="Explain the multiverse in the MCU.">Multiverse</button>
+        <button type="button" data-mcu-prompt="Why did Thanos win in Infinity War?">Thanos</button>
+      </div>
+      <p class="ai-config-note" id="mcuAiConfigNote">AI needs a deployed serverless Worker and secret configuration. See MCU-AI-SETUP.md.</p>
+    </div>
+  </div>
+</section>
+
 <footer class="mcu-footer">
 
   <div class="footer-logo">
@@ -4444,6 +4507,70 @@ function mcuFilter(type, button){
       const activate=()=>{const name=$("h3",stone)?.textContent.trim();if(!name)return;$$(".stone",stoneRoot).forEach(x=>x.classList.toggle("jarvis-selected",x===stone));$("#stoneReadoutTitle").textContent=name.toUpperCase();$("#stoneReadoutText").textContent=stoneInfo[name]||$("p",stone)?.textContent||"Archive entry selected.";output.classList.add("show");};
       stone.addEventListener("click",activate);stone.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activate();}});
     });
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  const endpoint = "https://YOUR-CLOUDFLARE-WORKER.workers.dev/api/chat";
+  const log = document.getElementById("mcuAiLog");
+  const form = document.getElementById("mcuAiForm");
+  const input = document.getElementById("mcuAiInput");
+  const send = document.getElementById("mcuAiSend");
+  const note = document.getElementById("mcuAiConfigNote");
+  if (!log || !form || !input || !send) return;
+  const history = [];
+  function addMessage(text, kind){
+    const el = document.createElement("div");
+    el.className = "ai-message " + kind;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+  async function ask(question){
+    const prompt = question.trim();
+    if (!prompt || send.disabled) return;
+    addMessage(prompt,"user");
+    input.value = "";
+    send.disabled = true;
+    send.textContent = "…";
+    const pending = addMessage("Connecting to the MCU archive…","bot");
+    try{
+      if (endpoint.includes("YOUR-CLOUDFLARE-WORKER")) throw new Error("The AI endpoint has not been configured. Follow MCU-AI-SETUP.md, then replace the Worker URL in index.html.");
+      const response = await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:prompt,history:history.slice(-8)})});
+      const data = await response.json().catch(()=>({}));
+      if (!response.ok) throw new Error(data.error || "The AI service could not answer right now.");
+      if (typeof data.answer !== "string" || !data.answer.trim()) throw new Error("The AI service returned an empty answer.");
+      pending.textContent = data.answer;
+      history.push({role:"user",content:prompt},{role:"assistant",content:data.answer});
+      if(history.length>10) history.splice(0,history.length-10);
+      if(note) note.textContent = "Connected to the serverless MCU AI. Responses may contain mistakes; verify important details.";
+    }catch(error){
+      pending.classList.add("error");
+      pending.textContent = error.message || "Connection failed. Check the Worker setup and try again.";
+      if(note) note.textContent = "AI is not connected yet. Configure the Worker endpoint and secrets using MCU-AI-SETUP.md.";
+    }finally{
+      send.disabled = false;
+      send.textContent = "SEND";
+      input.focus();
+    }
+  }
+  form.addEventListener("submit",event=>{event.preventDefault();ask(input.value);});
+  document.querySelectorAll("[data-mcu-prompt]").forEach(button=>button.addEventListener("click",()=>ask(button.dataset.mcuPrompt||"")));
+  const comments = document.getElementById("communityComments");
+  if(comments){
+    const utterances = document.createElement("script");
+    utterances.src = "https://utteranc.es/client.js";
+    utterances.async = true;
+    utterances.crossOrigin = "anonymous";
+    utterances.setAttribute("repo","Niceguylid/MCU-HUB");
+    utterances.setAttribute("issue-term","pathname");
+    utterances.setAttribute("label","community");
+    utterances.setAttribute("theme","github-dark");
+    comments.replaceChildren(utterances);
   }
 })();
 </script>
