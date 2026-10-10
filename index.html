@@ -1969,6 +1969,60 @@ body.light-mode .filter-btn.active{
 
 }
 
+
+/* ===== JARVIS / IRON MAN EXPANSION ===== */
+.jarvis-console{max-width:1250px;margin:110px auto 55px;padding:0 5%;font-family:Arial,sans-serif}
+.jarvis-shell{position:relative;overflow:hidden;border:1px solid rgba(0,220,255,.35);border-radius:18px;padding:26px;background:linear-gradient(135deg,rgba(3,15,24,.96),rgba(10,10,14,.96));box-shadow:0 0 35px rgba(0,190,255,.08),inset 0 0 35px rgba(0,190,255,.04)}
+.jarvis-shell:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(0,210,255,.025) 6px);opacity:.6}
+.jarvis-top,.jarvis-metrics,.jarvis-actions,.journey-tools,.builder-options{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.jarvis-kicker,.jarvis-label{font-size:10px;letter-spacing:2.5px;color:#35d9ff;font-weight:800}
+.jarvis-title{font-size:clamp(24px,4vw,38px);letter-spacing:1px;margin:8px 0}
+.jarvis-title span{color:#e62429;text-shadow:0 0 18px rgba(230,36,41,.5)}
+.jarvis-status{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(0,255,160,.35);border-radius:30px;padding:7px 11px;color:#79ffc6;font-size:10px;letter-spacing:1px}
+.jarvis-status:before{content:"";width:7px;height:7px;border-radius:50%;background:#43ffad;box-shadow:0 0 10px #43ffad}
+.jarvis-metrics{justify-content:flex-start;margin:22px 0}
+.jarvis-metric{min-width:125px;flex:1;border-left:2px solid #e62429;background:rgba(255,255,255,.035);padding:12px 15px}
+.jarvis-metric strong{display:block;font-size:25px;color:#fff;line-height:1.2}
+.jarvis-metric small{font-size:9px;letter-spacing:1.3px;color:#8aabb8}
+.jarvis-actions{justify-content:flex-start}
+.jarvis-btn,.builder-btn,.journey-btn,.archive-filter{cursor:pointer;border:1px solid rgba(53,217,255,.45);background:rgba(0,160,200,.09);color:#dffaff;border-radius:7px;padding:10px 13px;font-size:10px;font-weight:800;letter-spacing:1px;transition:transform .2s,border-color .2s,background .2s}
+.jarvis-btn:hover,.builder-btn:hover,.journey-btn:hover,.archive-filter:hover{transform:translateY(-2px);border-color:#35d9ff;background:rgba(0,190,255,.18)}
+.jarvis-readout{margin-top:17px;color:#8faab5;font-size:11px;min-height:18px}
+.jarvis-readout b{color:#35d9ff}
+.mcu-section.journey-section,.mcu-section.builder-section{padding-top:65px;padding-bottom:65px}
+.journey-panel,.builder-panel{max-width:1150px;margin:auto;border:1px solid rgba(230,36,41,.3);border-radius:16px;padding:24px;background:linear-gradient(145deg,rgba(20,20,24,.95),rgba(5,5,7,.98));box-shadow:0 15px 50px rgba(0,0,0,.22)}
+.journey-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
+.journey-stat{padding:15px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.journey-stat strong{font-size:25px;display:block;color:#e62429}
+.journey-stat span{font-size:10px;color:#999;letter-spacing:1px}
+.journey-track{height:9px;background:#202024;border-radius:20px;overflow:hidden}
+.journey-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#e62429,#ff6b3d);box-shadow:0 0 14px rgba(230,36,41,.55);transition:width .4s}
+.journey-note{font-size:12px;color:#aaa;margin-top:13px}
+.journey-tools{justify-content:flex-start;margin-top:16px}
+.builder-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+.builder-pool{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.builder-pick{display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);border-radius:8px;padding:11px;font-size:12px;cursor:pointer}
+.builder-pick input{accent-color:#e62429}
+.builder-output{border:1px solid rgba(53,217,255,.22);border-radius:12px;padding:18px;background:rgba(0,130,170,.055);min-height:180px}
+.builder-output h3{color:#35d9ff;letter-spacing:1px;margin-bottom:12px}
+.builder-roster{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.builder-chip{border:1px solid rgba(230,36,41,.4);padding:7px 9px;border-radius:5px;font-size:11px}
+.builder-output p{font-size:12px;color:#aab4ba}
+.builder-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.archive-tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 auto 20px;max-width:1000px}
+.archive-tools input,.archive-tools select{min-width:190px;flex:1;background:#101014;color:#fff;border:1px solid #38383f;border-radius:7px;padding:11px 12px;outline:none}
+.archive-tools input:focus,.archive-tools select:focus{border-color:#e62429}
+.archive-filter.active{background:#e62429;border-color:#e62429}
+.jarvis-hidden{display:none!important}
+.stone{cursor:pointer;transition:transform .25s,box-shadow .25s}
+.stone:hover{transform:translateY(-5px);box-shadow:0 0 24px rgba(255,255,255,.08)}
+.stone.jarvis-selected{outline:1px solid rgba(53,217,255,.8);box-shadow:0 0 22px rgba(53,217,255,.13)}
+.stone-readout{max-width:950px;margin:20px auto 0;border:1px solid rgba(53,217,255,.3);border-radius:10px;padding:14px 17px;background:rgba(0,120,160,.07);color:#b9d4dc;font-size:12px;display:none}
+.stone-readout.show{display:block}
+.event-archive-note{text-align:center;color:#8c969d;font-size:11px;margin:-5px auto 18px}
+@media(max-width:760px){.jarvis-console{margin:90px auto 35px}.jarvis-shell{padding:18px}.jarvis-metric{min-width:calc(50% - 10px)}.journey-summary{grid-template-columns:1fr}.builder-layout{grid-template-columns:1fr}.builder-pool{grid-template-columns:1fr 1fr}.journey-panel,.builder-panel{padding:16px}}
+@media(prefers-reduced-motion:reduce){.jarvis-btn,.builder-btn,.journey-btn,.archive-filter,.stone,.journey-track span{transition:none}}
+
 </style>
 
 </head>
@@ -2059,6 +2113,30 @@ body.light-mode .filter-btn.active{
   </button>
 
 </div>
+</section>
+
+
+<section class="jarvis-console" aria-label="JARVIS MCU command center">
+  <div class="jarvis-shell">
+    <div class="jarvis-top">
+      <div><div class="jarvis-kicker">STARK INDUSTRIES // MCU DATABASE</div><h2 class="jarvis-title">GOUFE <span>COMMAND CENTER</span></h2></div>
+      <div class="jarvis-status">SYSTEM ONLINE</div>
+    </div>
+    <p style="color:#a9bbc5;font-size:12px;max-width:760px">J.A.R.V.I.S. interface initialized. Access your MCU timeline, track your watch journey, or assemble a team.</p>
+    <div class="jarvis-metrics">
+      <div class="jarvis-metric"><strong id="jarvisWatched">0</strong><small>PROJECTS WATCHED</small></div>
+      <div class="jarvis-metric"><strong id="jarvisProgress">0%</strong><small>MCU JOURNEY</small></div>
+      <div class="jarvis-metric"><strong>06</strong><small>INFINITY STONES</small></div>
+      <div class="jarvis-metric"><strong id="jarvisClock">--:--</strong><small>LOCAL SYSTEM TIME</small></div>
+    </div>
+    <div class="jarvis-actions">
+      <button class="jarvis-btn" data-jump="#watch-order">▶ OPEN CINEMA ARCHIVE</button>
+      <button class="jarvis-btn" data-jump="#timeline">⌁ EXPLORE TIMELINE</button>
+      <button class="jarvis-btn" data-jump="#team-builder">✚ BUILD AVENGERS TEAM</button>
+      <button class="jarvis-btn" data-jump="#upcoming">◷ FUTURE FILES</button>
+    </div>
+    <div class="jarvis-readout" id="jarvisReadout"><b>JARVIS:</b> All systems nominal. Welcome to the MCU archive.</div>
+  </div>
 </section>
 
 <section class="mcu-section" id="about">
@@ -3504,6 +3582,52 @@ body.light-mode .filter-btn.active{
 
 </section>
 
+
+<section class="mcu-section journey-section" id="my-journey">
+  <div class="mcu-title"><h2>MY MCU JOURNEY</h2><div class="mcu-line"></div><p>Your personal mission log, synced with your WATCHED checklist on this browser.</p></div>
+  <div class="journey-panel">
+    <div class="journey-tools"><span class="jarvis-label">PERSONAL WATCH LOG</span><button class="journey-btn" id="journeyOpenCinema">OPEN WATCH ORDER ↗</button></div>
+    <div class="journey-summary">
+      <div class="journey-stat"><strong id="journeyWatched">0</strong><span>WATCHED</span></div>
+      <div class="journey-stat"><strong id="journeyRemaining">0</strong><span>REMAINING</span></div>
+      <div class="journey-stat"><strong id="journeyPercent">0%</strong><span>COMPLETION</span></div>
+    </div>
+    <div class="journey-track"><span id="journeyFill"></span></div>
+    <p class="journey-note" id="journeyMessage">Your journey begins here. Mark a title as WATCHED in the chronological archive to record progress.</p>
+  </div>
+</section>
+
+
+<section class="mcu-section builder-section" id="team-builder">
+  <div class="mcu-title"><h2>AVENGERS TEAM BUILDER</h2><div class="mcu-line"></div><p>Assemble your dream squad. Choose up to six heroes and generate your team roster.</p></div>
+  <div class="builder-panel">
+    <div class="builder-layout">
+      <div><div class="jarvis-label" style="margin-bottom:12px">AVAILABLE PERSONNEL</div>
+        <div class="builder-pool" id="builderPool">
+          <label class="builder-pick"><input type="checkbox" value="Iron Man"> Iron Man</label>
+          <label class="builder-pick"><input type="checkbox" value="Captain America"> Captain America</label>
+          <label class="builder-pick"><input type="checkbox" value="Thor"> Thor</label>
+          <label class="builder-pick"><input type="checkbox" value="Hulk"> Hulk</label>
+          <label class="builder-pick"><input type="checkbox" value="Black Widow"> Black Widow</label>
+          <label class="builder-pick"><input type="checkbox" value="Hawkeye"> Hawkeye</label>
+          <label class="builder-pick"><input type="checkbox" value="Spider-Man"> Spider-Man</label>
+          <label class="builder-pick"><input type="checkbox" value="Doctor Strange"> Doctor Strange</label>
+          <label class="builder-pick"><input type="checkbox" value="Black Panther"> Black Panther</label>
+          <label class="builder-pick"><input type="checkbox" value="Captain Marvel"> Captain Marvel</label>
+          <label class="builder-pick"><input type="checkbox" value="Shang-Chi"> Shang-Chi</label>
+          <label class="builder-pick"><input type="checkbox" value="Scarlet Witch"> Scarlet Witch</label>
+          <label class="builder-pick"><input type="checkbox" value="Ant-Man"> Ant-Man</label>
+          <label class="builder-pick"><input type="checkbox" value="Wasp"> Wasp</label>
+          <label class="builder-pick"><input type="checkbox" value="Loki"> Loki</label>
+          <label class="builder-pick"><input type="checkbox" value="Winter Soldier"> Winter Soldier</label>
+        </div>
+        <div class="builder-actions"><button class="builder-btn" id="builderRandom">⚡ RANDOM SQUAD</button><button class="builder-btn" id="builderClear">CLEAR SELECTION</button></div>
+      </div>
+      <div class="builder-output" aria-live="polite"><h3>TEAM STATUS // <span id="builderCount">0</span>/6</h3><p id="builderHint">Select up to six personnel to build your roster.</p><div class="builder-roster" id="builderRoster"></div><p id="builderAnalysis">Awaiting team configuration.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="mcu-section music-playlist" id="music">
 
   <div class="mcu-title">
@@ -4214,6 +4338,115 @@ function mcuFilter(type, button){
   </p>
 
 </footer>
+
+
+<script>
+(function(){
+  const $ = (selector, root=document) => root.querySelector(selector);
+  const $$ = (selector, root=document) => Array.from(root.querySelectorAll(selector));
+  const readout = $("#jarvisReadout");
+  const announce = message => { if(readout) readout.innerHTML = "<b>JARVIS:</b> " + message; };
+  $$("[data-jump]").forEach(btn => btn.addEventListener("click",()=>{
+    const target=$(btn.dataset.jump); if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+    announce("Navigating to <b>"+btn.textContent.trim().replace(/[▶⌁✚◷]/g,"").trim()+"</b>.");
+  }));
+  $("#journeyOpenCinema")?.addEventListener("click",()=>$("#watch-order")?.scrollIntoView({behavior:"smooth"}));
+
+  function refreshJourney(){
+    const items=$$(".watch-item");
+    const watched=items.filter(item=>/watched/i.test($(".watch-badge",item)?.textContent||"")).length;
+    const total=items.length, remaining=Math.max(0,total-watched), percent=total?Math.round(watched/total*100):0;
+    [["#jarvisWatched",watched],["#jarvisProgress",percent+"%"],["#journeyWatched",watched],["#journeyRemaining",remaining],["#journeyPercent",percent+"%"],["#watchedCount",watched],["#totalCount",total],["#progressPercent",percent+"%"]].forEach(([id,val])=>{if($(id)) $(id).textContent=val;});
+    ["#journeyFill","#progressFill"].forEach(id=>{if($(id)) $(id).style.width=percent+"%";});
+    if($("#journeyMessage")) $("#journeyMessage").textContent=percent===100?"Mission complete. Your current MCU watch order is fully logged.":watched===0?"Your journey begins here. Mark a title as WATCHED in the chronological archive to record progress.":watched+" of "+total+" titles logged. "+remaining+" remain in your current archive.";
+  }
+  const watchRoot=$("#watch-order");
+  if(watchRoot){
+    const observer=new MutationObserver(refreshJourney);
+    observer.observe(watchRoot,{subtree:true,childList:true,characterData:true,attributes:true});
+    watchRoot.addEventListener("click",()=>setTimeout(refreshJourney,80));
+  }
+  refreshJourney();
+
+  const clock=()=>{const d=new Date();const el=$("#jarvisClock");if(el)el.textContent=d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit",hour12:false});};
+  clock();setInterval(clock,30000);
+
+  const pool=$("#builderPool"), roster=$("#builderRoster");
+  function updateBuilder(){
+    if(!pool)return;
+    const selected=$$('input[type="checkbox"]:checked',pool);
+    if(selected.length>6){selected[selected.length-1].checked=false;announce("Team limit reached. Maximum six heroes per squad.");return updateBuilder();}
+    const names=selected.map(input=>input.value);
+    if($("#builderCount"))$("#builderCount").textContent=names.length;
+    if($("#builderHint"))$("#builderHint").textContent=names.length?names.length+" personnel selected.":"Select up to six personnel to build your roster.";
+    if(roster)roster.innerHTML=names.map(name=>'<span class="builder-chip">'+name.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))+'</span>').join("");
+    if($("#builderAnalysis"))$("#builderAnalysis").textContent=names.length>=4?"Avengers-level roster assembled. Ready for a major threat.":names.length>=1?"Squad forming. Add more heroes to improve team coverage.":"Awaiting team configuration.";
+  }
+  pool?.addEventListener("change",updateBuilder);
+  $("#builderClear")?.addEventListener("click",()=>{ $$('input[type="checkbox"]',pool).forEach(i=>i.checked=false);updateBuilder();announce("Team roster cleared.");});
+  $("#builderRandom")?.addEventListener("click",()=>{const inputs=$$('input[type="checkbox"]',pool);inputs.forEach(i=>i.checked=false);inputs.sort(()=>Math.random()-.5).slice(0,6).forEach(i=>i.checked=true);updateBuilder();announce("Random Avengers squad generated.");});
+  
+  // Character search filters only the character archive; it does not touch other sections.
+  const characterTitle=$("#characters .mcu-title");
+  if(characterTitle && !$("#characterArchiveSearch")){
+    const tools=document.createElement("div");tools.className="archive-tools";tools.innerHTML='<input id="characterArchiveSearch" type="search" placeholder="Search heroes and villains..." aria-label="Search characters">';
+    characterTitle.after(tools);
+    $("#characterArchiveSearch").addEventListener("input",e=>{
+      const query=e.target.value.trim().toLowerCase();
+      $$(".character-card",$("#characters")).forEach(card=>card.classList.toggle("jarvis-hidden",!card.textContent.toLowerCase().includes(query)));
+      announce(query?"Character archive filtered for <b>"+query.replace(/[&<>]/g,"")+"</b>.":"Character archive restored.");
+    });
+  }
+
+  // Timeline phase controls use the existing cards, preserving the original timeline markup.
+  const timeline=$("#timeline");
+  if(timeline && !$("#timelineArchiveTools")){
+    const title=$(".mcu-title",timeline);
+    const tools=document.createElement("div");tools.id="timelineArchiveTools";tools.className="archive-tools";
+    tools.innerHTML='<button class="archive-filter active" data-phase="all">ALL PHASES</button><button class="archive-filter" data-phase="phase one">PHASE ONE</button><button class="archive-filter" data-phase="phase two">PHASE TWO</button><button class="archive-filter" data-phase="phase three">PHASE THREE</button><button class="archive-filter" data-phase="phase four">PHASE FOUR</button><button class="archive-filter" data-phase="phase five">PHASE FIVE</button><button class="archive-filter" data-phase="phase six">PHASE SIX</button>';
+    title?.after(tools);
+    tools.addEventListener("click",e=>{const btn=e.target.closest("[data-phase]");if(!btn)return;$$("[data-phase]",tools).forEach(b=>b.classList.toggle("active",b===btn));$$(".timeline-item",timeline).forEach(item=>item.classList.toggle("jarvis-hidden",btn.dataset.phase!=="all"&&!item.textContent.toLowerCase().includes(btn.dataset.phase)));});
+  }
+
+  // Quick search for the movie archive.
+  const watchTitle=$("#watch-order .mcu-title");
+  if(watchTitle && !$("#cinemaArchiveSearch")){
+    const tools=document.createElement("div");tools.className="archive-tools";tools.innerHTML='<input id="cinemaArchiveSearch" type="search" placeholder="Search the cinema archive..." aria-label="Search MCU movies">';
+    watchTitle.after(tools);
+    $("#cinemaArchiveSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLowerCase();$$(".watch-item",watchRoot).forEach(item=>item.classList.toggle("jarvis-hidden",!item.textContent.toLowerCase().includes(q)));});
+  }
+
+  // Event archive filter.
+  const eventTitle=$("#events .mcu-title");
+  if(eventTitle && !$("#eventArchiveSearch")){
+    const note=document.createElement("p");note.className="event-archive-note";note.textContent="Search the event archive by battle, year, or multiverse event.";
+    const tools=document.createElement("div");tools.className="archive-tools";tools.innerHTML='<input id="eventArchiveSearch" type="search" placeholder="Search major events..." aria-label="Search MCU events">';
+    eventTitle.after(note,tools);
+    $("#eventArchiveSearch").addEventListener("input",e=>{const q=e.target.value.trim().toLowerCase();$$(".event",$("#events")).forEach(item=>item.classList.toggle("jarvis-hidden",!item.textContent.toLowerCase().includes(q)));});
+  }
+
+  // Select a stone to focus the archive readout.
+  const stoneInfo={
+    "Space Stone":"The Tesseract; manipulates space and enables portals and instant travel.",
+    "Mind Stone":"Once housed in Loki's scepter and later Vision; connected to consciousness and mental power.",
+    "Reality Stone":"The Aether; can alter matter and the way reality is perceived.",
+    "Power Stone":"A cosmic source of immense destructive energy.",
+    "Time Stone":"The Eye of Agamotto; can manipulate and loop time.",
+    "Soul Stone":"A mysterious stone tied to souls and a terrible sacrifice on Vormir."
+  };
+  const stoneRoot=$("#stones");
+  if(stoneRoot && !$("#stoneReadout")){
+    const output=document.createElement("div");output.id="stoneReadout";output.className="stone-readout";output.setAttribute("aria-live","polite");
+    output.innerHTML='<b id="stoneReadoutTitle">INFINITY STONE DATABASE</b><p id="stoneReadoutText">Select any stone card to inspect its archive entry.</p>';
+    $(".stones-grid",stoneRoot)?.after(output);
+    $$(".stone",stoneRoot).forEach(stone=>{
+      stone.setAttribute("tabindex","0");stone.setAttribute("role","button");
+      const activate=()=>{const name=$("h3",stone)?.textContent.trim();if(!name)return;$$(".stone",stoneRoot).forEach(x=>x.classList.toggle("jarvis-selected",x===stone));$("#stoneReadoutTitle").textContent=name.toUpperCase();$("#stoneReadoutText").textContent=stoneInfo[name]||$("p",stone)?.textContent||"Archive entry selected.";output.classList.add("show");};
+      stone.addEventListener("click",activate);stone.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activate();}});
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
