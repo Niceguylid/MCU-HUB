@@ -2146,10 +2146,10 @@ body.light-mode .filter-btn.active{
 <section class="jarvis-console" aria-label="JARVIS MCU command center">
   <div class="jarvis-shell">
     <div class="jarvis-top">
-      <div><div class="jarvis-kicker">STARK INDUSTRIES // MCU DATABASE</div><h2 class="jarvis-title">GOUFE <span>COMMAND CENTER</span></h2></div>
+      <div><div class="jarvis-kicker">GOUFE INDUSTRIES // MCU DATABASE</div><h2 class="jarvis-title">GOUFE <span>COMMAND CENTER</span></h2></div>
       <div class="jarvis-status">SYSTEM ONLINE</div>
     </div>
-    <p style="color:#a9bbc5;font-size:12px;max-width:760px">J.A.R.V.I.S. interface initialized. Access your MCU timeline, track your watch journey, or assemble a team.</p>
+    <p style="color:#a9bbc5;font-size:12px;max-width:760px">G.O.U.F.E interface initialized. Access your MCU timeline, track your watch journey, or assemble a team.</p>
     <div class="jarvis-metrics">
       <div class="jarvis-metric"><strong id="jarvisWatched">0</strong><small>PROJECTS WATCHED</small></div>
       <div class="jarvis-metric"><strong id="jarvisProgress">0%</strong><small>MCU JOURNEY</small></div>
@@ -2162,7 +2162,7 @@ body.light-mode .filter-btn.active{
       <button class="jarvis-btn" data-jump="#team-builder">✚ BUILD AVENGERS TEAM</button>
       <button class="jarvis-btn" data-jump="#upcoming">◷ FUTURE FILES</button>
     </div>
-    <div class="jarvis-readout" id="jarvisReadout"><b>JARVIS:</b> All systems nominal. Welcome to the MCU archive.</div>
+    <div class="jarvis-readout" id="jarvisReadout"><b>GOUFE:</b> All systems nominal. Welcome to the MCU archive.</div>
   </div>
 </section>
 
@@ -4410,7 +4410,7 @@ function mcuFilter(type, button){
   const $ = (selector, root=document) => root.querySelector(selector);
   const $$ = (selector, root=document) => Array.from(root.querySelectorAll(selector));
   const readout = $("#jarvisReadout");
-  const announce = message => { if(readout) readout.innerHTML = "<b>JARVIS:</b> " + message; };
+  const announce = message => { if(readout) readout.innerHTML = "<b>GOUFE:</b> " + message; };
   $$("[data-jump]").forEach(btn => btn.addEventListener("click",()=>{
     const target=$(btn.dataset.jump); if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
     announce("Navigating to <b>"+btn.textContent.trim().replace(/[▶⌁✚◷]/g,"").trim()+"</b>.");
