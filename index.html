@@ -2049,6 +2049,175 @@ body.light-mode .filter-btn.active{
 .ai-quick-prompts button:hover{border-color:#e62429}
 @media(max-width:850px){.community-ai-grid{grid-template-columns:1fr}.ai-chat-log{height:260px}}
 
+
+
+/* =========================
+   REFINED LIGHT MODE
+   Light surfaces, readable text, cinematic hero retained
+========================= */
+body.light-mode{
+  --light-bg:#f4f5f8;
+  --light-surface:#ffffff;
+  --light-surface-soft:#f8f9fc;
+  --light-border:#e1e4eb;
+  --light-text:#171923;
+  --light-muted:#626878;
+  background:var(--light-bg);
+  color:var(--light-text);
+}
+
+body.light-mode .mcu-nav{
+  background:rgba(255,255,255,.88);
+  border-bottom:1px solid rgba(20,24,35,.09);
+  box-shadow:0 8px 28px rgba(24,30,45,.07);
+}
+
+body.light-mode .mcu-logo{color:#171923}
+body.light-mode .mcu-menu a{color:#454a57}
+body.light-mode .mcu-menu a:hover{color:#e62429}
+body.light-mode .mcu-section{color:var(--light-text)}
+body.light-mode .mcu-title h2{color:#171923}
+body.light-mode .mcu-title p,
+body.light-mode .about-text p,
+body.light-mode .about-box p{color:var(--light-muted)}
+
+body.light-mode .about-box,
+body.light-mode .timeline-card,
+body.light-mode .watch-item,
+body.light-mode .upcoming-item,
+body.light-mode .saga-card,
+body.light-mode .avengers-card,
+body.light-mode .stone,
+body.light-mode .character-card,
+body.light-mode .event,
+body.light-mode .mcu-progress,
+body.light-mode .mcu-search-box,
+body.light-mode .movie-modal-box{
+  background:var(--light-surface);
+  color:var(--light-text);
+  border-color:var(--light-border);
+  box-shadow:0 8px 24px rgba(25,32,48,.055);
+}
+
+body.light-mode .about-box:hover,
+body.light-mode .timeline-card:hover,
+body.light-mode .watch-item:hover,
+body.light-mode .upcoming-item:hover,
+body.light-mode .saga-card:hover,
+body.light-mode .avengers-card:hover,
+body.light-mode .stone:hover,
+body.light-mode .character-card:hover,
+body.light-mode .event:hover{
+  box-shadow:0 14px 34px rgba(25,32,48,.11),0 5px 20px rgba(230,36,41,.07);
+}
+
+body.light-mode .timeline-card h3,
+body.light-mode .watch-info h3,
+body.light-mode .upcoming-info h3,
+body.light-mode .avengers-info h3,
+body.light-mode .character-info h3,
+body.light-mode .event h3,
+body.light-mode .progress-header h3,
+body.light-mode .movie-modal-info h2{
+  color:var(--light-text);
+}
+
+body.light-mode .timeline-card p,
+body.light-mode .watch-info p,
+body.light-mode .upcoming-info p,
+body.light-mode .saga-card p,
+body.light-mode .avengers-info p,
+body.light-mode .stone p,
+body.light-mode .character-info p,
+body.light-mode .event p,
+body.light-mode .movie-modal-info p,
+body.light-mode .search-result{
+  color:var(--light-muted);
+}
+
+body.light-mode .timeline:before{background:#d8dce5}
+body.light-mode .timeline-card{border-radius:12px}
+body.light-mode .about-box,
+body.light-mode .watch-item,
+body.light-mode .upcoming-item,
+body.light-mode .avengers-card,
+body.light-mode .stone,
+body.light-mode .character-card,
+body.light-mode .event,
+body.light-mode .mcu-progress,
+body.light-mode .movie-modal-box{
+  border-radius:12px;
+}
+body.light-mode .watch-item,
+body.light-mode .upcoming-item{background:linear-gradient(135deg,#fff,#fafbfe)}
+body.light-mode .watch-poster,
+body.light-mode .upcoming-poster,
+body.light-mode .avengers-poster{background:#e9ebf1}
+body.light-mode .saga-card{
+  background:linear-gradient(145deg,#fff,#f5f6fa);
+}
+body.light-mode .saga-phases{border-top-color:var(--light-border);color:#444a58}
+body.light-mode .personal-status{border-color:#cbd0db;color:#626878}
+body.light-mode .personal-watch-btn{
+  background:#f5f6fa;color:#4b5060;border-color:#d8dce5;
+}
+body.light-mode .personal-watch-btn:hover{background:#e62429;color:#fff;border-color:#e62429}
+body.light-mode .mcu-progress{border-left:3px solid #e62429}
+body.light-mode .progress-track{background:#e5e7ee}
+body.light-mode .mcu-search-box input{color:#171923}
+body.light-mode .mcu-search-box input::placeholder{color:#858b99}
+body.light-mode .mcu-search-box button{color:#747b8a}
+body.light-mode .mcu-search-box:focus-within{
+  border-color:#e62429;
+  box-shadow:0 0 0 3px rgba(230,36,41,.09);
+}
+body.light-mode .filter-btn{
+  background:#fff;color:#545a69;border-color:#dfe2e9;border-radius:999px;
+}
+body.light-mode .filter-btn:hover,
+body.light-mode .filter-btn.active{background:#e62429;color:#fff;border-color:#e62429}
+body.light-mode .theme-toggle,
+body.light-mode .mobile-menu-btn{
+  background:#fff;color:#252a36;border-color:#dfe2e9;
+  box-shadow:0 3px 12px rgba(25,32,48,.06);
+}
+body.light-mode .theme-toggle:hover,
+body.light-mode .mobile-menu-btn:hover{border-color:#e62429;color:#e62429}
+body.light-mode .movie-modal{
+  background:rgba(20,24,34,.48);
+}
+body.light-mode .movie-modal-close{
+  background:#fff;color:#252a36;border-color:#dfe2e9;
+}
+body.light-mode .movie-modal-close:hover{background:#e62429;color:#fff;border-color:#e62429}
+body.light-mode .mcu-hero{
+  /* Keep the hero cinematic and high-contrast in both themes. */
+  background:linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.76)),
+    url('https://cdn.marvel.com/content/2x/news_articles-mas_dsk_01.webp');
+  background-size:cover;
+  background-position:center;
+  background-attachment:scroll;
+}
+body.light-mode .mcu-hero h1{color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.55)}
+body.light-mode .mcu-hero p{color:#e7e7e7}
+body.light-mode .mcu-hero small{color:#ff5559}
+body.light-mode .mcu-button{background:#e62429;color:#fff;border-radius:4px}
+body.light-mode .mcu-button:hover{background:#c91d22;border-color:#c91d22}
+body.light-mode .mcu-menu.mobile-open{
+  background:rgba(255,255,255,.98);
+  border-color:var(--light-border);
+  box-shadow:0 16px 36px rgba(25,32,48,.12);
+}
+body.light-mode :focus-visible{
+  outline:3px solid rgba(230,36,41,.45);
+  outline-offset:3px;
+}
+@media(prefers-reduced-motion:reduce){
+  body.light-mode *,
+  body.light-mode *::before,
+  body.light-mode *::after{transition:none!important;animation:none!important}
+}
+
 </style>
 
 </head>
