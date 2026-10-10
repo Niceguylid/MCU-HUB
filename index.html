@@ -4425,8 +4425,8 @@ function mcuFilter(type, button){
   }
   const watchRoot=$("#watch-order");
   if(watchRoot){
-    const observer=new MutationObserver(refreshJourney);
-    observer.observe(watchRoot,{subtree:true,childList:true,characterData:true});
+    // Refresh on user interaction only. Observing text mutations here would
+    // re-trigger refreshJourney when it updates journeyMessage, freezing the page.
     watchRoot.addEventListener("click",()=>setTimeout(refreshJourney,80));
   }
   refreshJourney();
