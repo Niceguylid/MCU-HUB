@@ -4947,7 +4947,7 @@ function mcuFilter(type, button){
 const $=s=>document.querySelector(s),catalog=window.GOUFE_CARD_CATALOG||[];
 if(!$("#vaultCollection")||!catalog.length)return;
 const STORE="goufeCardVaultV2",PACKS="goufeCardPacksV2",DAY=86400000;
-const founder={id:"goufe-founder",name:"GOUFE // FOUNDER",rarity:"GOUFE EXCLUSIVE",faction:"FOUNDER",power:10,tactics:10,versatility:10,roles:["Creator","Founder","Multiversal"],image:"",custom:true};
+const founder={id:"goufe-founder",name:"GOUFE // FOUNDER",rarity:"GOUFE EXCLUSIVE",faction:"FOUNDER",power:10,tactics:10,versatility:10,roles:["Creator","Founder","Multiversal"],image:"https://raw.githubusercontent.com/Niceguylid/MCU-HUB/main/WhatsApp%20Image%202026-10-11%20at%2008.34.51.jpeg",custom:true};
 const weights={RARE:45,EPIC:27,LEGENDARY:16,MYTHIC:8,COSMIC:3,MULTIVERSAL:.9,TRANSCENDENT:.1};
 const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 let owned=new Set(read(STORE,[])),state=read(PACKS,{count:3,lastDaily:Date.now(),opened:0});
