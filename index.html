@@ -2400,7 +2400,11 @@ body.light-mode .builder-lore-note{background:#fffaf0;color:#5d4b24;border-color
 </style>
 
 <style id="vault-secret-mission-styles">
-.vault-secret-mission{margin:18px 0 24px;border:1px solid rgba(220,40,55,.38);border-radius:14px;background:linear-gradient(135deg,rgba(80,8,18,.22),rgba(8,10,16,.94));overflow:hidden}
+.vault-secret-mission{display:none;margin:18px 0 24px;border:1px solid rgba(220,40,55,.38);border-radius:14px;background:linear-gradient(135deg,rgba(80,8,18,.22),rgba(8,10,16,.94));overflow:hidden}
+.vault-secret-mission.vault-secret-open{display:block;position:fixed;z-index:100010;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(620px,calc(100vw - 28px));max-height:86vh;overflow-y:auto;margin:0;box-shadow:0 0 0 100vmax rgba(0,0,0,.88),0 0 50px rgba(230,36,41,.24)}
+.mcu-logo{border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;padding:0}
+.mcu-logo:focus-visible{outline:2px solid #ff454b;outline-offset:6px;border-radius:3px}
+@media(max-width:600px){.vault-secret-mission.vault-secret-open{max-height:88vh}}
 .vault-secret-trigger{width:100%;text-align:left;letter-spacing:.12em;color:#e7b7bd!important;background:rgba(12,12,16,.72)!important;border:1px dashed rgba(230,65,80,.48)!important}
 .vault-secret-panel{padding:20px;border-top:1px solid rgba(220,40,55,.28)}
 .vault-secret-heading>span,.vault-secret-progress span{font-size:.7rem;letter-spacing:.15em;color:#f06b78}
@@ -2424,9 +2428,9 @@ body.light-mode .builder-lore-note{background:#fffaf0;color:#5d4b24;border-color
 <nav class="mcu-nav">
   <div class="mcu-nav-inner">
 
-    <div class="mcu-logo">
+    <button class="mcu-logo" id="goufeSecretToggle" type="button" aria-label="Open classified GOUFE archive" aria-expanded="false">
       <span>GOUFE</span>
-    </div>
+    </button>
 
     <button class="mobile-menu-btn" id="mobileMenuBtn">
   ☰
@@ -4993,7 +4997,11 @@ $('#vaultOpenPack').addEventListener('click',()=>{if(!state.count)return;const c
 $('#vaultClaimFounder').addEventListener('click',()=>{if(owned.has(founder.id))return;const fullSet=catalog.every(c=>owned.has(c.id));const missing=[];if(!fullSet)missing.push('collect all '+catalog.length+' standard cards ('+owned.size+' / '+catalog.length+')');if(state.wins<50)missing.push('win '+(50-state.wins)+' more VS battles ('+state.wins+' / 50 wins)');if(!state.toaaDefeated)missing.push('discover the secret counter: Doctor Doom (YOUR CARD) vs The One Above All (RIVAL CARD)');if(missing.length){$('#vaultStatus').textContent='FOUNDER CARD LOCKED // REQUIREMENTS REMAINING: '+missing.join(' • ')+'.';return}owned.add(founder.id);save();render();reveal(founder,'SECRET ENDGAME PROTOCOL COMPLETE')});
 let secretCodeAccepted=false;
  function updateSecretMission(){const wins=Math.min(3,state.wins);$('#vaultSecretWins').textContent=wins+' / 3';$('#vaultSecretMeter').style.width=(wins/3*100)+'%';const done=secretCodeAccepted&&wins>=3;$('#vaultSecretClaim').disabled=!done||owned.has(secretRewards[0].id);if(owned.has(secretRewards[0].id))$('#vaultSecretStatus').textContent='MISSION COMPLETE // REWARD ALREADY CLAIMED.';else if(!secretCodeAccepted)$('#vaultSecretStatus').textContent='Mission locked. Decode the access code to begin.';else if(wins<3)$('#vaultSecretStatus').textContent='ACCESS GRANTED // Win '+(3-wins)+' more VS battle(s) to breach the multiverse.';else $('#vaultSecretStatus').textContent='BREACH CONTAINED // Claim your Cosmic card.';$('#vaultSecretClaim').textContent=owned.has(secretRewards[0].id)?'REWARD CLAIMED':'CLAIM COSMIC REWARD'}
- $('#vaultSecretTrigger').addEventListener('click',()=>{$('#vaultSecretPanel').hidden=!$('#vaultSecretPanel').hidden});
+ const secretMission=$('#vaultSecretMission'),secretPanel=$('#vaultSecretPanel'),secretToggle=$('#goufeSecretToggle');
+  function setSecretOpen(open){secretMission.classList.toggle('vault-secret-open',open);secretPanel.hidden=!open;secretToggle.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':''}
+  secretToggle.addEventListener('click',()=>setSecretOpen(!secretMission.classList.contains('vault-secret-open')));
+  $('#vaultSecretTrigger').addEventListener('click',()=>setSecretOpen(false));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&secretMission.classList.contains('vault-secret-open'))setSecretOpen(false)});
  $('#vaultSecretSubmit').addEventListener('click',()=>{if($('#vaultSecretCode').value.trim().toUpperCase()==='616'){secretCodeAccepted=true;$('#vaultSecretHint').textContent='CODE ACCEPTED // Earth-616 confirmed.';updateSecretMission()}else{$('#vaultSecretStatus').textContent='ACCESS DENIED // Incorrect code. Recheck the clue.';$('#vaultSecretCode').select()}});
  $('#vaultSecretCode').addEventListener('keydown',e=>{if(e.key==='Enter')$('#vaultSecretSubmit').click()});
  $('#vaultSecretClaim').addEventListener('click',()=>{updateSecretMission();if(!secretCodeAccepted||state.wins<3||owned.has(secretRewards[0].id))return;owned.add(secretRewards[0].id);save();render();updateSecretMission();reveal(secretRewards[0],'SECRET MISSION COMPLETE // COSMIC REWARD')});
