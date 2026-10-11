@@ -4987,7 +4987,7 @@ function mcuFilter(type, button){
     "Iron Man":"iron-man-tony-stark","Captain America":"captain-america-steve-rogers","Thor":"thor-thor-odinson","Hulk":"hulk-bruce-banner","Black Widow":"black-widow-natasha-romanoff","Hawkeye":"hawkeye-clint-barton","Spider-Man":"spider-man-peter-parker","Doctor Strange":"doctor-strange-stephen-strange","Black Panther":"black-panther-tchalla","Captain Marvel":"captain-marvel-carol-danvers","Shang-Chi":"shang-chi","Scarlet Witch":"scarlet-witch-wanda-maximoff","Ant-Man":"ant-man-scott-lang","Wasp":"wasp-janet-van-dyne","Loki":"loki","Vision":"vision-vision","War Machine":"war-machine-james-rhodes","Falcon / Sam Wilson":"falcon-sam-wilson","Winter Soldier":"winter-soldier-bucky-barnes","Winter Soldier / Bucky Barnes":"winter-soldier-bucky-barnes","Star-Lord":"star-lord-peter-quill","Gamora":"gamora","Rocket Raccoon":"rocket-raccoon","Groot":"groot","Drax":"drax","Mantis":"mantis","Nebula":"nebula","Yelena Belova":"yelena-belova","Kate Bishop":"kate-bishop","Moon Knight":"moon-knight-marc-spector","Daredevil":"daredevil-matthew-murdock","Punisher":"punisher-frank-castle","Deadpool":"deadpool-wade-wilson","Wolverine":"wolverine-james-howlett","Professor X":"professor-x-charles-xavier","Magneto":"magneto-max-eisenhardt","Cyclops":"cyclops-scott-summers","Storm":"storm-ororo-munroe","Jean Grey":"jean-grey","Reed Richards":"mister-fantastic-reed-richards","Invisible Woman":"invisible-woman-susan-storm","Human Torch":"human-torch-johnny-storm","The Thing":"thing-ben-grimm","Silver Surfer":"silver-surfer-norrin-radd","Sentry":"sentry-robert-reynolds","Mephisto":"mephisto","Sentinel":"sentinel"
   };
   function marvelProfileURL(name){const slug=marvelProfileAliases[name];return slug?"https://www.marvel.com/characters/"+slug:"https://www.marvel.com/characters";}
-  function loadWikiPortraits(root){
+  window.loadWikiPortraits = function(root){
     if(!root)return;
     const profiles=Array.isArray(window.GOUFE_CARD_CATALOG)?window.GOUFE_CARD_CATALOG:[];
     const normalize=name=>String(name||"").toLowerCase().replace(/[^a-z0-9]/g,"");
@@ -5005,7 +5005,7 @@ function mcuFilter(type, button){
       img.onerror=function(){if(this.dataset.fallbackTried){this.remove();return;}this.dataset.fallbackTried="1";this.src=fallback;};
       node.replaceWith(img);
     });
-  }
+  };
   function renderBuilderCards(){
     if(!pool)return;
     const rarityOrder={"FOUNDER":-2,TRANSCENDENT:0,MULTIVERSAL:1,COSMIC:2,MYTHIC:3,LEGENDARY:4,EPIC:5,RARE:6};
@@ -5016,7 +5016,7 @@ function mcuFilter(type, button){
       const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase().replace(/[^a-z0-9-]/g,"-"), isFounder=name==="G.O.U.F.E", founderOwned=builderFounderOwned();
       return '<label class="builder-pick rarity-'+rarityClass+(isFounder?(' builder-founder-card '+(founderOwned?' builder-founder-owned':' builder-founder-locked')):'')+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'" '+'><span class="builder-card-art">'+(image?'<img src="'+image+'" alt="" loading="lazy" decoding="async">' : '<span class="builder-image-placeholder" data-wiki-portrait="'+builderEscape(name)+'"><b>'+builderEscape(name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>')+'<span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+(isFounder&&!founderOwned?'LOCKED // CLAIM IN GOUFE CARD VAULT':builderEscape(profile.roles.join(" / ")))+'</small></span></label>';
     }).join("");
-    loadWikiPortraits(pool);
+    window.loadWikiPortraits(pool);
   }
   function builderFounderOwned(){try{return JSON.parse(localStorage.getItem("goufeCardVaultV2")||"[]").includes("goufe-founder")}catch(e){return false}}
   renderBuilderCards();
@@ -5168,7 +5168,7 @@ const label=got?c.name:(secret?'CLASSIFIED REWARD':'UNKNOWN PERSONNEL');
 const sub=got?c.rarity+' // '+c.faction:(secret?'SECRET MISSION // LOCKED':'MYSTERY DROP // '+c.rarity);
 return '<button class="vault-card rarity-'+cls(c.rarity)+(got?' owned':' locked')+'" data-vault-card="'+esc(c.id)+'" type="button" aria-label="'+esc(got?c.name:(secret?'Classified secret reward':'Mystery card '+c.rarity))+'">'+art(c,!got)+'<span class="vault-card-label"><strong>'+esc(label)+'</strong><small>'+esc(sub)+'</small></span></button>';
 }).join('');
-loadWikiPortraits(root);
+window.loadWikiPortraits(root);
 $('#vaultOwnedCount').textContent=owned.size;
 $('#vaultTotalCount').textContent=Math.max(100,catalog.length+secretRewards.length+1);
 $('#vaultPackCount').textContent=state.count;
