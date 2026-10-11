@@ -4991,19 +4991,57 @@ function mcuFilter(type, button){
     if(!root)return;
     const profiles=Array.isArray(window.GOUFE_CARD_CATALOG)?window.GOUFE_CARD_CATALOG:[];
     const normalize=name=>String(name||"").toLowerCase().replace(/[^a-z0-9]/g,"");
-    const fallback="https://cdn.marvel.com/content/2x/news_articles-mas_dsk_01.webp";
+    const searchNames={
+      "Falcon / Sam Wilson":"Sam Wilson Marvel Cinematic Universe",
+      "Winter Soldier / Bucky Barnes":"Bucky Barnes Marvel Cinematic Universe",
+      "Professor X":"Professor X X-Men film",
+      "The Thing":"Ben Grimm Fantastic Four film",
+      "Human Torch":"Johnny Storm Fantastic Four film",
+      "Invisible Woman":"Sue Storm Fantastic Four film",
+      "Reed Richards":"Reed Richards Fantastic Four film",
+      "Kingpin":"Wilson Fisk Marvel Cinematic Universe",
+      "Groot":"Groot Guardians of the Galaxy film",
+      "Rocket Raccoon":"Rocket Raccoon Guardians of the Galaxy film"
+    };
+    const portraitCache=window.__goufePortraitCache||(window.__goufePortraitCache={});
+    async function findPortrait(name){
+      const query=searchNames[name]||name+" Marvel Cinematic Universe";
+      if(portraitCache[query])return portraitCache[query];
+      try{
+        const url="https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch="+encodeURIComponent(query)+"&gsrnamespace=0&gsrlimit=6&prop=pageimages&piprop=thumbnail&pithumbsize=700&format=json&origin=*";
+        const response=await fetch(url);
+        if(!response.ok)throw new Error("Portrait search failed");
+        const data=await response.json();
+        const pages=Object.values(data.query&&data.query.pages||{}).filter(page=>page.thumbnail&&page.thumbnail.source);
+        const key=normalize(name.replace(/\/.*$/,""));
+        const exact=pages.find(page=>normalize(page.title).includes(key)||key.includes(normalize(page.title)));
+        const result=(exact||pages[0]||{}).thumbnail?.source||"";
+        portraitCache[query]=result;
+        return result;
+      }catch(error){portraitCache[query]="";return "";}
+    }
     root.querySelectorAll("[data-wiki-portrait]").forEach(node=>{
       const name=node.getAttribute("data-wiki-portrait")||"";
       const key=normalize(name);
       const profile=profiles.find(p=>normalize(p.name)===key)||profiles.find(p=>normalize(p.name).includes(key)||key.includes(normalize(p.name)));
-      const src=profile&&profile.image?profile.image:fallback;
       const img=document.createElement("img");
-      img.src=src;
-      img.alt=name+" — Marvel";
+      img.alt=name+" — Marvel character";
       img.loading="lazy";
       img.decoding="async";
-      img.onerror=function(){if(this.dataset.fallbackTried){this.remove();return;}this.dataset.fallbackTried="1";this.src=fallback;};
+      img.referrerPolicy="no-referrer";
+      const useImage=src=>{
+        if(!src){img.remove();return;}
+        img.onerror=async function(){
+          this.onerror=null;
+          const found=await findPortrait(name);
+          if(found&&found!==this.src)this.src=found;
+          else this.remove();
+        };
+        img.src=src;
+      };
       node.replaceWith(img);
+      if(profile&&profile.image)useImage(profile.image);
+      else findPortrait(name).then(useImage);
     });
   };
   function renderBuilderCards(){
