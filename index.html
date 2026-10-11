@@ -2421,6 +2421,45 @@ body.light-mode .builder-lore-note{background:#fffaf0;color:#5d4b24;border-color
 .vault-secret-status{margin:12px 0}
 .vault-secret-trigger:hover{border-color:#ff5668!important;color:#fff!important}
 @media(max-width:600px){.vault-secret-panel{padding:14px}.vault-secret-code-row>*{width:100%}}
+
+/* GOUFE MENU + VAULT BUG FIXES */
+.mcu-logo{
+  display:inline-flex!important;align-items:center;justify-content:center;
+  min-height:44px;padding:7px 12px!important;
+  font-family:Arial,Helvetica,sans-serif!important;font-size:25px!important;
+  line-height:1!important;font-weight:1000!important;letter-spacing:3px!important;
+  white-space:nowrap;flex-shrink:0;text-shadow:0 0 18px rgba(230,36,41,.3);
+  transition:transform .22s ease,text-shadow .22s ease;
+}
+.mcu-logo span{font-size:inherit!important;font-weight:inherit!important;letter-spacing:inherit!important}
+.mcu-logo:hover{transform:scale(1.06);text-shadow:0 0 18px rgba(230,36,41,.75)}
+.mcu-logo.goufe-opening{animation:goufeLogoPulse .65s ease both}
+@keyframes goufeLogoPulse{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.16);filter:brightness(1.8)}70%{transform:scale(.97);filter:brightness(1.2)}100%{transform:scale(1);filter:brightness(1)}}
+#vaultSecretBackdrop{position:fixed;inset:0;z-index:100009;background:rgba(0,0,0,.97);opacity:0;animation:goufeBackdropIn .22s ease forwards}
+@keyframes goufeBackdropIn{to{opacity:1}}
+.vault-secret-mission.vault-secret-open{
+  background:#08090d!important;opacity:1!important;
+  border:1px solid rgba(230,65,80,.75)!important;
+  box-shadow:0 0 45px rgba(230,36,41,.24)!important;
+  isolation:isolate;
+}
+.vault-secret-mission.vault-secret-open .vault-secret-panel{
+  background:#08090d!important;opacity:1!important;
+  animation:goufePanelIn .32s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes goufePanelIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.vault-secret-close{
+  position:sticky;top:0;z-index:5;float:right;margin:0 0 10px 12px;
+  width:38px;height:38px;border:1px solid #5b3339;border-radius:8px;
+  background:#191015;color:#fff;font-size:23px;font-weight:700;line-height:1;
+  cursor:pointer;display:grid;place-items:center;
+}
+.vault-secret-close:hover{background:#e62429;border-color:#e62429}
+.vault-secret-heading h3,.vault-secret-heading p,.vault-secret-status,.vault-secret-hint,
+.vault-secret-label,.vault-secret-progress strong{color:#fff!important;text-shadow:none!important}
+#vaultClaimFounder{position:relative;z-index:2;pointer-events:auto;opacity:1}
+#vaultClaimFounder:disabled{cursor:pointer;opacity:.75}
+@media(max-width:600px){.mcu-logo{font-size:22px!important;padding:7px 8px!important;letter-spacing:2px!important}}
 </style></head>
 
 <body>
@@ -4988,13 +5027,13 @@ function refresh(){if(!state.lastDaily||Date.now()-state.lastDaily>=DAY){state.c
 function populate(){const a=$('#vaultFighterA');if(!a)return;const preferred=a.value,options=all();a.innerHTML='<option value="">Choose an owned card</option>'+options.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' — '+esc(c.rarity)+'</option>').join('');if(options.some(c=>c.id===preferred))a.value=preferred;$('#vaultAiRival').textContent=a.value?'AI will choose a rival at battle start':'Choose your card first';$('#vaultFight').disabled=options.length<1||!a.value}
  function chooseAiRival(player){if(player.name==='Doctor Doom'){const toaa=catalog.find(c=>c.name==='The One Above All (TOAA)');if(toaa)return toaa}const pool=catalog.filter(c=>c.id!==player.id);if(!pool.length)return null;const score=c=>c.power*.4+c.tactics*.3+c.versatility*.3;const playerScore=score(player);const fair=pool.filter(c=>Math.abs(score(c)-playerScore)<=2.5);const choices=fair.length?fair:pool;return choices[Math.floor(Math.random()*choices.length)]}
  function render(){const root=$('#vaultCollection');root.innerHTML=catalog.map(c=>{const got=owned.has(c.id);return '<button class="vault-card rarity-'+cls(c.rarity)+(got?' owned':' locked')+'" data-vault-card="'+esc(c.id)+'" type="button" aria-label="'+esc(got?c.name:'Mystery card '+c.rarity)+'">'+art(c,!got)+'<span class="vault-card-label"><strong>'+esc(got?c.name:'UNKNOWN PERSONNEL')+'</strong><small>'+esc(got?c.rarity+' // '+c.faction:'MYSTERY DROP // '+c.rarity)+'</small></span></button>'}).join('')+secretRewards.map(c=>{const got=owned.has(c.id);return '<button class="vault-card rarity-'+cls(c.rarity)+(got?' owned':' locked')+'" data-vault-card="'+esc(c.id)+'" type="button" aria-label="'+esc(got?c.name:'Classified secret reward')+'">'+art(c,!got)+'<span class="vault-card-label"><strong>'+esc(got?c.name:'CLASSIFIED REWARD')+'</strong><small>'+esc(got?c.rarity+' // '+c.faction:'SECRET MISSION // LOCKED')+'</small></span></button>'}).join('')+'<button class="vault-card rarity-goufe-exclusive '+(owned.has(founder.id)?'owned':'locked')+'" data-vault-founder="true" type="button">'+art(founder,!owned.has(founder.id))+'<span class="vault-card-label"><strong>'+esc(owned.has(founder.id)?founder.name:'UNKNOWN FOUNDER')+'</strong><small>'+esc(owned.has(founder.id)?'GOUFE EXCLUSIVE // FOUNDER':'LOCKED // GOUFE EXCLUSIVE')+'</small></span></button>';
-$('#vaultOwnedCount').textContent=owned.size;$('#vaultTotalCount').textContent=catalog.length+secretRewards.length+1;$('#vaultPackCount').textContent=state.count;$('#vaultOpenPack').disabled=state.count<1||catalog.every(c=>owned.has(c.id));$('#vaultClaimFounder').disabled=owned.has(founder.id);$('#vaultClaimFounder').textContent=owned.has(founder.id)?'FOUNDER CARD CLAIMED':'CLAIM FOUNDER CARD';$('#vaultStatus').textContent=(state.count?state.count+' free pack(s) ready. One pack refreshes every 24 hours.':'No packs left. Next daily pack in '+untilDaily()+'.')+' FOUNDER PROTOCOL: CLASSIFIED.';populate()}
+$('#vaultOwnedCount').textContent=owned.size;$('#vaultTotalCount').textContent=catalog.length+secretRewards.length+1;$('#vaultPackCount').textContent=state.count;$('#vaultOpenPack').disabled=state.count<1||catalog.every(c=>owned.has(c.id));$('#vaultClaimFounder').disabled=false;$('#vaultClaimFounder').textContent=owned.has(founder.id)?'FOUNDER CARD CLAIMED':'CLAIM FOUNDER CARD';$('#vaultStatus').textContent=(state.count?state.count+' free pack(s) ready. One pack refreshes every 24 hours.':'No packs left. Next daily pack in '+untilDaily()+'.')+' FOUNDER PROTOCOL: CLASSIFIED.';populate()}
 function impact(title,sub){const o=$('#vaultImpact');$('#vaultImpactText').textContent=title;$('#vaultImpactSub').textContent=sub;o.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>{o.hidden=true;document.body.style.overflow=''},1600)}
 function reveal(c,sub){$('#vaultRevealCard').innerHTML=card(c,true);$('#vaultRevealTitle').textContent='NEW CARD UNLOCKED';$('#vaultRevealSubtitle').textContent=sub||c.rarity+' // '+c.faction;$('#vaultReveal').hidden=false;$('#vaultRevealClose').focus()}
 function closeReveal(){$('#vaultReveal').hidden=true;render()}
 function pick(){const a=catalog.filter(c=>!owned.has(c.id));if(!a.length)return null;const total=a.reduce((n,c)=>n+(weights[c.rarity]||1),0);let r=Math.random()*total;for(const c of a){r-=weights[c.rarity]||1;if(r<=0)return c}return a[a.length-1]}
 $('#vaultOpenPack').addEventListener('click',()=>{if(!state.count)return;const c=pick();if(!c){$('#vaultStatus').textContent='All standard cards collected!';return}state.count--;state.opened++;owned.add(c.id);save();render();reveal(c,'PACK DROP // '+c.rarity+' '+c.faction)});
-$('#vaultClaimFounder').addEventListener('click',()=>{if(owned.has(founder.id))return;const fullSet=catalog.every(c=>owned.has(c.id));const missing=[];if(!fullSet)missing.push('collect all '+catalog.length+' standard cards ('+owned.size+' / '+catalog.length+')');if(state.wins<50)missing.push('win '+(50-state.wins)+' more VS battles ('+state.wins+' / 50 wins)');if(!state.toaaDefeated)missing.push('discover the secret counter: Doctor Doom (YOUR CARD) vs The One Above All (RIVAL CARD)');if(missing.length){$('#vaultStatus').textContent='FOUNDER CARD LOCKED // REQUIREMENTS REMAINING: '+missing.join(' • ')+'.';return}owned.add(founder.id);save();render();reveal(founder,'SECRET ENDGAME PROTOCOL COMPLETE')});
+$('#vaultClaimFounder').addEventListener('click',()=>{if(owned.has(founder.id)){ $('#vaultStatus').textContent='FOUNDER CARD ALREADY CLAIMED // GOUFE EXCLUSIVE.'; return; }const fullSet=catalog.every(c=>owned.has(c.id));const missing=[];if(!fullSet)missing.push('collect all '+catalog.length+' standard cards ('+owned.size+' / '+catalog.length+')');if(state.wins<50)missing.push('win '+(50-state.wins)+' more VS battles ('+state.wins+' / 50 wins)');if(!state.toaaDefeated)missing.push('discover the secret counter: Doctor Doom (YOUR CARD) vs The One Above All (RIVAL CARD)');if(missing.length){$('#vaultStatus').textContent='FOUNDER CARD LOCKED // REQUIREMENTS REMAINING: '+missing.join(' • ')+'.';return}owned.add(founder.id);save();render();reveal(founder,'SECRET ENDGAME PROTOCOL COMPLETE')});
 let secretCodeAccepted=false;
  function updateSecretMission(){const wins=Math.min(3,state.wins);$('#vaultSecretWins').textContent=wins+' / 3';$('#vaultSecretMeter').style.width=(wins/3*100)+'%';const done=secretCodeAccepted&&wins>=3;$('#vaultSecretClaim').disabled=!done||owned.has(secretRewards[0].id);if(owned.has(secretRewards[0].id))$('#vaultSecretStatus').textContent='MISSION COMPLETE // REWARD ALREADY CLAIMED.';else if(!secretCodeAccepted)$('#vaultSecretStatus').textContent='Mission locked. Decode the access code to begin.';else if(wins<3)$('#vaultSecretStatus').textContent='ACCESS GRANTED // Win '+(3-wins)+' more VS battle(s) to breach the multiverse.';else $('#vaultSecretStatus').textContent='BREACH CONTAINED // Claim your Cosmic card.';$('#vaultSecretClaim').textContent=owned.has(secretRewards[0].id)?'REWARD CLAIMED':'CLAIM COSMIC REWARD'}
  const secretMission=$('#vaultSecretMission'),secretPanel=$('#vaultSecretPanel'),secretToggle=$('#goufeSecretToggle');
@@ -5090,5 +5129,61 @@ $('#vaultFighterA').addEventListener('change',populate);$('#vaultFight').addEven
 })();
 </script>
 
+
+<script>
+/* GOUFE interaction patch: close control, true opaque backdrop, logo animation, founder status */
+(function(){
+  const logo=document.getElementById('goufeSecretToggle');
+  const modal=document.getElementById('vaultSecretMission');
+  const panel=document.getElementById('vaultSecretPanel');
+  if(!logo||!modal||!panel)return;
+  let backdrop=null;
+  function closeMenu(){
+    if(modal.classList.contains('vault-secret-open')) logo.click();
+  }
+  function syncMenu(){
+    const isOpen=modal.classList.contains('vault-secret-open');
+    if(isOpen){
+      if(!backdrop){
+        backdrop=document.createElement('div');
+        backdrop.id='vaultSecretBackdrop';
+        backdrop.setAttribute('aria-hidden','true');
+        backdrop.addEventListener('click',closeMenu);
+        document.body.appendChild(backdrop);
+      }
+      document.body.style.overflow='hidden';
+      if(!panel.querySelector('.vault-secret-close')){
+        const close=document.createElement('button');
+        close.className='vault-secret-close';
+        close.type='button';
+        close.setAttribute('aria-label','Close GOUFE archive');
+        close.title='Close';
+        close.textContent='×';
+        close.addEventListener('click',closeMenu);
+        panel.prepend(close);
+      }
+    }else{
+      backdrop?.remove();backdrop=null;
+      document.body.style.overflow='';
+    }
+  }
+  logo.addEventListener('click',()=>{
+    logo.classList.remove('goufe-opening');
+    void logo.offsetWidth;
+    logo.classList.add('goufe-opening');
+    window.setTimeout(()=>logo.classList.remove('goufe-opening'),700);
+    window.setTimeout(syncMenu,0);
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+  // Ensure founder claim always reports the actual unlock requirements instead of appearing dead.
+  const claim=document.getElementById('vaultClaimFounder');
+  if(claim){
+    claim.disabled=false;
+    const observer=new MutationObserver(()=>{claim.disabled=false;});
+    observer.observe(claim,{attributes:true,attributeFilter:['disabled']});
+  }
+  syncMenu();
+})();
+</script>
 </body>
 </html>
