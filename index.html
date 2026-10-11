@@ -2370,6 +2370,7 @@ body.light-mode .builder-role-grid>div{border-color:#d5e0e4}
 
 
 /* TEAM BUILDER MARVEL CARDS + RARITY */
+.builder-image-placeholder{display:grid;place-items:center;width:100%;height:100%;min-height:130px;background:radial-gradient(circle,#5b171e,#09090d 72%);color:#ffd8a1;font-size:25px;font-weight:1000;letter-spacing:2px;}
 .builder-collection-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
 .builder-collection-tools input,.builder-collection-tools select{min-width:0;width:100%;padding:10px;background:#101014;color:#fff;border:1px solid #38383f;border-radius:7px;font:inherit;font-size:11px}
 .builder-collection-tools input{grid-column:1/-1}
@@ -4827,9 +4828,9 @@ function mcuFilter(type, button){
     if(!pool)return;
     pool.innerHTML=Object.entries(builderProfiles).map(([name,profile])=>{
       const meta=builderMeta[name]||["news_articles-mas_dsk_01.webp","RARE","HERO"];
-      const image=meta[0].startsWith("http")?meta[0]:"https://cdn.marvel.com/content/1x/"+meta[0];
+      const image=meta[0]?(meta[0].startsWith("http")?meta[0]:"https://cdn.marvel.com/content/1x/"+meta[0]):"";
       const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase();
-      return '<label class="builder-pick rarity-'+rarityClass+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'"><span class="builder-card-art"><img src="'+image+'" alt="" loading="lazy" decoding="async"><span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+builderEscape(profile.roles.join(" / "))+'</small></span></label>';
+      return '<label class="builder-pick rarity-'+rarityClass+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'"><span class="builder-card-art">'+(image?'<img src="'+image+'" alt="" loading="lazy" decoding="async">' : '<span class="builder-image-placeholder">'+builderEscape(name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</span>')+'<span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+builderEscape(profile.roles.join(" / "))+'</small></span></label>';
     }).join("");
   }
   renderBuilderCards();
@@ -4941,7 +4942,39 @@ function mcuFilter(type, button){
   }
 })();
 </script>
-
+<script>
+(function(){
+const $=s=>document.querySelector(s),catalog=window.GOUFE_CARD_CATALOG||[];
+if(!$("#vaultCollection")||!catalog.length)return;
+const STORE="goufeCardVaultV2",PACKS="goufeCardPacksV2",DAY=86400000;
+const founder={id:"goufe-founder",name:"GOUFE // FOUNDER",rarity:"GOUFE EXCLUSIVE",faction:"FOUNDER",power:10,tactics:10,versatility:10,roles:["Creator","Founder","Multiversal"],image:"",custom:true};
+const weights={RARE:45,EPIC:27,LEGENDARY:16,MYTHIC:8,COSMIC:3,MULTIVERSAL:.9,TRANSCENDENT:.1};
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+let owned=new Set(read(STORE,[])),state=read(PACKS,{count:3,lastDaily:Date.now(),opened:0});
+if(typeof state.count!=="number")state={count:3,lastDaily:Date.now(),opened:0};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cls=s=>s.toLowerCase().replace(/[^a-z0-9-]/g,"-");
+const all=()=>[...catalog,founder].filter(c=>owned.has(c.id));
+function save(){try{localStorage.setItem(STORE,JSON.stringify([...owned]));localStorage.setItem(PACKS,JSON.stringify(state))}catch(e){}}
+function art(c,locked){const image=c.image?'<img src="'+esc(c.image)+'" alt="" loading="lazy" onerror="this.remove()">':'';const placeholder=c.custom?'<div class="vault-custom-placeholder"><span>G</span><strong>YOUR PHOTO</strong><small>PORTRAIT SLOT // PENDING</small></div>':(!c.image?'<div class="vault-custom-placeholder"><span>'+esc(c.name.split(/\\s+/).map(w=>w[0]).join("").slice(0,3))+'</span><small>ARCHIVE ART PENDING</small></div>':'');return '<div class="vault-card-art">'+image+placeholder+(locked?'<span class="vault-question">?</span>':'')+'</div>'}
+function card(c,large){return '<div class="vault-card rarity-'+cls(c.rarity)+(large?' vault-reveal-card':'')+'">'+art(c,false)+'<span class="vault-card-label"><strong>'+esc(c.name)+'</strong><small>'+esc(c.rarity+' // '+c.faction)+'</small></span></div>'}
+function untilDaily(){const ms=Math.max(0,DAY-(Date.now()-(state.lastDaily||Date.now())));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'}
+function refresh(){if(!state.lastDaily||Date.now()-state.lastDaily>=DAY){state.count++;state.lastDaily=Date.now();save()}}
+function populate(){['#vaultFighterA','#vaultFighterB'].forEach(sel=>{const el=$(sel),old=el.value;el.innerHTML='<option value="">Choose an owned card</option>'+all().map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+' — '+esc(c.rarity)+'</option>').join('');if(all().some(c=>c.id===old))el.value=old});$('#vaultFight').disabled=all().length<2}
+function render(){const root=$('#vaultCollection');root.innerHTML=catalog.map(c=>{const got=owned.has(c.id);return '<button class="vault-card rarity-'+cls(c.rarity)+(got?' owned':' locked')+'" data-vault-card="'+esc(c.id)+'" type="button" aria-label="'+esc(got?c.name:'Mystery card '+c.rarity)+'">'+art(c,!got)+'<span class="vault-card-label"><strong>'+esc(got?c.name:'UNKNOWN PERSONNEL')+'</strong><small>'+esc(got?c.rarity+' // '+c.faction:'MYSTERY DROP // '+c.rarity)+'</small></span></button>'}).join('')+'<button class="vault-card rarity-goufe-exclusive '+(owned.has(founder.id)?'owned':'locked')+'" data-vault-founder="true" type="button">'+art(founder,!owned.has(founder.id))+'<span class="vault-card-label"><strong>'+esc(owned.has(founder.id)?founder.name:'UNKNOWN FOUNDER')+'</strong><small>'+esc(owned.has(founder.id)?'GOUFE EXCLUSIVE // FOUNDER':'LOCKED // GOUFE EXCLUSIVE')+'</small></span></button>';
+$('#vaultOwnedCount').textContent=owned.size;$('#vaultTotalCount').textContent=catalog.length+1;$('#vaultPackCount').textContent=state.count;$('#vaultOpenPack').disabled=state.count<1||catalog.every(c=>owned.has(c.id));$('#vaultClaimFounder').disabled=owned.has(founder.id);$('#vaultClaimFounder').textContent=owned.has(founder.id)?'FOUNDER CARD CLAIMED':'CLAIM FOUNDER CARD';$('#vaultStatus').textContent=state.count?state.count+' free pack(s) ready. One pack refreshes every 24 hours.':'No packs left. Next daily pack in '+untilDaily()+'.';populate()}
+function impact(title,sub){const o=$('#vaultImpact');$('#vaultImpactText').textContent=title;$('#vaultImpactSub').textContent=sub;o.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>{o.hidden=true;document.body.style.overflow=''},1600)}
+function reveal(c,sub){$('#vaultRevealCard').innerHTML=card(c,true);$('#vaultRevealTitle').textContent='NEW CARD UNLOCKED';$('#vaultRevealSubtitle').textContent=sub||c.rarity+' // '+c.faction;$('#vaultReveal').hidden=false;$('#vaultRevealClose').focus()}
+function closeReveal(){$('#vaultReveal').hidden=true;render()}
+function pick(){const a=catalog.filter(c=>!owned.has(c.id));if(!a.length)return null;const total=a.reduce((n,c)=>n+(weights[c.rarity]||1),0);let r=Math.random()*total;for(const c of a){r-=weights[c.rarity]||1;if(r<=0)return c}return a[a.length-1]}
+$('#vaultOpenPack').addEventListener('click',()=>{if(!state.count)return;const c=pick();if(!c){$('#vaultStatus').textContent='All standard cards collected!';return}state.count--;state.opened++;owned.add(c.id);const bonus=state.opened>=5&&!owned.has(founder.id);if(bonus)owned.add(founder.id);save();render();reveal(bonus?founder:c,bonus?'SECRET FOUNDER REWARD // ALSO UNLOCKED '+c.name:'PACK DROP // '+c.rarity+' '+c.faction)});
+$('#vaultClaimFounder').addEventListener('click',()=>{if(owned.has(founder.id))return;if(state.opened<5){$('#vaultStatus').textContent='Founder card unlocks after opening 5 packs. Progress: '+state.opened+'/5.';return}owned.add(founder.id);save();render();reveal(founder,'FOUNDER MILESTONE COMPLETE')});
+$('#vaultRevealClose').addEventListener('click',closeReveal);$('#vaultReveal').addEventListener('click',e=>{if(e.target.classList.contains('vault-reveal-backdrop'))closeReveal()});
+$('#vaultCollection').addEventListener('click',e=>{const b=e.target.closest('[data-vault-card],[data-vault-founder]');if(!b)return;const id=b.dataset.vaultCard||(b.dataset.vaultFounder?founder.id:'');if(!owned.has(id)){$('#vaultStatus').textContent='Still locked! Open a free pack to reveal this card.';return}const c=all().find(x=>x.id===id);if(c)impact(c.name,'CARD ACTIVATED')});
+$('#vaultFight').addEventListener('click',()=>{const a=all().find(c=>c.id===$('#vaultFighterA').value),b=all().find(c=>c.id===$('#vaultFighterB').value);if(!a||!b||a.id===b.id){$('#vaultStatus').textContent='Choose two different unlocked cards first.';return}const score=c=>c.power*.4+c.tactics*.3+c.versatility*.3,sa=score(a),sb=score(b),winner=sa===sb?'DRAW':sa>sb?a.name:b.name;$('#vaultBattleResult').hidden=false;$('#vaultBattleResult').innerHTML='<h4>'+esc(winner==='DRAW'?'TIE GAME':winner+' WINS!')+'</h4><p>'+esc(a.name)+' <strong>'+sa.toFixed(1)+'</strong> VS '+esc(b.name)+' <strong>'+sb.toFixed(1)+'</strong></p><p>Fan-made stats for fun, not an official Marvel power ranking.</p>';impact(winner==='DRAW'?'VS DRAW':winner,'BATTLE IMPACT')});
+refresh();render();
+})();
+</script>
 
 <script>
 (function(){
