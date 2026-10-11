@@ -4776,7 +4776,7 @@ function mcuFilter(type, button){
   };
   function updateBuilder(){
     if(!pool)return;
-    const selected=$('input[type="checkbox"]:checked',pool);
+    const selected=$$('input[type="checkbox"]:checked',pool);
     if(selected.length>6){selected[selected.length-1].checked=false;announce("Team limit reached. Maximum six heroes per squad.");return updateBuilder();}
     const names=selected.map(input=>input.value);
     if($("#builderCount"))$("#builderCount").textContent=names.length;
@@ -4803,7 +4803,7 @@ function mcuFilter(type, button){
     if($("#builderAnalysis"))$("#builderAnalysis").textContent=names.length>=4?"Squad assembled. Tactical rating estimates this team's power, planning and versatility.":names.length>=1?"Squad forming. Add more heroes to compare team balance.":"Awaiting team configuration.";
   }
   $("#builderCopy")?.addEventListener("click",async()=>{
-    const names=$('input[type="checkbox"]:checked',pool).map(input=>input.value);
+    const names=$$('input[type="checkbox"]:checked',pool).map(input=>input.value);
     if(!names.length)return;
     const report=["GOUFE MCU HUB // AVENGERS TEAM REPORT","Team: "+names.join(", "),"Tactical rating: "+($("#builderRating")?.textContent||"—")+"/100","Power: "+($("#builderPower")?.textContent||"—"),"Tactics: "+($("#builderTactics")?.textContent||"—"),"Versatility: "+($("#builderVersatility")?.textContent||"—"),$("#builderRoles")?.textContent||""].join("\n");
     try{await navigator.clipboard.writeText(report);announce("Team report copied to clipboard.");}
