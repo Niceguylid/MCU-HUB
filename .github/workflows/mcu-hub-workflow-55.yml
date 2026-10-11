@@ -28,7 +28,7 @@ jobs:
           import tempfile
 
           html = pathlib.Path("index.html").read_text(encoding="utf-8")
-          scripts = [x for x in re.findall(r"<script\\b[^>]*>([\\s\\S]*?)</script>", html, re.I) if x.strip()]
+          scripts = [x for x in re.findall(r"<script\b[^>]*>([\s\S]*?)</script>", html, re.I) if x.strip()]
           if not scripts:
               raise SystemExit("FAIL: no inline scripts found")
           for i, script in enumerate(scripts, 1):
@@ -55,7 +55,7 @@ jobs:
               raise SystemExit("Regression checks failed: " + ", ".join(failed))
 
           profile_section = html.split("const builderProfiles=", 1)[1].split("const builderMeta=", 1)[0]
-          profiles = re.findall(r'"([^"]+)":\\{power:', profile_section)
+          profiles = re.findall(r'"([^"]+)":\{power:', profile_section)
           if len(profiles) != 100:
               raise SystemExit(f"FAIL: expected 100 Team Builder profiles, found {len(profiles)}")
           print(f"PASS: {len(profiles)} Team Builder profiles")
