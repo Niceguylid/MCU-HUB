@@ -4836,7 +4836,7 @@ function mcuFilter(type, button){
   renderBuilderCards();
   function filterBuilderCards(){
     const query=($("#builderCardSearch")?.value||"").trim().toLowerCase(), faction=$("#builderFactionFilter")?.value||"all", rarity=$("#builderRarityFilter")?.value||"all";
-    $(".builder-pick",pool).forEach(card=>card.classList.toggle("jarvis-hidden",!((!query||card.dataset.name.includes(query)||card.textContent.toLowerCase().includes(query))&&(faction==="all"||card.dataset.faction===faction)&&(rarity==="all"||card.dataset.rarity===rarity))));
+    $$(".builder-pick",pool).forEach(card=>card.classList.toggle("jarvis-hidden",!((!query||card.dataset.name.includes(query)||card.textContent.toLowerCase().includes(query))&&(faction==="all"||card.dataset.faction===faction)&&(rarity==="all"||card.dataset.rarity===rarity))));
   }
   $("#builderCardSearch")?.addEventListener("input",filterBuilderCards);
   $("#builderFactionFilter")?.addEventListener("change",filterBuilderCards);
