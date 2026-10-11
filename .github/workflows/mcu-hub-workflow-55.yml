@@ -1,0 +1,62 @@
+name: MCU HUB workflow 55 regression checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  card-vault-regression:
+    name: Card Vault, Team Builder, and script validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate inline JavaScript and requested safeguards
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import re
+          import subprocess
+          import tempfile
+
+          html = pathlib.Path("index.html").read_text(encoding="utf-8")
+          scripts = [x for x in re.findall(r"<script\\b[^>]*>([\\s\\S]*?)</script>", html, re.I) if x.strip()]
+          if not scripts:
+              raise SystemExit("FAIL: no inline scripts found")
+          for i, script in enumerate(scripts, 1):
+              with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8") as f:
+                  f.write(script)
+                  f.flush()
+                  subprocess.run(["node", "--check", f.name], check=True)
+              print(f"PASS: inline JavaScript block {i}/{len(scripts)}")
+
+          required = {
+              "collection backup storage": "goufeCardVaultBackupV2" in html and "goufeCardPacksBackupV2" in html,
+              "infinite G.O.U.F.E power": "p.power=Infinity" in html,
+              "Founder card sorts first": "root.innerHTML=founderCard+sortedCards.map" in html,
+              "Vault rarity sorting": "const sortedCards=[...catalog,...secretRewards].sort" in html,
+              "Founder portrait is uncropped": "object-fit:contain!important;object-position:center center!important" in html,
+              "Founder remains selectable": 'isFounder&&!founderOwned?\'disabled title="Unlock Founder in GOUFE Card Vault first"\'' not in html,
+              "old profile-link prompt removed": "VIEW OFFICIAL MARVEL PROFILE" not in html,
+              "100-card collection counter": 'id="vaultTotalCount">100</span>' in html,
+          }
+          for name, ok in required.items():
+              print(f"{'PASS' if ok else 'FAIL'}: {name}")
+          failed = [name for name, ok in required.items() if not ok]
+          if failed:
+              raise SystemExit("Regression checks failed: " + ", ".join(failed))
+
+          profile_section = html.split("const builderProfiles=", 1)[1].split("const builderMeta=", 1)[0]
+          profiles = re.findall(r'"([^"]+)":\\{power:', profile_section)
+          if len(profiles) != 100:
+              raise SystemExit(f"FAIL: expected 100 Team Builder profiles, found {len(profiles)}")
+          print(f"PASS: {len(profiles)} Team Builder profiles")
+          PY
