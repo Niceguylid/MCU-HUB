@@ -2346,6 +2346,28 @@ body.light-mode .apple-player{
   background:#fff !important;
 }
 
+
+/* AVENGERS TEAM BUILDER 2.0 */
+.builder-intel{margin-top:16px;padding:14px;border:1px solid rgba(53,217,255,.25);border-radius:10px;background:rgba(0,110,150,.07)}
+.builder-intel[hidden],#builderCopy[hidden]{display:none!important}
+.builder-intel-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:10px;letter-spacing:1.4px;color:#aab4ba}
+.builder-intel-top strong{font-size:22px;letter-spacing:0;color:#35d9ff}
+.builder-meter{height:8px;margin:10px 0 14px;border-radius:99px;overflow:hidden;background:rgba(128,128,128,.22)}
+.builder-meter span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,#e62429,#35d9ff);transition:width .35s ease}
+.builder-role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.builder-role-grid>div{padding:9px;border:1px solid rgba(128,128,128,.2);border-radius:7px}
+.builder-role-grid span,.builder-role-grid strong{display:block}
+.builder-role-grid span{font-size:9px;letter-spacing:1px;color:#aab4ba}
+.builder-role-grid strong{margin-top:4px;color:inherit;font-size:13px}
+.builder-chip{display:flex;flex-direction:column;gap:2px}
+.builder-chip small{font-size:9px;color:#aab4ba}
+#builderCopy{margin-top:14px}
+body.light-mode .builder-intel{background:#f5fbfd;border-color:#c6e4eb}
+body.light-mode .builder-intel-top,body.light-mode .builder-role-grid span,body.light-mode .builder-chip small{color:#4d5a60}
+body.light-mode .builder-intel-top strong{color:#087c99}
+body.light-mode .builder-role-grid>div{border-color:#d5e0e4}
+@media(max-width:480px){.builder-role-grid{grid-template-columns:1fr}.builder-intel-top strong{font-size:20px}}
+
 </style>
 
 </head>
@@ -3947,7 +3969,7 @@ body.light-mode .apple-player{
         </div>
         <div class="builder-actions"><button class="builder-btn" id="builderRandom">⚡ RANDOM SQUAD</button><button class="builder-btn" id="builderClear">CLEAR SELECTION</button></div>
       </div>
-      <div class="builder-output" aria-live="polite"><h3>TEAM STATUS // <span id="builderCount">0</span>/6</h3><p id="builderHint">Select up to six personnel to build your roster.</p><div class="builder-roster" id="builderRoster"></div><p id="builderAnalysis">Awaiting team configuration.</p></div>
+      <div class="builder-output" aria-live="polite"><h3>TEAM STATUS // <span id="builderCount">0</span>/6</h3><p id="builderHint">Select up to six personnel to build your roster.</p><div class="builder-roster" id="builderRoster"></div><div class="builder-intel" id="builderIntel" hidden><div class="builder-intel-top"><span>TACTICAL RATING</span><strong><span id="builderRating">0</span>/100</strong></div><div class="builder-meter" role="progressbar" aria-label="Tactical rating" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="builderMeter"><span id="builderMeterFill"></span></div><div class="builder-role-grid"><div><span>POWER</span><strong id="builderPower">—</strong></div><div><span>TACTICS</span><strong id="builderTactics">—</strong></div><div><span>VERSATILITY</span><strong id="builderVersatility">—</strong></div></div><p id="builderRoles"></p></div><p id="builderAnalysis">Awaiting team configuration.</p><button class="builder-btn" id="builderCopy" type="button" hidden>COPY TEAM REPORT</button></div>
     </div>
   </div>
 </section>
@@ -4734,16 +4756,59 @@ function mcuFilter(type, button){
   clock();setInterval(clock,30000);
 
   const pool=$("#builderPool"), roster=$("#builderRoster");
+  const builderProfiles={
+    "Iron Man":{power:8,tactics:10,versatility:9,roles:["Tech","Leader"]},
+    "Captain America":{power:7,tactics:10,versatility:8,roles:["Leader","Tactics"]},
+    "Thor":{power:10,tactics:7,versatility:8,roles:["Cosmic","Power"]},
+    "Hulk":{power:10,tactics:5,versatility:5,roles:["Power","Tank"]},
+    "Black Widow":{power:5,tactics:9,versatility:8,roles:["Spy","Tactics"]},
+    "Hawkeye":{power:5,tactics:8,versatility:7,roles:["Ranged","Tactics"]},
+    "Spider-Man":{power:8,tactics:7,versatility:9,roles:["Agility","Tech"]},
+    "Doctor Strange":{power:9,tactics:9,versatility:10,roles:["Mystic","Support"]},
+    "Black Panther":{power:8,tactics:9,versatility:9,roles:["Tech","Leader"]},
+    "Captain Marvel":{power:10,tactics:7,versatility:8,roles:["Cosmic","Power"]},
+    "Shang-Chi":{power:7,tactics:8,versatility:7,roles:["Martial Arts","Tactics"]},
+    "Scarlet Witch":{power:10,tactics:8,versatility:10,roles:["Mystic","Power"]},
+    "Ant-Man":{power:7,tactics:7,versatility:9,roles:["Tech","Infiltration"]},
+    "Wasp":{power:7,tactics:8,versatility:9,roles:["Tech","Agility"]},
+    "Loki":{power:9,tactics:8,versatility:9,roles:["Mystic","Infiltration"]},
+    "Winter Soldier":{power:7,tactics:8,versatility:7,roles:["Spy","Combat"]}
+  };
   function updateBuilder(){
     if(!pool)return;
-    const selected=$$('input[type="checkbox"]:checked',pool);
+    const selected=$('input[type="checkbox"]:checked',pool);
     if(selected.length>6){selected[selected.length-1].checked=false;announce("Team limit reached. Maximum six heroes per squad.");return updateBuilder();}
     const names=selected.map(input=>input.value);
     if($("#builderCount"))$("#builderCount").textContent=names.length;
     if($("#builderHint"))$("#builderHint").textContent=names.length?names.length+" personnel selected.":"Select up to six personnel to build your roster.";
-    if(roster)roster.innerHTML=names.map(name=>'<span class="builder-chip">'+name.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))+'</span>').join("");
-    if($("#builderAnalysis"))$("#builderAnalysis").textContent=names.length>=4?"Avengers-level roster assembled. Ready for a major threat.":names.length>=1?"Squad forming. Add more heroes to improve team coverage.":"Awaiting team configuration.";
+    const escapeHTML=value=>String(value).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+    if(roster)roster.innerHTML=names.map(name=>'<span class="builder-chip"><strong>'+escapeHTML(name)+'</strong><small>'+escapeHTML((builderProfiles[name]?.roles||[]).join(" / "))+'</small></span>').join("");
+    const intel=$("#builderIntel"),copy=$("#builderCopy");
+    if(intel)intel.hidden=!names.length;
+    if(copy)copy.hidden=!names.length;
+    if(names.length){
+      const profiles=names.map(name=>builderProfiles[name]).filter(Boolean);
+      const average=key=>Math.round(profiles.reduce((sum,p)=>sum+p[key],0)/profiles.length*10);
+      const power=average("power"),tactics=average("tactics"),versatility=average("versatility");
+      const rating=Math.round(power*.4+tactics*.3+versatility*.3);
+      const roles=[...new Set(profiles.flatMap(p=>p.roles))];
+      if($("#builderRating"))$("#builderRating").textContent=rating;
+      if($("#builderPower"))$("#builderPower").textContent=power+"/100";
+      if($("#builderTactics"))$("#builderTactics").textContent=tactics+"/100";
+      if($("#builderVersatility"))$("#builderVersatility").textContent=versatility+"/100";
+      if($("#builderMeterFill"))$("#builderMeterFill").style.width=rating+"%";
+      if($("#builderMeter"))$("#builderMeter").setAttribute("aria-valuenow",String(rating));
+      if($("#builderRoles"))$("#builderRoles").textContent="ROLES COVERED // "+roles.join(" • ");
+    }
+    if($("#builderAnalysis"))$("#builderAnalysis").textContent=names.length>=4?"Squad assembled. Tactical rating estimates this team's power, planning and versatility.":names.length>=1?"Squad forming. Add more heroes to compare team balance.":"Awaiting team configuration.";
   }
+  $("#builderCopy")?.addEventListener("click",async()=>{
+    const names=$('input[type="checkbox"]:checked',pool).map(input=>input.value);
+    if(!names.length)return;
+    const report=["GOUFE MCU HUB // AVENGERS TEAM REPORT","Team: "+names.join(", "),"Tactical rating: "+($("#builderRating")?.textContent||"—")+"/100","Power: "+($("#builderPower")?.textContent||"—"),"Tactics: "+($("#builderTactics")?.textContent||"—"),"Versatility: "+($("#builderVersatility")?.textContent||"—"),$("#builderRoles")?.textContent||""].join("\n");
+    try{await navigator.clipboard.writeText(report);announce("Team report copied to clipboard.");}
+    catch(error){const area=document.createElement("textarea");area.value=report;area.setAttribute("readonly","");area.style.position="absolute";area.style.left="-9999px";document.body.append(area);area.select();const ok=document.execCommand("copy");area.remove();announce(ok?"Team report copied to clipboard.":"Copy unavailable. Select and copy the team report manually.");}
+  });
   pool?.addEventListener("change",updateBuilder);
   $("#builderClear")?.addEventListener("click",()=>{ $$('input[type="checkbox"]',pool).forEach(i=>i.checked=false);updateBuilder();announce("Team roster cleared.");});
   $("#builderRandom")?.addEventListener("click",()=>{const inputs=$$('input[type="checkbox"]',pool);inputs.forEach(i=>i.checked=false);inputs.sort(()=>Math.random()-.5).slice(0,6).forEach(i=>i.checked=true);updateBuilder();announce("Random Avengers squad generated.");});
