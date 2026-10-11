@@ -5182,6 +5182,8 @@ $('#vaultFighterA').addEventListener('change',populate);$('#vaultFight').addEven
     const observer=new MutationObserver(()=>{claim.disabled=false;});
     observer.observe(claim,{attributes:true,attributeFilter:['disabled']});
   }
+  const menuObserver=new MutationObserver(syncMenu);
+  menuObserver.observe(modal,{attributes:true,attributeFilter:['class']});
   syncMenu();
 })();
 </script>
