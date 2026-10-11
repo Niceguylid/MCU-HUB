@@ -2368,6 +2368,32 @@ body.light-mode .builder-intel-top strong{color:#087c99}
 body.light-mode .builder-role-grid>div{border-color:#d5e0e4}
 @media(max-width:480px){.builder-role-grid{grid-template-columns:1fr}.builder-intel-top strong{font-size:20px}}
 
+
+/* TEAM BUILDER MARVEL CARDS + RARITY */
+.builder-collection-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}
+.builder-collection-tools input,.builder-collection-tools select{min-width:0;width:100%;padding:10px;background:#101014;color:#fff;border:1px solid #38383f;border-radius:7px;font:inherit;font-size:11px}
+.builder-collection-tools input{grid-column:1/-1}
+.builder-pool{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.builder-pick{position:relative;display:block;min-width:0;padding:0;overflow:hidden;border-radius:9px;border:1px solid #303039;background:#101116;transition:transform .22s,border-color .22s,box-shadow .22s}
+.builder-pick:hover{transform:translateY(-4px);border-color:#e62429;box-shadow:0 8px 22px rgba(230,36,41,.15)}
+.builder-pick input{position:absolute;top:8px;left:8px;z-index:3;width:17px;height:17px;accent-color:#e62429}
+.builder-card-art{position:relative;display:block;height:132px;overflow:hidden;background:radial-gradient(circle at 50% 25%,#30333b,#08090c 75%)}
+.builder-card-art:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(5,5,8,.8));pointer-events:none}
+.builder-card-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 20%;transition:transform .35s}
+.builder-pick:hover .builder-card-art img{transform:scale(1.07)}
+.builder-rarity{position:absolute;right:5px;bottom:6px;z-index:2;padding:3px 5px;border-radius:3px;background:rgba(0,0,0,.78);color:#fff;font-size:7px;line-height:1.3;font-weight:900;letter-spacing:.5px}
+.builder-card-copy{display:flex;flex-direction:column;gap:5px;padding:9px;min-height:66px}
+.builder-card-copy strong{font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+.builder-card-copy small{font-size:8px;line-height:1.4;color:#aab4ba}
+.builder-pick.rarity-rare{border-bottom:2px solid #3198ff}.builder-pick.rarity-epic{border-bottom:2px solid #b56cff}.builder-pick.rarity-legendary{border-bottom:2px solid #ffad32}.builder-pick.rarity-mythic{border-bottom:2px solid #ff4b55}.builder-pick.rarity-cosmic{border-bottom:2px solid #36d9ff}.builder-pick.rarity-multiversal{border-bottom:2px solid #d28cff;box-shadow:inset 0 0 18px rgba(155,80,255,.08)}.builder-pick.rarity-transcendent{border:1px solid #fff3a4;border-bottom:3px solid #fff3a4;box-shadow:inset 0 0 22px rgba(255,228,120,.13)}.rarity-transcendent .builder-rarity{background:linear-gradient(90deg,#6c4d00,#e6c75b)}
+.builder-lore-note{margin:12px 0 0;padding:10px 12px;border:1px solid rgba(255,220,120,.25);border-radius:8px;color:#b9c3cd;font-size:10px;line-height:1.6}
+body.light-mode .builder-collection-tools input,body.light-mode .builder-collection-tools select{background:#fff;color:#171923;border-color:#cfd5e0}
+body.light-mode .builder-pick{background:#fff;border-color:#d9dee8;color:#171923}
+body.light-mode .builder-card-copy small{color:#586171}
+body.light-mode .builder-lore-note{background:#fffaf0;color:#5d4b24;border-color:#e8d7a4}
+@media(max-width:900px){.builder-pool{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.builder-collection-tools{grid-template-columns:1fr}.builder-collection-tools input{grid-column:auto}.builder-pool{grid-template-columns:repeat(2,minmax(0,1fr))}.builder-card-art{height:145px}.builder-card-copy strong{font-size:11px}}
+
 </style>
 
 </head>
@@ -3949,25 +3975,11 @@ body.light-mode .builder-role-grid>div{border-color:#d5e0e4}
   <div class="builder-panel">
     <div class="builder-layout">
       <div><div class="jarvis-label" style="margin-bottom:12px">AVAILABLE PERSONNEL</div>
+        <div class="builder-collection-tools"><input id="builderCardSearch" type="search" placeholder="Search heroes, villains, entities..." aria-label="Search team builder cards"><select id="builderFactionFilter" aria-label="Filter by character type"><option value="all">ALL TYPES</option><option value="hero">HEROES</option><option value="villain">VILLAINS</option><option value="entity">COSMIC ENTITIES</option></select><select id="builderRarityFilter" aria-label="Filter by rarity"><option value="all">ALL RARITIES</option><option value="rare">RARE</option><option value="epic">EPIC</option><option value="legendary">LEGENDARY</option><option value="mythic">MYTHIC</option><option value="cosmic">COSMIC</option><option value="multiversal">MULTIVERSAL</option><option value="transcendent">TRANSCENDENT</option></select></div>
         <div class="builder-pool" id="builderPool">
-          <label class="builder-pick"><input type="checkbox" value="Iron Man"> Iron Man</label>
-          <label class="builder-pick"><input type="checkbox" value="Captain America"> Captain America</label>
-          <label class="builder-pick"><input type="checkbox" value="Thor"> Thor</label>
-          <label class="builder-pick"><input type="checkbox" value="Hulk"> Hulk</label>
-          <label class="builder-pick"><input type="checkbox" value="Black Widow"> Black Widow</label>
-          <label class="builder-pick"><input type="checkbox" value="Hawkeye"> Hawkeye</label>
-          <label class="builder-pick"><input type="checkbox" value="Spider-Man"> Spider-Man</label>
-          <label class="builder-pick"><input type="checkbox" value="Doctor Strange"> Doctor Strange</label>
-          <label class="builder-pick"><input type="checkbox" value="Black Panther"> Black Panther</label>
-          <label class="builder-pick"><input type="checkbox" value="Captain Marvel"> Captain Marvel</label>
-          <label class="builder-pick"><input type="checkbox" value="Shang-Chi"> Shang-Chi</label>
-          <label class="builder-pick"><input type="checkbox" value="Scarlet Witch"> Scarlet Witch</label>
-          <label class="builder-pick"><input type="checkbox" value="Ant-Man"> Ant-Man</label>
-          <label class="builder-pick"><input type="checkbox" value="Wasp"> Wasp</label>
-          <label class="builder-pick"><input type="checkbox" value="Loki"> Loki</label>
-          <label class="builder-pick"><input type="checkbox" value="Winter Soldier"> Winter Soldier</label>
         </div>
         <div class="builder-actions"><button class="builder-btn" id="builderRandom">⚡ RANDOM SQUAD</button><button class="builder-btn" id="builderClear">CLEAR SELECTION</button></div>
+        <p class="builder-lore-note"><strong>FAN-MADE RARITY SCALE:</strong> Transcendent is a custom top tier for comic-cosmology entities. The One Above All (TOAA) is from Marvel Comics; this card does not claim TOAA is confirmed in MCU film canon.</p>
       </div>
       <div class="builder-output" aria-live="polite"><h3>TEAM STATUS // <span id="builderCount">0</span>/6</h3><p id="builderHint">Select up to six personnel to build your roster.</p><div class="builder-roster" id="builderRoster"></div><div class="builder-intel" id="builderIntel" hidden><div class="builder-intel-top"><span>TACTICAL RATING</span><strong><span id="builderRating">0</span>/100</strong></div><div class="builder-meter" role="progressbar" aria-label="Tactical rating" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="builderMeter"><span id="builderMeterFill"></span></div><div class="builder-role-grid"><div><span>POWER</span><strong id="builderPower">—</strong></div><div><span>TACTICS</span><strong id="builderTactics">—</strong></div><div><span>VERSATILITY</span><strong id="builderVersatility">—</strong></div></div><p id="builderRoles"></p></div><p id="builderAnalysis">Awaiting team configuration.</p><button class="builder-btn" id="builderCopy" type="button" hidden>COPY TEAM REPORT</button></div>
     </div>
@@ -4772,8 +4784,59 @@ function mcuFilter(type, button){
     "Ant-Man":{power:7,tactics:7,versatility:9,roles:["Tech","Infiltration"]},
     "Wasp":{power:7,tactics:8,versatility:9,roles:["Tech","Agility"]},
     "Loki":{power:9,tactics:8,versatility:9,roles:["Mystic","Infiltration"]},
-    "Winter Soldier":{power:7,tactics:8,versatility:7,roles:["Spy","Combat"]}
+    "Winter Soldier":{power:7,tactics:8,versatility:7,roles:["Spy","Combat"]},
+    "Thanos":{power:10,tactics:10,versatility:9,roles:["Cosmic","Leader","Power"]},
+    "Ultron":{power:9,tactics:9,versatility:8,roles:["Tech","AI","Villain"]},
+    "Kang the Conqueror":{power:9,tactics:10,versatility:10,roles:["Time","Strategist","Villain"]},
+    "Green Goblin":{power:7,tactics:8,versatility:7,roles:["Tech","Villain"]},
+    "Doctor Doom":{power:10,tactics:10,versatility:10,roles:["Tech","Mystic","Leader"]},
+    "Hela":{power:10,tactics:8,versatility:8,roles:["Asgardian","Power","Villain"]},
+    "Killmonger":{power:7,tactics:8,versatility:7,roles:["Combat","Strategist","Villain"]},
+    "Ego":{power:10,tactics:8,versatility:9,roles:["Celestial","Cosmic","Villain"]},
+    "Dormammu":{power:10,tactics:9,versatility:10,roles:["Mystic","Dimension","Villain"]},
+    "Gorr":{power:9,tactics:8,versatility:8,roles:["Godslayer","Cosmic","Villain"]},
+    "High Evolutionary":{power:8,tactics:10,versatility:9,roles:["Science","Genetics","Villain"]},
+    "Namor":{power:8,tactics:8,versatility:8,roles:["Atlantean","Combat","Leader"]},
+    "Wenwu":{power:8,tactics:9,versatility:8,roles:["Ten Rings","Combat","Villain"]},
+    "Red Skull":{power:7,tactics:8,versatility:7,roles:["Hydra","Strategist","Villain"]},
+    "Abomination":{power:9,tactics:5,versatility:5,roles:["Tank","Power","Villain"]},
+    "Vulture":{power:6,tactics:7,versatility:7,roles:["Tech","Flight","Villain"]},
+    "Mysterio":{power:6,tactics:9,versatility:8,roles:["Illusion","Tech","Villain"]},
+    "Agatha Harkness":{power:9,tactics:9,versatility:9,roles:["Mystic","Witch","Villain"]},
+    "Baron Zemo":{power:5,tactics:10,versatility:8,roles:["Strategist","Spy","Villain"]},
+    "Ronan":{power:8,tactics:8,versatility:7,roles:["Kree","Cosmic","Villain"]},
+    "Ebony Maw":{power:8,tactics:8,versatility:8,roles:["Black Order","Telekinesis","Villain"]},
+    "Surtur":{power:10,tactics:6,versatility:7,roles:["Demon","Cosmic","Villain"]},
+    "Arishem":{power:10,tactics:10,versatility:10,roles:["Celestial","Cosmic Entity"]},
+    "Galactus":{power:10,tactics:10,versatility:10,roles:["Cosmic Entity","Devourer"]},
+    "Eternity":{power:10,tactics:10,versatility:10,roles:["Cosmic Entity","Abstract"]},
+    "Living Tribunal":{power:10,tactics:10,versatility:10,roles:["Multiversal","Cosmic Entity"]},
+    "Beyonder":{power:10,tactics:10,versatility:10,roles:["Multiversal","Reality Warper"]},
+    "The One Above All (TOAA)":{power:10,tactics:10,versatility:10,roles:["Supreme Being","Omniversal"]}
   };
+  const builderMeta={
+    "Iron Man":["002irm_ons_crd_03.webp","LEGENDARY","HERO"],"Captain America":["003cap_ons_crd_03.webp","LEGENDARY","HERO"],"Thor":["004tho_ons_crd_04.webp","MYTHIC","HERO"],"Hulk":["006hbb_ons_crd_03.webp","MYTHIC","HERO"],"Black Widow":["011blw_ons_crd_04.webp","RARE","HERO"],"Hawkeye":["hawkeye_ons_crd_01.webp","RARE","HERO"],"Spider-Man":["005smp_ons_crd_02.webp","EPIC","HERO"],"Doctor Strange":["009drs_ons_crd_03.webp","MYTHIC","HERO"],"Black Panther":["007blp_ons_crd_02.webp","LEGENDARY","HERO"],"Captain Marvel":["008cmv_ons_crd_05.webp","MYTHIC","HERO"],"Shang-Chi":["242shc_ons_crd_01.webp","EPIC","HERO"],"Scarlet Witch":["012scw_ons_crd_03.webp","MYTHIC","HERO"],"Ant-Man":["010ant_ons_crd_05.webp","RARE","HERO"],"Wasp":["321whv_ons_crd_02.webp","EPIC","HERO"],"Loki":["017lok_ons_crd_03.webp","MYTHIC","HERO"],"Winter Soldier":["003cap_ons_crd_03.webp","EPIC","HERO"],
+    "Thanos":["019tha_ons_crd_03.webp","MYTHIC","VILLAIN"],"Ultron":["061ult_ons_crd_01-1.webp","LEGENDARY","VILLAIN"],"Kang the Conqueror":["301kng_ons_crd_01.webp","MYTHIC","VILLAIN"],"Green Goblin":["104gno_ons_crd_01.webp","LEGENDARY","VILLAIN"],"Doctor Doom":["057drd_com_crd_01.webp","MYTHIC","VILLAIN"],"Hela":["thorragnarok_lob_crd_03.webp","MYTHIC","VILLAIN"],"Killmonger":["blackpanther_lob_crd_01_4.webp","EPIC","VILLAIN"],"Ego":["guardiansofthegalaxyvol2_lob_crd_01.webp","COSMIC","VILLAIN"],"Dormammu":["doctorstrange_lob_crd_01_6.webp","COSMIC","VILLAIN"],"Gorr":["thorloveandthunder_lob_crd_04.webp","LEGENDARY","VILLAIN"],"High Evolutionary":["guardiansofthegalaxyvolume3_lob_crd_03.webp","LEGENDARY","VILLAIN"],"Namor":["blackpantherwakandaforever_lob_crd_06.webp","LEGENDARY","HERO"],"Wenwu":["shangchi_lob_crd_07.webp","LEGENDARY","VILLAIN"],"Red Skull":["captainamericathefirstavenger_lob_crd_01.webp","EPIC","VILLAIN"],"Abomination":["theincrediblehulk_lob_crd_03.webp","EPIC","VILLAIN"],"Vulture":["spider-manhomecoming_lob_crd_02.webp","RARE","VILLAIN"],"Mysterio":["spider-manfarfromhome_lob_crd_04_3.webp","EPIC","VILLAIN"],"Agatha Harkness":["012scw_ons_crd_03.webp","MYTHIC","VILLAIN"],"Baron Zemo":["captainamericacivilwar_lob_crd_01_9.webp","EPIC","VILLAIN"],"Ronan":["guardiansofthegalaxy_lob_crd_03.webp","LEGENDARY","VILLAIN"],"Ebony Maw":["avengersinfinitywar_lob_crd_02_1.webp","LEGENDARY","VILLAIN"],"Surtur":["thorragnarok_lob_crd_03.webp","COSMIC","VILLAIN"],"Arishem":["eternals_lob_crd_06.webp","COSMIC","ENTITY"],"Galactus":["thefantasticfourfirststeps_lob_crd_02.webp","COSMIC","ENTITY"],"Eternity":["thorloveandthunder_lob_crd_04.webp","MULTIVERSAL","ENTITY"],"Living Tribunal":["doctorstrangeinthemultiverseofmadness_lob_crd_02_3.webp","MULTIVERSAL","ENTITY"],"Beyonder":["avengerssecretwars_lob_crd_02.webp","MULTIVERSAL","ENTITY"],"The One Above All (TOAA)":["https://cdn.marvel.com/content/2x/news_articles-mas_dsk_01.webp","TRANSCENDENT","ENTITY"]
+  };
+  const builderEscape=value=>String(value).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function renderBuilderCards(){
+    if(!pool)return;
+    pool.innerHTML=Object.entries(builderProfiles).map(([name,profile])=>{
+      const meta=builderMeta[name]||["news_articles-mas_dsk_01.webp","RARE","HERO"];
+      const image=meta[0].startsWith("http")?meta[0]:"https://cdn.marvel.com/content/1x/"+meta[0];
+      const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase();
+      return '<label class="builder-pick rarity-'+rarityClass+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'"><span class="builder-card-art"><img src="'+image+'" alt="" loading="lazy" decoding="async"><span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+builderEscape(profile.roles.join(" / "))+'</small></span></label>';
+    }).join("");
+  }
+  renderBuilderCards();
+  function filterBuilderCards(){
+    const query=($("#builderCardSearch")?.value||"").trim().toLowerCase(), faction=$("#builderFactionFilter")?.value||"all", rarity=$("#builderRarityFilter")?.value||"all";
+    $(".builder-pick",pool).forEach(card=>card.classList.toggle("jarvis-hidden",!((!query||card.dataset.name.includes(query)||card.textContent.toLowerCase().includes(query))&&(faction==="all"||card.dataset.faction===faction)&&(rarity==="all"||card.dataset.rarity===rarity))));
+  }
+  $("#builderCardSearch")?.addEventListener("input",filterBuilderCards);
+  $("#builderFactionFilter")?.addEventListener("change",filterBuilderCards);
+  $("#builderRarityFilter")?.addEventListener("change",filterBuilderCards);
+
   function updateBuilder(){
     if(!pool)return;
     const selected=$$('input[type="checkbox"]:checked',pool);
