@@ -4915,7 +4915,7 @@ function mcuFilter(type, button){
     pool.innerHTML=sortedEntries.map(([name,profile])=>{
       const meta=builderMeta[name]||["news_articles-mas_dsk_01.webp","RARE","HERO"];
       const image=meta[0]?(meta[0].startsWith("http")?meta[0]:"https://cdn.marvel.com/content/1x/"+meta[0]):"";
-      const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase(), isFounder=name==="GOUFE // FOUNDER", founderOwned=builderFounderOwned();
+      const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase().replace(/[^a-z0-9-]/g,"-"), isFounder=name==="GOUFE // FOUNDER", founderOwned=builderFounderOwned();
       return '<label class="builder-pick rarity-'+rarityClass+(isFounder?(founderOwned?' builder-founder-owned':' builder-founder-locked'):'')+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'" '+(isFounder&&!founderOwned?'disabled title="Unlock Founder in GOUFE Card Vault first"':'')+'><span class="builder-card-art">'+(image?'<img src="'+image+'" alt="" loading="lazy" decoding="async">' : '<span class="builder-image-placeholder">'+builderEscape(name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</span>')+'<span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+(isFounder&&!founderOwned?'LOCKED // CLAIM IN GOUFE CARD VAULT':builderEscape(profile.roles.join(" / ")))+'</small></span></label>';
     }).join("");
   }
