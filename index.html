@@ -4995,40 +4995,52 @@ function mcuFilter(type, button){
       "Falcon / Sam Wilson":"Sam Wilson",
       "Winter Soldier / Bucky Barnes":"Bucky Barnes",
       "Star-Lord":"Peter Quill",
-      "Rocket Raccoon":"Rocket Raccoon",
       "The Thing":"Ben Grimm",
       "Invisible Woman":"Sue Storm",
       "Human Torch":"Johnny Storm",
-      "Professor X":"Professor X",
       "U.S. Agent":"US Agent",
       "The Collector":"Collector",
-      "Kingpin":"Kingpin Wilson Fisk"
+      "Kingpin":"Kingpin Wilson Fisk",
+      "MULTIVERSE SENTINEL":"Multiverse Sentinel Marvel"
     };
-    const portraitCache=window.__goufePortraitCache||(window.__goufePortraitCache={});
+    const cache=window.__goufePortraitCache||(window.__goufePortraitCache={});
     async function findPortrait(name){
       const searchName=searchAliases[name]||name;
       const query=searchName+" Marvel";
-      if(Object.prototype.hasOwnProperty.call(portraitCache,query))return portraitCache[query];
+      if(Object.prototype.hasOwnProperty.call(cache,query))return cache[query];
       try{
-        const url="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrsearch="+encodeURIComponent(query)+"&gsrnamespace=0&gsrlimit=10&prop=pageimages&piprop=thumbnail&pithumbsize=700&origin=*";
-        const response=await fetch(url);
-        if(!response.ok)throw new Error("Character image search failed");
-        const data=await response.json();
-        const pages=(data.query&&data.query.pages)||[];
+        const searchUrl="https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="+encodeURIComponent(query)+"&srnamespace=0&srlimit=8&format=json&origin=*";
+        const searchResponse=await fetch(searchUrl);
+        if(!searchResponse.ok)throw new Error("Search request failed");
+        const searchData=await searchResponse.json();
+        const results=(searchData.query&&searchData.query.search)||[];
+        if(!results.length){cache[query]="";return "";}
+        const titles=results.map(result=>result.title).join("|");
+        const imageUrl="https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=800&redirects=1&format=json&origin=*&titles="+encodeURIComponent(titles);
+        const imageResponse=await fetch(imageUrl);
+        if(!imageResponse.ok)throw new Error("Image request failed");
+        const imageData=await imageResponse.json();
+        const pages=Object.values(imageData.query&&imageData.query.pages||{});
         const target=normalize(searchName);
-        const matching=pages.filter(page=>page.thumbnail&&page.thumbnail.source).map(page=>{
-          const title=normalize(page.title);
+        const ranked=results.map((result,index)=>{
+          const page=pages.find(item=>normalize(item.title)===normalize(result.title));
+          const title=normalize(result.title);
           let score=0;
           if(title===target)score=100;
-          else if(title.startsWith(target))score=80;
-          else if(title.includes(target))score=60;
-          else if(target.includes(title)&&title.length>3)score=40;
-          return {page,score};
-        }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score);
-        const result=matching.length?matching[0].page.thumbnail.source:"";
-        portraitCache[query]=result;
-        return result;
-      }catch(error){portraitCache[query]="";return "";}
+          else if(title.startsWith(target))score=85;
+          else if(title.includes(target))score=70;
+          else if(target.includes(title)&&title.length>3)score=45;
+          else {
+            const words=searchName.toLowerCase().split(/[^a-z0-9]+/).filter(word=>word.length>2);
+            score=words.filter(word=>title.includes(word)).length*15;
+          }
+          return {page,score,index};
+        }).filter(item=>item.page&&item.page.thumbnail&&item.page.thumbnail.source&&item.score>0)
+          .sort((a,b)=>b.score-a.score||a.index-b.index);
+        const src=ranked.length?ranked[0].page.thumbnail.source:"";
+        cache[query]=src;
+        return src;
+      }catch(error){cache[query]="";return "";}
     }
     root.querySelectorAll("[data-wiki-portrait]").forEach(node=>{
       const name=node.getAttribute("data-wiki-portrait")||"";
@@ -5196,7 +5208,7 @@ state={count:Math.max(0,Math.floor(Number(state.count)||0)),lastDaily:Number(sta
 
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cls=s=>s.toLowerCase().replace(/[^a-z0-9-]/g,"-");
-const secretRewards=[{id:"secret-cosmic-variant",name:"MULTIVERSE SENTINEL",rarity:"COSMIC",faction:"SECRET MISSIONS",power:8.5,tactics:9,versatility:9,roles:["Multiversal","Secret Reward"],image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR60xp7q8e2vqfbli9udJ71eWAuGEBqHqhobi13V7_kYg&s=10",secretReward:true}];
+const secretRewards=[{id:"secret-cosmic-variant",name:"MULTIVERSE SENTINEL",rarity:"COSMIC",faction:"SECRET MISSIONS",power:85,tactics:90,versatility:90,roles:["Multiversal","Secret Reward"],image:"",secretReward:true}];
  const all=()=>[...catalog,...secretRewards,founder].filter(c=>owned.has(c.id));
 function save(){try{const cards=JSON.stringify([...owned]),packs=JSON.stringify(state);localStorage.setItem(STORE,cards);localStorage.setItem("goufeCardVaultBackupV2",cards);localStorage.setItem(PACKS,packs);localStorage.setItem("goufeCardPacksBackupV2",packs);if(localStorage.getItem(STORE)!==cards||localStorage.getItem(PACKS)!==packs)throw new Error("Storage verification failed");return true}catch(e){const status=$("#vaultStatus");if(status)status.textContent="WARNING: browser storage is blocked or full. Your current session may not persist after refresh.";return false}}
 function art(c,locked){const image=c.image?'<img src="'+esc(c.image)+'" alt="'+esc(c.secretReward?"Multiverse Sentinel Marvel character":c.name)+'" loading="lazy" onerror="this.remove()">':'<span class="vault-profile-placeholder" data-wiki-portrait="'+esc(c.name)+'"><b>'+esc(c.name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>';const placeholder=!c.image?(c.custom?'<div class="vault-custom-placeholder"><span>G</span><strong>FOUNDER ARCHIVE</strong></div>':''):"";return '<div class="vault-card-art">'+image+placeholder+(locked?'<span class="vault-question">?</span>':"")+'</div>'}
