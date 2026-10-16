@@ -4991,77 +4991,44 @@ function mcuFilter(type, button){
     if(!root)return;
     const profiles=Array.isArray(window.GOUFE_CARD_CATALOG)?window.GOUFE_CARD_CATALOG:[];
     const normalize=name=>String(name||"").toLowerCase().replace(/[^a-z0-9]/g,"");
-    // Use exact MCU/film character article titles only. Never use a broad
-    // search result or the generic Marvel news banner as character artwork.
-    const portraitPages={
-      "Kingpin":"Kingpin (Marvel Cinematic Universe)",
-      "Vision":"Vision (Marvel Cinematic Universe)",
-      "War Machine":"War Machine (Marvel Cinematic Universe)",
-      "Falcon / Sam Wilson":"Sam Wilson (Marvel Cinematic Universe)",
-      "Winter Soldier / Bucky Barnes":"Bucky Barnes (Marvel Cinematic Universe)",
-      "Star-Lord":"Peter Quill (Marvel Cinematic Universe)",
-      "Gamora":"Gamora (Marvel Cinematic Universe)",
-      "Rocket Raccoon":"Rocket Raccoon (Marvel Cinematic Universe)",
-      "Groot":"Groot (Marvel Cinematic Universe)",
-      "Drax":"Drax the Destroyer (Marvel Cinematic Universe)",
-      "Nebula":"Nebula (Marvel Cinematic Universe)",
-      "Kate Bishop":"Kate Bishop (Marvel Cinematic Universe)",
-      "Moon Knight":"Moon Knight (Marvel Cinematic Universe)",
-      "Daredevil":"Daredevil (Marvel Cinematic Universe)",
-      "Punisher":"Punisher (Marvel Cinematic Universe)",
-      "Deadpool":"Deadpool (film character)",
-      "Wolverine":"Wolverine (film character)",
-      "Professor X":"Professor X (film character)",
-      "Magneto":"Magneto (film character)",
-      "Cyclops":"Cyclops (film character)",
-      "Storm":"Storm (film character)",
-      "Jean Grey":"Jean Grey (film character)",
-      "Reed Richards":"Reed Richards (Marvel Cinematic Universe)",
-      "Invisible Woman":"Sue Storm (Marvel Cinematic Universe)",
-      "Human Torch":"Johnny Storm (Marvel Cinematic Universe)",
-      "The Thing":"Ben Grimm (Marvel Cinematic Universe)",
-      "Silver Surfer":"Silver Surfer (film character)",
-      "Sentry":"Sentry (Marvel Cinematic Universe)",
-      "Mephisto":"Mephisto (Marvel Cinematic Universe)",
-      "Echo":"Echo (Marvel Cinematic Universe)",
-      "She-Hulk":"She-Hulk (Marvel Cinematic Universe)",
-      "Ironheart":"Ironheart (Marvel Cinematic Universe)",
-      "Red Guardian":"Red Guardian (Marvel Cinematic Universe)",
-      "Taskmaster":"Taskmaster (Marvel Cinematic Universe)",
-      "Ghost":"Ghost (Marvel Cinematic Universe)",
-      "U.S. Agent":"U.S. Agent (Marvel Cinematic Universe)",
-      "Crossbones":"Crossbones (Marvel Cinematic Universe)",
-      "Justin Hammer":"Justin Hammer (Marvel Cinematic Universe)",
-      "Yellowjacket":"Yellowjacket (Marvel Cinematic Universe)",
-      "Yon-Rogg":"Yon-Rogg (Marvel Cinematic Universe)",
-      "Korath":"Korath (Marvel Cinematic Universe)",
-      "The Collector":"Collector (Marvel Cinematic Universe)",
-      "Grandmaster":"Grandmaster (Marvel Cinematic Universe)",
-      "Korg":"Korg (Marvel Cinematic Universe)",
-      "Valkyrie":"Valkyrie (Marvel Cinematic Universe)",
-      "Heimdall":"Heimdall (Marvel Cinematic Universe)",
-      "Odin":"Odin (Marvel Cinematic Universe)",
-      "Frigga":"Frigga (Marvel Cinematic Universe)",
-      "Jane Foster":"Jane Foster (Marvel Cinematic Universe)",
-      "America Chavez":"America Chavez (Marvel Cinematic Universe)",
-      "Wong":"Wong (Marvel Cinematic Universe)"
+    const searchAliases={
+      "Falcon / Sam Wilson":"Sam Wilson",
+      "Winter Soldier / Bucky Barnes":"Bucky Barnes",
+      "Star-Lord":"Peter Quill",
+      "Rocket Raccoon":"Rocket Raccoon",
+      "The Thing":"Ben Grimm",
+      "Invisible Woman":"Sue Storm",
+      "Human Torch":"Johnny Storm",
+      "Professor X":"Professor X",
+      "U.S. Agent":"US Agent",
+      "The Collector":"Collector",
+      "Kingpin":"Kingpin Wilson Fisk"
     };
     const portraitCache=window.__goufePortraitCache||(window.__goufePortraitCache={});
     async function findPortrait(name){
-      const title=portraitPages[name];
-      if(!title)return "";
-      if(Object.prototype.hasOwnProperty.call(portraitCache,title))return portraitCache[title];
+      const searchName=searchAliases[name]||name;
+      const query=searchName+" Marvel";
+      if(Object.prototype.hasOwnProperty.call(portraitCache,query))return portraitCache[query];
       try{
-        const url="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=700&titles="+encodeURIComponent(title)+"&origin=*";
+        const url="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrsearch="+encodeURIComponent(query)+"&gsrnamespace=0&gsrlimit=10&prop=pageimages&piprop=thumbnail&pithumbsize=700&origin=*";
         const response=await fetch(url);
-        if(!response.ok)throw new Error("Exact portrait lookup failed");
+        if(!response.ok)throw new Error("Character image search failed");
         const data=await response.json();
         const pages=(data.query&&data.query.pages)||[];
-        const page=pages.find(item=>!item.missing&&normalize(item.title)===normalize(title));
-        const src=page&&page.thumbnail&&page.thumbnail.source||"";
-        portraitCache[title]=src;
-        return src;
-      }catch(error){portraitCache[title]="";return "";}
+        const target=normalize(searchName);
+        const matching=pages.filter(page=>page.thumbnail&&page.thumbnail.source).map(page=>{
+          const title=normalize(page.title);
+          let score=0;
+          if(title===target)score=100;
+          else if(title.startsWith(target))score=80;
+          else if(title.includes(target))score=60;
+          else if(target.includes(title)&&title.length>3)score=40;
+          return {page,score};
+        }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score);
+        const result=matching.length?matching[0].page.thumbnail.source:"";
+        portraitCache[query]=result;
+        return result;
+      }catch(error){portraitCache[query]="";return "";}
     }
     root.querySelectorAll("[data-wiki-portrait]").forEach(node=>{
       const name=node.getAttribute("data-wiki-portrait")||"";
