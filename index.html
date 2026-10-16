@@ -5046,6 +5046,15 @@ function mcuFilter(type, button){
       const name=node.getAttribute("data-wiki-portrait")||"";
       const key=normalize(name);
       const profile=profiles.find(p=>normalize(p.name)===key)||profiles.find(p=>normalize(p.name).includes(key)||key.includes(normalize(p.name)));
+      if(node.tagName==="IMG"){
+        node.onerror=async function(){
+          this.onerror=null;
+          const found=await findPortrait(name);
+          if(found&&found!==this.src)this.src=found;
+          else this.remove();
+        };
+        return;
+      }
       const img=document.createElement("img");
       img.alt=name+" — Marvel character";
       img.loading="lazy";
@@ -5074,7 +5083,7 @@ function mcuFilter(type, button){
       const meta=builderMeta[name]||["","RARE","HERO"];
       const image=meta[0]?(meta[0].startsWith("http")?meta[0]:"https://cdn.marvel.com/content/1x/"+meta[0]):"";
       const rarity=meta[1], faction=meta[2], rarityClass=rarity.toLowerCase().replace(/[^a-z0-9-]/g,"-"), isFounder=name==="G.O.U.F.E", founderOwned=builderFounderOwned();
-      return '<label class="builder-pick rarity-'+rarityClass+(isFounder?(' builder-founder-card '+(founderOwned?' builder-founder-owned':' builder-founder-locked')):'')+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'" '+'><span class="builder-card-art">'+(image?'<img src="'+image+'" alt="" loading="lazy" decoding="async">' : '<span class="builder-image-placeholder" data-wiki-portrait="'+builderEscape(name)+'"><b>'+builderEscape(name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>')+'<span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+(isFounder&&!founderOwned?'LOCKED // CLAIM IN GOUFE CARD VAULT':builderEscape(profile.roles.join(" / ")))+'</small></span></label>';
+      return '<label class="builder-pick rarity-'+rarityClass+(isFounder?(' builder-founder-card '+(founderOwned?' builder-founder-owned':' builder-founder-locked')):'')+'" data-name="'+builderEscape(name.toLowerCase())+'" data-faction="'+faction.toLowerCase()+'" data-rarity="'+rarityClass+'"><input type="checkbox" value="'+builderEscape(name)+'" aria-label="Select '+builderEscape(name)+'" '+'><span class="builder-card-art">'+(image?'<img src="'+image+'" alt="" data-wiki-portrait="'+builderEscape(name)+'" loading="lazy" decoding="async">' : '<span class="builder-image-placeholder" data-wiki-portrait="'+builderEscape(name)+'"><b>'+builderEscape(name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>')+'<span class="builder-rarity">'+rarity+'</span></span><span class="builder-card-copy"><strong>'+builderEscape(name)+'</strong><small>'+(isFounder&&!founderOwned?'LOCKED // CLAIM IN GOUFE CARD VAULT':builderEscape(profile.roles.join(" / ")))+'</small></span></label>';
     }).join("");
     window.loadWikiPortraits(pool);
   }
@@ -5211,7 +5220,7 @@ const cls=s=>s.toLowerCase().replace(/[^a-z0-9-]/g,"-");
 const secretRewards=[{id:"secret-cosmic-variant",name:"MULTIVERSE SENTINEL",rarity:"COSMIC",faction:"SECRET MISSIONS",power:85,tactics:90,versatility:90,roles:["Multiversal","Secret Reward"],image:"",secretReward:true}];
  const all=()=>[...catalog,...secretRewards,founder].filter(c=>owned.has(c.id));
 function save(){try{const cards=JSON.stringify([...owned]),packs=JSON.stringify(state);localStorage.setItem(STORE,cards);localStorage.setItem("goufeCardVaultBackupV2",cards);localStorage.setItem(PACKS,packs);localStorage.setItem("goufeCardPacksBackupV2",packs);if(localStorage.getItem(STORE)!==cards||localStorage.getItem(PACKS)!==packs)throw new Error("Storage verification failed");return true}catch(e){const status=$("#vaultStatus");if(status)status.textContent="WARNING: browser storage is blocked or full. Your current session may not persist after refresh.";return false}}
-function art(c,locked){const image=c.image?'<img src="'+esc(c.image)+'" alt="'+esc(c.secretReward?"Multiverse Sentinel Marvel character":c.name)+'" loading="lazy" onerror="this.remove()">':'<span class="vault-profile-placeholder" data-wiki-portrait="'+esc(c.name)+'"><b>'+esc(c.name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>';const placeholder=!c.image?(c.custom?'<div class="vault-custom-placeholder"><span>G</span><strong>FOUNDER ARCHIVE</strong></div>':''):"";return '<div class="vault-card-art">'+image+placeholder+(locked?'<span class="vault-question">?</span>':"")+'</div>'}
+function art(c,locked){const image=c.image?'<img src="'+esc(c.image)+'" alt="'+esc(c.secretReward?"Multiverse Sentinel Marvel character":c.name)+'" data-wiki-portrait="'+esc(c.name)+'" loading="lazy">':'<span class="vault-profile-placeholder" data-wiki-portrait="'+esc(c.name)+'"><b>'+esc(c.name.split(" ").map(w=>w[0]).join("").slice(0,3))+'</b><small>MCU / MARVEL</small></span>';const placeholder=!c.image?(c.custom?'<div class="vault-custom-placeholder"><span>G</span><strong>FOUNDER ARCHIVE</strong></div>':''):"";return '<div class="vault-card-art">'+image+placeholder+(locked?'<span class="vault-question">?</span>':"")+'</div>'}
 function card(c,large){return '<div class="vault-card rarity-'+cls(c.rarity)+(large?' vault-reveal-card':'')+'">'+art(c,false)+'<span class="vault-card-label"><strong>'+esc(c.name)+'</strong><small>'+esc(c.rarity+' // '+c.faction)+'</small></span></div>'}
 function untilDaily(){const ms=Math.max(0,DAY-(Date.now()-(state.lastDaily||Date.now())));return Math.floor(ms/3600000)+'h '+Math.floor(ms%3600000/60000)+'m'}
 function refresh(){if(!state.lastDaily||Date.now()-state.lastDaily>=DAY){state.count++;state.lastDaily=Date.now();save()}}
